@@ -4,6 +4,6 @@
   </ImportGroup>
 
   <PropertyGroup Label="Package">
-    <PackageProjectUrl>http://localhost</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/kritikos-io/AspNetCore.Extensions</PackageProjectUrl>
   </PropertyGroup>
 </Project>
