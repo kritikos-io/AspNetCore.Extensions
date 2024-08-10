@@ -1,0 +1,9 @@
+@PetStore.WebApi_HostAddress = https://localhost:7043
+
+###
+@apiVersion=2
+@id=5
+GET {{PetStore.WebApi_HostAddress}}/api/v{{apiVersion}}/pet/{{id}} HTTP/2
+
+###
+GET {{PetStore.WebApi_HostAddress}}/api/v{{apiVersion}}/pet/{{id}}

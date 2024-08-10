@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
+    <PackageReference Include="Swashbuckle.AspNetCore"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\AspNetCore.MinimalApiExtensions\AspNetCore.MinimalApiExtensions.csproj" />
+    <ProjectReference Include="..\..\src\AspNetCore.SwaggerFeatureManagementOptions\AspNetCore.SwaggerFeatureManagementOptions.csproj" />
+    <ProjectReference Include="..\..\src\AspNetCore.SwaggerOptions\AspNetCore.SwaggerOptions.csproj" />
+    <ProjectReference Include="..\..\src\AspNetCore.SwaggerVersioningOptions\AspNetCore.SwaggerVersioningOptions.csproj" />
+    <ProjectReference Include="..\..\src\AspNetCore.VersioningOptions\AspNetCore.VersioningOptions.csproj" />
+  </ItemGroup>
+
+</Project>
