@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore"/>
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations"/>
+    <PackageReference Include="Swashbuckle.AspNetCore.Filters"/>
+  </ItemGroup>
+
+</Project>
