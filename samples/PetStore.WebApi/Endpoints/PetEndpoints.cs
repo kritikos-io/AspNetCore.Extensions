@@ -19,7 +19,6 @@ public class PetEndpoints : IEndpoint
         .WithApiVersionSet(Program.VersionSet)
         .MapToApiVersion(1)
         .WithTags("Pet")
-        .WithParameterValidation()
         .WithOpenApi();
 
     v1.MapGet("{id:long}", GetPetsV1).AddEndpointFilter<ValidatorFilter>();
@@ -31,7 +30,8 @@ public class PetEndpoints : IEndpoint
         .WithApiVersionSet(Program.VersionSet)
         .MapToApiVersion(2)
         .WithTags("Pet")
-        .WithOpenApi();
+        .WithOpenApi()
+        .AddEndpointFilter<ValidatorFilter>();
 
     v2.MapGet("{id:long}", GetPetsV2);
     v2.MapPost(string.Empty, CreatePetV2);
@@ -42,7 +42,7 @@ public class PetEndpoints : IEndpoint
     return TypedResults.Ok(new PetV1Dto("Sir Paddington", 3));
   }
 
-  public async Task<Ok<PetV2Dto>> GetPetsV2([DeniedValues(3)] long id)
+  public async Task<Ok<PetV2Dto>> GetPetsV2(long id)
   {
     return TypedResults.Ok(new PetV2Dto("Snuggles", "McFluff", 5));
   }
