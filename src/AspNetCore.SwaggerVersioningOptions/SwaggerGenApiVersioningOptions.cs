@@ -40,7 +40,10 @@ public class SwaggerGenApiVersioningOptions
     var text = new StringBuilder(apiInfo.Description);
     var info = new OpenApiInfo
     {
-      Title = apiInfo.Title, Contact = apiInfo.Contact, License = apiInfo.License, Version = description.ApiVersion.ToString(),
+      Title = apiInfo.Title,
+      Contact = apiInfo.Contact,
+      License = apiInfo.License,
+      Version = description.ApiVersion.ToString(),
     };
     if (description.IsDeprecated)
     {

@@ -2,7 +2,7 @@
 
 using Asp.Versioning;
 
-using Kritikos.AspNetCore.MinimalApiExtensions.Startup;
+using Kritikos.AspNetCore.MinimalApiExtensions.StartupBuilder;
 
 using Microsoft.FeatureManagement;
 using Microsoft.OpenApi.Models;

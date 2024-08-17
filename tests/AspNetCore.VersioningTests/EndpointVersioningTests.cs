@@ -1,12 +1,11 @@
-﻿namespace Kritikos.AspNetCore.VersioningTests;
+﻿#pragma warning disable CA2234 // Pass system uri objects instead of strings
+namespace Kritikos.AspNetCore.VersioningTests;
 
 using System.Net;
 using System.Net.Http.Json;
 
 using Kritikos.PetStore.WebApi.Endpoints;
 
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
