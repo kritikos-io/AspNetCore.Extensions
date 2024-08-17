@@ -8,7 +8,7 @@ using Kritikos.AspNetCore.MinimalApiExtensions.Contracts;
 
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-public static partial class KritikosIEndpointExtensions
+public static partial class KritikosStartupBuilderExtensions
 {
   /// <summary>
   /// Registers all implementations of <see cref="IEndpoint"/> in the provided assembly.
