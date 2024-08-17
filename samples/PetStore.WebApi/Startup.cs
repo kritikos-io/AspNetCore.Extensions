@@ -38,12 +38,12 @@ public class Startup : IWebApplicationStartup
   {
     ArgumentNullException.ThrowIfNull(app);
     Program.VersionSet = app.NewApiVersionSet()
-        .HasApiVersion(new ApiVersion(1))
-        .HasApiVersion(new ApiVersion(2))
-        .HasApiVersion(new ApiVersion(3))
-        .HasDeprecatedApiVersion(new ApiVersion(0))
-        .ReportApiVersions()
-        .Build();
+            .HasApiVersion(new ApiVersion(1))
+            .HasApiVersion(new ApiVersion(2))
+            .HasApiVersion(new ApiVersion(3))
+            .HasDeprecatedApiVersion(new ApiVersion(0))
+            .ReportApiVersions()
+            .Build();
 
     app.UseSwagger();
     app.UseHttpsRedirection();
