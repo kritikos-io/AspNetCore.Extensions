@@ -1,4 +1,6 @@
-﻿namespace Kritikos.AspNetCore.FeatureManagementOptionTests;
+﻿#pragma warning disable CA2234 // Pass system uri objects instead of strings
+
+namespace Kritikos.AspNetCore.FeatureManagementOptionTests;
 
 using System.Net;
 using System.Net.Http.Json;

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Kritikos IO. All rights reserved.
+﻿#pragma warning disable CA5394 // Do not use insecure randomness
 
 namespace Kritikos.HttpClient.Handlers;
 

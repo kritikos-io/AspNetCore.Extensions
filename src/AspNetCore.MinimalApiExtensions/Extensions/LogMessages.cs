@@ -10,7 +10,7 @@ public static partial class LogMessages
   private const string PeriodicBackgroundServiceSleepingMessage =
       "Periodic background service {Service} going to sleep";
 
-  private const string EntityNotFoundMessage = "Requested ntity {Entity} with id {Id} was not found";
+  private const string EntityNotFoundMessage = "Requested entity {Entity} with id {Id} was not found";
 }
 
 public static partial class LogMessages
