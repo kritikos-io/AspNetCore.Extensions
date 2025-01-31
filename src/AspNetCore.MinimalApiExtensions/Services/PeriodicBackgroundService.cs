@@ -45,7 +45,7 @@ public abstract class PeriodicBackgroundService<TService, TOptions>(
   protected override async Task ExecuteAsync(CancellationToken stoppingToken)
   {
     await Task.Delay(TimeSpan.Zero, stoppingToken);
-    cancellationTokenSource ??= CancellationTokenSource.CreateLinkedTokenSource(stoppingToken);
+    RefreshCancellationToken(stoppingToken);
     while (!stoppingToken.IsCancellationRequested)
     {
       try
@@ -63,14 +63,10 @@ public abstract class PeriodicBackgroundService<TService, TOptions>(
 
       try
       {
-        if (cancellationTokenSource == null || cancellationTokenSource.Token.IsCancellationRequested)
-        {
-          cancellationTokenSource?.Dispose();
-          cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(stoppingToken);
-        }
+        RefreshCancellationToken(stoppingToken);
 
         logger.LogPeriodicBackgroundServiceTriggered(nameof(TService));
-        await DoWork(cancellationTokenSource.Token);
+        await DoWork(cancellationTokenSource!.Token);
       }
 #pragma warning disable CA1031 // Background service should not throw exceptions
       catch (Exception e)
@@ -87,4 +83,15 @@ public abstract class PeriodicBackgroundService<TService, TOptions>(
   /// <param name="stoppingToken">A <see cref="CancellationToken"/> to notify the service when it is time to shut down.</param>
   /// <returns>A <see cref="Task"/> that represents the asynchronous Start operation.</returns>
   protected abstract Task DoWork(CancellationToken stoppingToken);
+
+  private void RefreshCancellationToken(CancellationToken stoppingToken)
+  {
+    if (cancellationTokenSource is { Token.IsCancellationRequested: false })
+    {
+      return;
+    }
+
+    cancellationTokenSource?.Dispose();
+    cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(stoppingToken);
+  }
 }
