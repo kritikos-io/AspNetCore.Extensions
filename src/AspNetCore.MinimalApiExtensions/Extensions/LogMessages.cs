@@ -7,6 +7,9 @@ public static partial class LogMessages
   private const string PeriodicBackgroundServiceTriggeredMessage =
       "Periodic background service {Service} was triggered";
 
+  private const string PeriodicBackgroundServiceTriggeredManuallyMessage =
+          "Periodic background service {Service} was triggered by manual request";
+
   private const string PeriodicBackgroundServiceSleepingMessage =
       "Periodic background service {Service} going to sleep";
 
@@ -18,7 +21,10 @@ public static partial class LogMessages
   [LoggerMessage(LogLevel.Critical, UnhandledExceptionMessage)]
   public static partial void LogUnhandledException(this ILogger logger, Exception e);
 
-  [LoggerMessage(LogLevel.Information, PeriodicBackgroundServiceTriggeredMessage)]
+  [LoggerMessage(LogLevel.Information, PeriodicBackgroundServiceTriggeredManuallyMessage)]
+  public static partial void LogPeriodicBackgroundServiceTriggeredManually(this ILogger logger, string service);
+
+  [LoggerMessage(LogLevel.Debug, PeriodicBackgroundServiceTriggeredMessage)]
   public static partial void LogPeriodicBackgroundServiceTriggered(this ILogger logger, string service);
 
   [LoggerMessage(LogLevel.Debug, PeriodicBackgroundServiceSleepingMessage)]

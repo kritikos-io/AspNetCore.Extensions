@@ -6,4 +6,6 @@ public abstract class PeriodicBackgroundServiceOptions<T>
 {
   [Required]
   public TimeSpan Interval { get; set; }
+
+  public bool TriggerStopsCurrentExecution { get; set; }
 }

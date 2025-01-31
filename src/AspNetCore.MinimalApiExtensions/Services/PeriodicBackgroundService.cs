@@ -20,12 +20,14 @@ public abstract class PeriodicBackgroundService<TService, TOptions>(
   where TService : PeriodicBackgroundService<TService, TOptions>
   where TOptions : PeriodicBackgroundServiceOptions<TService>
 {
-  private readonly ILogger logger = logger;
+  private readonly string serviceName = typeof(TService).Name;
   private readonly PeriodicTimer timer = new(options.Value.Interval);
+
   private CancellationTokenSource? cancellationTokenSource;
 
   protected TOptions Options { get; } = options.Value;
 
+  protected ILogger Logger { get; } = logger;
   /// <inheritdoc />
   public override void Dispose()
   {
@@ -44,35 +46,48 @@ public abstract class PeriodicBackgroundService<TService, TOptions>(
   /// <inheritdoc />
   protected override async Task ExecuteAsync(CancellationToken stoppingToken)
   {
-    await Task.Delay(TimeSpan.Zero, stoppingToken);
-    RefreshCancellationToken(stoppingToken);
     while (!stoppingToken.IsCancellationRequested)
     {
       try
       {
-        logger.LogPeriodicBackgroundServiceSleeping(nameof(TService));
-        await timer.WaitForNextTickAsync(cancellationTokenSource.Token);
+        Logger.LogPeriodicBackgroundServiceSleeping(serviceName);
+        RefreshCancellationToken(stoppingToken);
+        await timer.WaitForNextTickAsync(cancellationTokenSource!.Token);
       }
       catch (OperationCanceledException)
       {
         if (stoppingToken.IsCancellationRequested)
         {
-          continue;
+          break;
         }
+
+        Logger.LogPeriodicBackgroundServiceTriggeredManually(serviceName);
       }
 
       try
       {
+        if ((cancellationTokenSource?.IsCancellationRequested ?? false)
+            && Options.TriggerStopsCurrentExecution)
+        {
+          continue;
+        }
+
         RefreshCancellationToken(stoppingToken);
 
-        logger.LogPeriodicBackgroundServiceTriggered(nameof(TService));
-        await DoWork(cancellationTokenSource!.Token);
+        Logger.LogPeriodicBackgroundServiceTriggered(serviceName);
+        await DoWork(
+                Options.TriggerStopsCurrentExecution
+                    ? cancellationTokenSource!.Token
+                    : stoppingToken);
+      }
+      catch (OperationCanceledException)
+      {
       }
 #pragma warning disable CA1031 // Background service should not throw exceptions
       catch (Exception e)
 #pragma warning restore CA1031
       {
-        logger.LogUnhandledException(e);
+        Logger.LogUnhandledException(e);
       }
     }
   }
@@ -82,6 +97,7 @@ public abstract class PeriodicBackgroundService<TService, TOptions>(
   /// </summary>
   /// <param name="stoppingToken">A <see cref="CancellationToken"/> to notify the service when it is time to shut down.</param>
   /// <returns>A <see cref="Task"/> that represents the asynchronous Start operation.</returns>
+  /// <exception cref=""></exception>
   protected abstract Task DoWork(CancellationToken stoppingToken);
 
   private void RefreshCancellationToken(CancellationToken stoppingToken)
