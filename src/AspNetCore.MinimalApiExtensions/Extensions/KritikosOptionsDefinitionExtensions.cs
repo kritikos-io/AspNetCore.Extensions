@@ -9,10 +9,9 @@ public static class KritikosOptionsDefinitionExtensions
   {
     ArgumentNullException.ThrowIfNull(services);
 
-    services.AddOptions<TOptions>()
+    services.AddOptionsWithValidateOnStart<TOptions>()
         .BindConfiguration(TOptions.Location)
-        .ValidateDataAnnotations()
-        .ValidateOnStart();
+        .ValidateDataAnnotations();
 
     return services;
   }
