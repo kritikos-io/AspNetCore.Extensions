@@ -3,6 +3,9 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+
 /// <summary>
 /// Adds a validation Filter to the endpoint pipeline.
 /// </summary>

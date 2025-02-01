@@ -6,6 +6,7 @@ using System.Reflection;
 
 using Kritikos.AspNetCore.MinimalApiExtensions.Contracts;
 
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 public static partial class KritikosStartupBuilderExtensions

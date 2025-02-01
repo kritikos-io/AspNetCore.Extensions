@@ -1,5 +1,7 @@
 ﻿namespace Kritikos.AspNetCore.MinimalApiExtensions.Contracts;
 
+using Microsoft.AspNetCore.Routing;
+
 public interface IEndpoint
 {
   /// <summary>

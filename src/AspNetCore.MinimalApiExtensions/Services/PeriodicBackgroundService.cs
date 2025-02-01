@@ -3,6 +3,10 @@ namespace Kritikos.AspNetCore.MinimalApiExtensions.Services;
 using Kritikos.AspNetCore.MinimalApiExtensions.Extensions;
 using Kritikos.AspNetCore.MinimalApiExtensions.Options;
 
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 /// <summary>
@@ -10,7 +14,7 @@ using Microsoft.Extensions.Options;
 /// </summary>
 /// <remarks>Ensure you also call <see cref="OptionsConfigurationServiceCollectionExtensions.Configure{T}(IServiceCollection, string?, IConfiguration)"/> to register <typeparamref name="TOptions"/>.</remarks>
 /// <param name="options">An implementation of <see cref="PeriodicBackgroundServiceOptions{T}"/> to provide needed parameters.</param>
-/// <param name="logger">An <see cref="ILogger{T}"/> instance to provide proper structured logs.</param>
+/// <param name="logger">An <see cref="ILogger"/> instance to provide proper structured logs.</param>
 /// <typeparam name="TService">The type of the service to be implemented (Curiously Recurring Template Pattern to overcome lack of the self keyword).</typeparam>
 /// <typeparam name="TOptions">An implementation of <see cref="PeriodicBackgroundServiceOptions{T}"/> for <typeparamref name="TService"/>.</typeparam>
 public abstract class PeriodicBackgroundService<TService, TOptions>(

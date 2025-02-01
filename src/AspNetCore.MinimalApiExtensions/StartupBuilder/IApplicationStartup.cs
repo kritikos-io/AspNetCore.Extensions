@@ -1,5 +1,8 @@
 ﻿namespace Kritikos.AspNetCore.MinimalApiExtensions.StartupBuilder;
 
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Hosting;
+
 /// <summary>
 /// Provides an interface for initializing services and middleware used by an application.
 /// </summary>

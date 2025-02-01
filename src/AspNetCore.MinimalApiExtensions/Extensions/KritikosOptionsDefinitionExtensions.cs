@@ -2,6 +2,8 @@
 
 using Kritikos.AspNetCore.MinimalApiExtensions.Contracts;
 
+using Microsoft.Extensions.DependencyInjection;
+
 public static class KritikosOptionsDefinitionExtensions
 {
   public static IServiceCollection AddOptionsDefinition<TOptions>(this IServiceCollection services)

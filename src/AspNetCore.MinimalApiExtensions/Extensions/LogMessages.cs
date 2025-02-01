@@ -1,5 +1,7 @@
 ﻿namespace Kritikos.AspNetCore.MinimalApiExtensions.Extensions;
 
+using Microsoft.Extensions.Logging;
+
 public static partial class LogMessages
 {
   private const string UnhandledExceptionMessage = "An unhandled exception occurred";

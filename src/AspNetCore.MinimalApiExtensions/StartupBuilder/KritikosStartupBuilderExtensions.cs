@@ -4,6 +4,9 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 using Kritikos.AspNetCore.MinimalApiExtensions.StartupBuilder;
 
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Hosting;
+
 public static partial class KritikosStartupBuilderExtensions
 {
   /// <summary>

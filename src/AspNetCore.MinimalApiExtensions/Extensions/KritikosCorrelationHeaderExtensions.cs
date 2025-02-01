@@ -5,6 +5,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 using Kritikos.AspNetCore.MinimalApiExtensions.Middleware;
 using Kritikos.AspNetCore.MinimalApiExtensions.Options;
 
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 public static class KritikosCorrelationHeaderExtensions
