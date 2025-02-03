@@ -2,6 +2,8 @@
 
 namespace Microsoft.Extensions.DependencyInjection;
 
+using Kritikos.AspNetCore.MinimalApiExtensions.Contracts;
+using Kritikos.AspNetCore.MinimalApiExtensions.Extensions;
 using Kritikos.AspNetCore.MinimalApiExtensions.Options;
 using Kritikos.AspNetCore.MinimalApiExtensions.Services;
 
@@ -17,10 +19,11 @@ public static partial class KritikosStartupBuilderExtensions
   /// <remarks>Ensure there is a configured options class registered as <typeparamref name="TOptions"/> otherwise you will get a runtime <see cref="InvalidOperationException"/>.</remarks>
   public static IServiceCollection AddPeriodicBackgroundService<TService, TOptions>(this IServiceCollection services)
       where TService : PeriodicBackgroundService<TService, TOptions>
-      where TOptions : PeriodicBackgroundServiceOptions<TService>
+      where TOptions : PeriodicBackgroundServiceOptions<TService>, IOptionsDefinition, new()
   {
     ArgumentNullException.ThrowIfNull(services);
 
+    services.AddOptionsDefinition<TOptions>();
     return services.AddHostedService<TService>();
   }
 }

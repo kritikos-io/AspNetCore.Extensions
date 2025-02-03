@@ -2,6 +2,7 @@
 
 namespace Microsoft.Extensions.DependencyInjection;
 
+using Kritikos.AspNetCore.MinimalApiExtensions.Extensions;
 using Kritikos.AspNetCore.MinimalApiExtensions.Middleware;
 using Kritikos.AspNetCore.MinimalApiExtensions.Options;
 
@@ -21,6 +22,7 @@ public static class KritikosCorrelationHeaderExtensions
   {
     ArgumentNullException.ThrowIfNull(services);
 
+    services.AddOptionsDefinition<CorrelationHeaderOptions>();
     services.Configure(configure ?? (_ => { }));
     services.TryAddSingleton<CorrelationHeaderMiddleware>();
 
