@@ -2,7 +2,7 @@
 
 using System.ComponentModel.DataAnnotations;
 
-public abstract class PeriodicBackgroundServiceOptions<T>
+public abstract class PeriodicBackgroundServiceOptions
 {
   [Required]
   public TimeSpan Interval { get; set; }

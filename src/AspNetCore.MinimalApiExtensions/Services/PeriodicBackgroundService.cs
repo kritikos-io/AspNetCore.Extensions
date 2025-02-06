@@ -13,16 +13,16 @@ using Microsoft.Extensions.Options;
 /// A generic periodic background service that can be triggered externally.
 /// </summary>
 /// <remarks>Ensure you also call <see cref="OptionsConfigurationServiceCollectionExtensions.Configure{T}(IServiceCollection, string?, IConfiguration)"/> to register <typeparamref name="TOptions"/>.</remarks>
-/// <param name="options">An implementation of <see cref="PeriodicBackgroundServiceOptions{T}"/> to provide needed parameters.</param>
+/// <param name="options">An implementation of <see cref="PeriodicBackgroundServiceOptions"/> to provide needed parameters.</param>
 /// <param name="logger">An <see cref="ILogger"/> instance to provide proper structured logs.</param>
 /// <typeparam name="TService">The type of the service to be implemented (Curiously Recurring Template Pattern to overcome lack of the self keyword).</typeparam>
-/// <typeparam name="TOptions">An implementation of <see cref="PeriodicBackgroundServiceOptions{T}"/> for <typeparamref name="TService"/>.</typeparam>
+/// <typeparam name="TOptions">An implementation of <see cref="PeriodicBackgroundServiceOptions"/> for <typeparamref name="TService"/>.</typeparam>
 public abstract class PeriodicBackgroundService<TService, TOptions>(
   IOptions<TOptions> options,
   ILogger<TService> logger)
   : BackgroundService
   where TService : PeriodicBackgroundService<TService, TOptions>
-  where TOptions : PeriodicBackgroundServiceOptions<TService>
+  where TOptions : PeriodicBackgroundServiceOptions
 {
   private readonly string serviceName = typeof(TService).Name;
   private readonly PeriodicTimer timer = new(options.Value.Interval);
