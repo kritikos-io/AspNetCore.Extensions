@@ -4,6 +4,7 @@ namespace Kritikos.AspNetCore.VersioningTests;
 using System.Net;
 using System.Net.Http.Json;
 
+using Kritikos.AspNetCore.VersioningOptions;
 using Kritikos.PetStore.WebApi.Endpoints;
 
 using Microsoft.AspNetCore.Mvc.Testing;

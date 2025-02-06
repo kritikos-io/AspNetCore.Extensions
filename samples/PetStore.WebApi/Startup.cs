@@ -6,6 +6,8 @@ using Kritikos.AspNetCore.MinimalApiExtensions.Extensions;
 using Kritikos.AspNetCore.MinimalApiExtensions.StartupBuilder;
 using Kritikos.AspNetCore.SwaggerFeatureManagementOptions;
 using Kritikos.AspNetCore.SwaggerOptions;
+using Kritikos.AspNetCore.SwaggerVersioningOptions;
+using Kritikos.AspNetCore.VersioningOptions;
 
 using Microsoft.FeatureManagement;
 using Microsoft.OpenApi.Models;

@@ -1,8 +1,6 @@
-﻿// ReSharper disable once CheckNamespace : Recommendation by Microsoft for dependency injection extension methods
+﻿namespace Kritikos.AspNetCore.VersioningOptions;
 
-namespace Microsoft.Extensions.DependencyInjection;
-
-using Kritikos.AspNetCore.VersioningOptions;
+using Microsoft.Extensions.DependencyInjection;
 
 public static class KritikosApiVersioningDependencyInjectionExtensions
 {
@@ -17,9 +15,9 @@ public static class KritikosApiVersioningDependencyInjectionExtensions
     ArgumentNullException.ThrowIfNull(services);
 
     services
-      .AddApiVersioning()
-      .AddApiExplorer()
-      .EnableApiVersionBinding();
+        .AddApiVersioning()
+        .AddApiExplorer()
+        .EnableApiVersionBinding();
 
     services.ConfigureOptions<ApiVersioningDefaultOptions>();
 

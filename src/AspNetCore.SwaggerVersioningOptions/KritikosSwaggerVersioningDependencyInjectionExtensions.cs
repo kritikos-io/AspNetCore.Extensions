@@ -1,11 +1,8 @@
-﻿// ReSharper disable InconsistentNaming : Following original method casing
-// ReSharper disable once CheckNamespace : Recommendation by Microsoft for dependency injection extension methods
+﻿namespace Kritikos.AspNetCore.SwaggerVersioningOptions;
 
-namespace Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
 using System.Globalization;
-
-using Kritikos.AspNetCore.SwaggerVersioningOptions;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection.Extensions;
