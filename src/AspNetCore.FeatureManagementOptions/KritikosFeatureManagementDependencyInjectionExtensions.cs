@@ -1,9 +1,6 @@
-﻿// ReSharper disable once CheckNamespace : Recommendation by Microsoft for dependency injection extension methods
+﻿namespace Kritikos.AspNetCore.FeatureManagementOptions;
 
-namespace Microsoft.Extensions.DependencyInjection;
-
-using Kritikos.AspNetCore.FeatureManagementOptions;
-
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.FeatureManagement;
 

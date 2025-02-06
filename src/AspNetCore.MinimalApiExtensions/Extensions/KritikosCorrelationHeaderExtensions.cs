@@ -1,12 +1,10 @@
-﻿// ReSharper disable once CheckNamespace : Recommendation by Microsoft for dependency injection extension methods
+﻿namespace Kritikos.AspNetCore.MinimalApiExtensions.Extensions;
 
-namespace Microsoft.Extensions.DependencyInjection;
-
-using Kritikos.AspNetCore.MinimalApiExtensions.Extensions;
 using Kritikos.AspNetCore.MinimalApiExtensions.Middleware;
 using Kritikos.AspNetCore.MinimalApiExtensions.Options;
 
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 public static class KritikosCorrelationHeaderExtensions

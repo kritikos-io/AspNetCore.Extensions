@@ -1,8 +1,6 @@
-﻿// ReSharper disable once CheckNamespace : Recommendation by Microsoft for dependency injection extension methods
+﻿namespace Kritikos.AspNetCore.SwaggerFeatureManagementOptions;
 
-namespace Microsoft.Extensions.DependencyInjection;
-
-using Kritikos.AspNetCore.SwaggerFeatureManagementOptions;
+using Microsoft.Extensions.DependencyInjection;
 
 public static class KritikosSwaggerFeatureManagerDependencyInjectionExtensions
 {
