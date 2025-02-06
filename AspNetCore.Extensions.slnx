@@ -1,0 +1,39 @@
+﻿<Solution>
+  <Folder Name="/Assets/">
+    <File Path="icon.png" />
+    <File Path="LICENSE.md" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/Configuration/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path=".globalconfig" />
+    <File Path=".runsettings" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Build.targets" />
+    <File Path="Directory.Packages.props" />
+    <File Path="dotnet.ruleset" />
+    <File Path="GitVersion.yml" />
+    <File Path="xunit.runner.json" />
+  </Folder>
+  <Folder Name="/samples/">
+    <Project Path="samples\PetStore.WebApi\PetStore.WebApi.csproj" Type="Classic C#" />
+    <File Path="samples\Directory.Build.props" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src\AspNetCore.FeatureManagementOptions\AspNetCore.FeatureManagementOptions.csproj" Type="Classic C#" />
+    <Project Path="src\AspNetCore.MinimalApiExtensions\AspNetCore.MinimalApiExtensions.csproj" Type="Classic C#" />
+    <Project Path="src\AspNetCore.SwaggerFeatureManagementOptions\AspNetCore.SwaggerFeatureManagementOptions.csproj" Type="Classic C#" />
+    <Project Path="src\AspNetCore.SwaggerOptions\AspNetCore.SwaggerOptions.csproj" Type="Classic C#" />
+    <Project Path="src\AspNetCore.SwaggerVersioningOptions\AspNetCore.SwaggerVersioningOptions.csproj" Type="Classic C#" />
+    <Project Path="src\AspNetCore.VersioningOptions\AspNetCore.VersioningOptions.csproj" Type="Classic C#" />
+    <Project Path="src\HttpClient.Handlers\HttpClient.Handlers.csproj" Type="Classic C#" />
+    <File Path="src\Directory.build.props" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests\AspNetCore.FeatureManagementOptionTests\AspNetCore.FeatureManagementOptionTests.csproj" Type="Classic C#" />
+    <Project Path="tests\AspNetCore.MinimalApiTests\AspNetCore.MinimalApiTests.csproj" Type="Classic C#" />
+    <Project Path="tests\AspNetCore.VersioningTests\AspNetCore.VersioningTests.csproj" Type="Classic C#" />
+    <File Path="tests\Directory.Build.props" />
+  </Folder>
+</Solution>
