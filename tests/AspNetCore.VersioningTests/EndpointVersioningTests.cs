@@ -39,13 +39,14 @@ public class EndpointVersioningTests
         .CreateClient();
 
     var response = await client.GetAsync("/api/v1/pet/5");
-    response.StatusCode.Should().Be(HttpStatusCode.OK);
+    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
     var fromJsonAsync = await response.Content.ReadFromJsonAsync<PetV1Dto>();
-    fromJsonAsync.Should().NotBeNull();
+    Assert.NotNull(fromJsonAsync);
 
     var expected = new PetV1Dto("Sir Paddington", 3);
-    fromJsonAsync.Should().Be(expected);
+    Assert.Equal(expected, fromJsonAsync);
+    Assert.Equal(expected, fromJsonAsync);
   }
 
   [Fact]
@@ -55,12 +56,12 @@ public class EndpointVersioningTests
         .CreateClient();
 
     var response = await client.GetAsync("/api/v2/pet/5");
-    response.StatusCode.Should().Be(HttpStatusCode.OK);
+    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
     var fromJsonAsync = await response.Content.ReadFromJsonAsync<PetV2Dto>();
-    fromJsonAsync.Should().NotBeNull();
+    Assert.NotNull(fromJsonAsync);
 
     var expected = new PetV2Dto("Snuggles", "McFluff", 5);
-    fromJsonAsync.Should().Be(expected);
+    Assert.Equal(expected, fromJsonAsync);
   }
 }

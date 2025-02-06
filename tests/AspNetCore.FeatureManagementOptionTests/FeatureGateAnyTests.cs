@@ -42,7 +42,7 @@ public class FeatureGateAnyTests
       .CreateClient();
 
     var response = await client.GetAsync("/api/feature/or");
-    response.StatusCode.Should().Be(HttpStatusCode.NotFound);
+    Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
   }
 
   [Fact]
@@ -56,10 +56,10 @@ public class FeatureGateAnyTests
       .CreateClient();
 
     var response = await client.GetAsync("/api/feature/or");
-    response.StatusCode.Should().Be(HttpStatusCode.OK);
+    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
     var fromJsonAsync = await response.Content.ReadFromJsonAsync<string>();
-    fromJsonAsync.Should().Be("on");
+    Assert.Equal("on", fromJsonAsync);
   }
 
   [Fact]
@@ -73,10 +73,10 @@ public class FeatureGateAnyTests
       .CreateClient();
 
     var response = await client.GetAsync("/api/feature/or");
-    response.StatusCode.Should().Be(HttpStatusCode.OK);
+    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
     var fromJsonAsync = await response.Content.ReadFromJsonAsync<string>();
-    fromJsonAsync.Should().Be("on");
+    Assert.Equal("on", fromJsonAsync);
   }
 
   [Fact]
@@ -90,9 +90,9 @@ public class FeatureGateAnyTests
       .CreateClient();
 
     var response = await client.GetAsync("/api/feature/or");
-    response.StatusCode.Should().Be(HttpStatusCode.OK);
+    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
     var fromJsonAsync = await response.Content.ReadFromJsonAsync<string>();
-    fromJsonAsync.Should().Be("on");
+    Assert.Equal("on", fromJsonAsync);
   }
 }

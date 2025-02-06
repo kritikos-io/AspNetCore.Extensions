@@ -27,7 +27,7 @@ public class CorrelationMiddlewareTests
     var response = await client.GetAsync("api/v1/pet/3");
 
     response.EnsureSuccessStatusCode();
-    response.Headers.Should().ContainKey(CorrelationHeaderOptions.DefaultHeader);
+    Assert.True(response.Headers.Contains(CorrelationHeaderOptions.DefaultHeader));
   }
 
   [Fact]
@@ -40,7 +40,7 @@ public class CorrelationMiddlewareTests
     var response = await client.GetAsync("api/v1/pet/3");
 
     response.EnsureSuccessStatusCode();
-    response.Headers.Should().ContainKey(CorrelationHeaderOptions.DefaultHeader);
-    response.Headers.FirstOrDefault(x => x.Key == CorrelationHeaderOptions.DefaultHeader).Value.Should().BeEquivalentTo(correlation);
+    Assert.True(response.Headers.Contains(CorrelationHeaderOptions.DefaultHeader));
+    Assert.Equal(correlation, response.Headers.GetValues(CorrelationHeaderOptions.DefaultHeader).First());
   }
 }
