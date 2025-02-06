@@ -34,7 +34,7 @@ public class FeatureGateAnyTests
   [Fact]
   public async Task EndpointFeatureFilter_with_or_filter_should_return_not_found_when_both_features_are_disabled()
   {
-    var client = factory.WithWebHostBuilder(builder =>
+    var client = factory.WithWebHostBuilder(static builder =>
       {
         builder.UseSetting("FeatureManagement:FirstOrFlag", "false");
         builder.UseSetting("FeatureManagement:SecondOrFlag", "false");
@@ -48,7 +48,7 @@ public class FeatureGateAnyTests
   [Fact]
   public async Task EndpointFeatureFilter_with_and_filter_should_be_transparent_when_only_first_flag_is_enabled()
   {
-    var client = factory.WithWebHostBuilder(builder =>
+    var client = factory.WithWebHostBuilder(static builder =>
       {
         builder.UseSetting("FeatureManagement:FirstOrFlag", "true");
         builder.UseSetting("FeatureManagement:SecondOrFlag", "false");
@@ -65,7 +65,7 @@ public class FeatureGateAnyTests
   [Fact]
   public async Task EndpointFeatureFilter_with_or_filter_should_be_transparent_when_only_second_flag_is_enabled()
   {
-    var client = factory.WithWebHostBuilder(builder =>
+    var client = factory.WithWebHostBuilder(static builder =>
       {
         builder.UseSetting("FeatureManagement:FirstOrFlag", "false");
         builder.UseSetting("FeatureManagement:SecondOrFlag", "true");
@@ -82,7 +82,7 @@ public class FeatureGateAnyTests
   [Fact]
   public async Task EndpointFeatureFilter_with_or_filter_should_be_transparent_when_both_flags_are_enabled()
   {
-    var client = factory.WithWebHostBuilder(builder =>
+    var client = factory.WithWebHostBuilder(static builder =>
       {
         builder.UseSetting("FeatureManagement:FirstOrFlag", "true");
         builder.UseSetting("FeatureManagement:SecondOrFlag", "true");

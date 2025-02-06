@@ -32,9 +32,9 @@ public class FeatureGateEndpointFilter
 
     List<string> featureStrings = [];
     featureStrings.AddRange(features
-      .Select(feature => Enum.GetName(feature.GetType(), feature))
+      .Select(static feature => Enum.GetName(feature.GetType(), feature))
       .OfType<string>()
-      .Where(x => !string.IsNullOrWhiteSpace(x))
+      .Where(static x => !string.IsNullOrWhiteSpace(x))
       .ToList());
 
     Features = featureStrings;
@@ -76,11 +76,11 @@ public class FeatureGateEndpointFilter
     var isEnabled = RequirementType == RequirementType.All;
     foreach (var feature in Features)
     {
-      var features = await featureManager.IsEnabledAsync(feature);
+      var isFeatureEnabled = await featureManager.IsEnabledAsync(feature);
       isEnabled = RequirementType switch
       {
-        RequirementType.All => isEnabled && await featureManager.IsEnabledAsync(feature),
-        RequirementType.Any => isEnabled || await featureManager.IsEnabledAsync(feature),
+        RequirementType.All => isEnabled && isFeatureEnabled,
+        RequirementType.Any => isEnabled || isFeatureEnabled,
         _ => throw new ArgumentException(nameof(RequirementType)),
       };
     }

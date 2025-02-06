@@ -13,10 +13,8 @@ using Microsoft.AspNetCore.Mvc;
 public class FooController
 {
   [HttpGet("")]
-  public async Task<Ok> GetFoo()
-  {
-    return TypedResults.Ok();
-  }
+  public Ok GetFoo()
+    => TypedResults.Ok();
 }
 
 public record CreateFooDto(

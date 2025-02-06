@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.FeatureManagement;
 
 public class FeatureGateTests
-  : IClassFixture<WebApplicationFactory<Program>>
+    : IClassFixture<WebApplicationFactory<Program>>
 {
   private readonly WebApplicationFactory<Program> factory;
 
@@ -34,11 +34,9 @@ public class FeatureGateTests
   [Fact]
   public async Task EndpointFeatureFilter_should_be_transparent_when_feature_is_enabled()
   {
-    var client = factory.WithWebHostBuilder(builder =>
-      {
-        builder.UseSetting("FeatureManagement:MyFeature", "true");
-      })
-      .CreateClient();
+    var client = factory.WithWebHostBuilder(static builder => builder
+            .UseSetting("FeatureManagement:MyFeature", "true"))
+        .CreateClient();
 
     var response = await client.GetAsync("/api/feature/single");
     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
@@ -50,11 +48,9 @@ public class FeatureGateTests
   [Fact]
   public async Task EndpointFeatureFilter_should_return_not_found_when_feature_is_disabled()
   {
-    var client = factory.WithWebHostBuilder(builder =>
-      {
-        builder.UseSetting("FeatureManagement:MyFeature", "false");
-      })
-      .CreateClient();
+    var client = factory.WithWebHostBuilder(static builder => builder
+            .UseSetting("FeatureManagement:MyFeature", "false"))
+        .CreateClient();
 
     var response = await client.GetAsync("/api/feature/single");
     Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);

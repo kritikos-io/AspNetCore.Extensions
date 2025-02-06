@@ -101,7 +101,6 @@ public abstract class PeriodicBackgroundService<TService, TOptions>(
   /// </summary>
   /// <param name="stoppingToken">A <see cref="CancellationToken"/> to notify the service when it is time to shut down.</param>
   /// <returns>A <see cref="Task"/> that represents the asynchronous Start operation.</returns>
-  /// <exception cref=""></exception>
   protected abstract Task DoWork(CancellationToken stoppingToken);
 
   private void RefreshCancellationToken(CancellationToken stoppingToken)

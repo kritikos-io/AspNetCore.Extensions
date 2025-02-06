@@ -24,7 +24,7 @@ public class PetEndpoints : IEndpoint
     v1.MapGet("{id:long}", GetPetsV1).AddEndpointFilter<ValidatorFilter>();
     v1
         .AddEndpointFilter<ValidatorFilter>()
-        .MapPost("{id:long}", ([Required] long id, CreateFooDto dto) => TypedResults.Ok(dto));
+        .MapPost("{id:long}", static ([Required] long id, CreateFooDto dto) => TypedResults.Ok(dto));
 
     var v2 = group.MapGroup("pet")
         .WithApiVersionSet(Program.VersionSet)
@@ -37,17 +37,13 @@ public class PetEndpoints : IEndpoint
     v2.MapPost(string.Empty, CreatePetV2);
   }
 
-  public async Task<Ok<PetV1Dto>> GetPetsV1(long id)
-  {
-    return TypedResults.Ok(new PetV1Dto("Sir Paddington", 3));
-  }
+  public Ok<PetV1Dto> GetPetsV1(long id)
+    => TypedResults.Ok(new PetV1Dto("Sir Paddington", 3));
 
-  public async Task<Ok<PetV2Dto>> GetPetsV2(long id)
-  {
-    return TypedResults.Ok(new PetV2Dto("Snuggles", "McFluff", 5));
-  }
+  public Ok<PetV2Dto> GetPetsV2(long id)
+    => TypedResults.Ok(new PetV2Dto("Snuggles", "McFluff", 5));
 
-  public async Task<Ok> CreatePetV2(PetV2Dto dto) => TypedResults.Ok();
+  public Ok CreatePetV2(PetV2Dto dto) => TypedResults.Ok();
 }
 
 public record PetV1Dto(string Name, int Age);

@@ -16,7 +16,7 @@ public class CorrelationMiddlewareTests
     ArgumentNullException.ThrowIfNull(factory);
     this.factory = factory;
 
-    factory.WithWebHostBuilder(builder => { });
+    factory.WithWebHostBuilder(static _ => { });
   }
 
   [Fact]

@@ -20,7 +20,7 @@ internal sealed class SwaggerDefaultOptions
   {
     ArgumentNullException.ThrowIfNull(options);
 
-    options.PreSerializeFilters.Add((openApi, request) => openApi.Servers =
+    options.PreSerializeFilters.Add(static (openApi, request) => openApi.Servers =
       [new OpenApiServer { Url = $"{request.Scheme}://{request.Host.Value}", }]);
   }
 

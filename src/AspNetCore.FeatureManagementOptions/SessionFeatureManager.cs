@@ -30,11 +30,8 @@ public class SessionFeatureManager(IHttpContextAccessor accessor)
     var session = accessor.HttpContext?.Session;
     var sessionKey = $"feature_{featureName}";
 
-    if ((session?.TryGetValue(sessionKey, out var enabledBytes) ?? false) && enabledBytes[0] == 1)
-    {
-      return Task.FromResult<bool?>(true);
-    }
-
-    return Task.FromResult<bool?>(false);
+    return (session?.TryGetValue(sessionKey, out var enabledBytes) ?? false) && enabledBytes[0] == 1
+      ? Task.FromResult<bool?>(true)
+      : Task.FromResult<bool?>(false);
   }
 }

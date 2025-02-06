@@ -16,13 +16,13 @@ public class FeatureGatedEndpoints : IEndpoint
     var group = app.MapGroup("/api/feature")
         .WithOpenApi();
 
-    group.MapGet("single", () => TypedResults.Ok("on"))
+    group.MapGet("single", static () => TypedResults.Ok("on"))
         .WithFeatureFlags("MyFeature");
 
-    group.MapGet("or", () => TypedResults.Ok("on"))
+    group.MapGet("or", static () => TypedResults.Ok("on"))
         .WithFeatureFlags(RequirementType.Any, "FirstOrFlag", "SecondOrFlag");
 
-    group.MapGet("and", () => TypedResults.Ok("on"))
+    group.MapGet("and", static () => TypedResults.Ok("on"))
         .WithFeatureFlags(RequirementType.All, "FirstAndFlag", "SecondAndFlag");
   }
 }

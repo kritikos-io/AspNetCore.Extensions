@@ -40,8 +40,8 @@ public static partial class KritikosStartupBuilderExtensions
 
     var serviceDescriptors = assembly
         .DefinedTypes
-        .Where(type => type is { IsAbstract: false, IsInterface: false } && type.IsAssignableTo(typeof(IEndpoint)))
-        .Select(type => ServiceDescriptor.Singleton(typeof(IEndpoint), type))
+        .Where(static type => type is { IsAbstract: false, IsInterface: false } && type.IsAssignableTo(typeof(IEndpoint)))
+        .Select(static type => ServiceDescriptor.Singleton(typeof(IEndpoint), type))
         .ToArray();
 
     services.TryAddEnumerable(serviceDescriptors);

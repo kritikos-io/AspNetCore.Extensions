@@ -35,7 +35,7 @@ public class EndpointVersioningTests
   [Fact]
   public async Task Ensure_V1_Endpoint_Returns_Proper_Type()
   {
-    var client = factory.WithWebHostBuilder(builder => { })
+    var client = factory.WithWebHostBuilder(static _ => { })
         .CreateClient();
 
     var response = await client.GetAsync("/api/v1/pet/5");
@@ -52,7 +52,7 @@ public class EndpointVersioningTests
   [Fact]
   public async Task Ensure_V2_Endpoint_Returns_Proper_Type()
   {
-    var client = factory.WithWebHostBuilder(builder => { })
+    var client = factory.WithWebHostBuilder(static _ => { })
         .CreateClient();
 
     var response = await client.GetAsync("/api/v2/pet/5");

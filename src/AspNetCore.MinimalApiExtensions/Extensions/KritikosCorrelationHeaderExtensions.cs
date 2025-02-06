@@ -23,7 +23,7 @@ public static class KritikosCorrelationHeaderExtensions
     ArgumentNullException.ThrowIfNull(services);
 
     services.AddOptionsDefinition<CorrelationHeaderOptions>();
-    services.Configure(configure ?? (_ => { }));
+    services.Configure(configure ?? (static _ => { }));
     services.TryAddSingleton<CorrelationHeaderMiddleware>();
 
     return services;
