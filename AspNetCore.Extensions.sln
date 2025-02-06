@@ -21,7 +21,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Configuration", "Configurat
 		Directory.Packages.props = Directory.Packages.props
 		dotnet.ruleset = dotnet.ruleset
 		GitVersion.yml = GitVersion.yml
-		stylecop.json = stylecop.json
 		xunit.runner.json = xunit.runner.json
 	EndProjectSection
 EndProject
