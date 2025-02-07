@@ -25,8 +25,9 @@ public class ApiVersioningDefaultOptions
   {
     ArgumentNullException.ThrowIfNull(options);
 
-    options.GroupNameFormat = "'v'VV";
     options.SubstituteApiVersionInUrl = true;
     options.AssumeDefaultVersionWhenUnspecified = true;
+    options.GroupNameFormat = "'v'VV";
+    options.RouteConstraintName = "apiVersion";
   }
 }

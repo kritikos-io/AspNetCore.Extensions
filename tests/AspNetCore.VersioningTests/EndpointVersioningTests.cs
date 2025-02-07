@@ -4,12 +4,12 @@ namespace Kritikos.AspNetCore.VersioningTests;
 using System.Net;
 using System.Net.Http.Json;
 
+using Kritikos.AspNetCore.MinimalApiExtensions.Extensions;
 using Kritikos.AspNetCore.VersioningOptions;
 using Kritikos.PetStore.WebApi.Endpoints;
 
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.DependencyInjection;
 
 public class EndpointVersioningTests
     : IClassFixture<WebApplicationFactory<Program>>

@@ -1,13 +1,11 @@
-﻿// ReSharper disable once CheckNamespace : Recommendation by Microsoft for dependency injection extension methods
-
-namespace Microsoft.Extensions.DependencyInjection;
+﻿namespace Kritikos.AspNetCore.MinimalApiExtensions.Extensions;
 
 using Kritikos.AspNetCore.MinimalApiExtensions.StartupBuilder;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 
-public static partial class KritikosStartupBuilderExtensions
+public static class KritikosAspNetCoreWebApplicationBuilderExtensions
 {
   /// <summary>
   /// Creates a <see cref="WebApplication"/> by configuring services and middleware using a <see cref="IWebApplicationStartup"/> class.
@@ -20,7 +18,7 @@ public static partial class KritikosStartupBuilderExtensions
   {
     ArgumentNullException.ThrowIfNull(builder);
 
-    var startup = Activator.CreateInstance<T>();
+    var startup = new T();
     startup.ConfigureServices(builder);
 
     var app = builder.Build();
@@ -40,7 +38,7 @@ public static partial class KritikosStartupBuilderExtensions
   {
     ArgumentNullException.ThrowIfNull(builder);
 
-    var startup = Activator.CreateInstance<T>();
+    var startup = new T();
 
     startup.ConfigureServices(builder);
     var app = builder.Build();

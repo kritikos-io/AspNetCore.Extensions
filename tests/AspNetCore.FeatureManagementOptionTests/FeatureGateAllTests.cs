@@ -5,9 +5,10 @@ namespace Kritikos.AspNetCore.FeatureManagementOptionTests;
 using System.Net;
 using System.Net.Http.Json;
 
+using Kritikos.AspNetCore.MinimalApiExtensions.Extensions;
+
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.FeatureManagement;
 
 public class FeatureGateAllTests

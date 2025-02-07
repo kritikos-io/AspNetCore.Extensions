@@ -1,5 +1,6 @@
 using Asp.Versioning.Builder;
 
+using Kritikos.AspNetCore.MinimalApiExtensions.Extensions;
 using Kritikos.PetStore.WebApi;
 
 var builder = WebApplication.CreateBuilder(args);

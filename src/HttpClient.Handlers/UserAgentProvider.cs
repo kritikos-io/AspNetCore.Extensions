@@ -7,6 +7,16 @@ using Kritikos.HttpClient.Handlers.Contracts;
 public class UserAgentProvider(Random random)
     : IUserAgentProvider
 {
+  public UserAgentProvider()
+      : this(Random.Shared)
+  {
+  }
+
+  public UserAgentProvider(int seed)
+      : this(new Random(seed))
+  {
+  }
+
   private static readonly List<string> Agents =
   [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36",
@@ -28,11 +38,6 @@ public class UserAgentProvider(Random random)
     { "Mobile Safari", 10 },
     { "Other", 5 },
   };
-
-  public UserAgentProvider()
-      : this(Random.Shared)
-  {
-  }
 
   /// <inheritdoc />
   public string GetRandomUserAgent()

@@ -13,7 +13,7 @@ public interface IApplicationStartup
   /// Register services into the <see cref="WebApplicationBuilder.Services"/> container.
   /// </summary>
   /// <param name="builder">The <see cref="WebApplicationBuilder"/> to configure services for.</param>
-  void ConfigureServices(HostApplicationBuilder builder);
+  void ConfigureServices(IHostApplicationBuilder builder);
 
   /// <summary>
   /// Configures middleware on a <see cref="WebApplication"/>.
