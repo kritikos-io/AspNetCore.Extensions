@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\AspNetCore.OpenApiExtensions\AspNetCore.OpenApiExtensions.csproj" />
+      <ProjectReference Include="..\src\AspNetCore.VersioningOptions\AspNetCore.VersioningOptions.csproj" />
+    </ItemGroup>
+
+</Project>
