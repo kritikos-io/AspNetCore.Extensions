@@ -584,7 +584,7 @@
         "type": "Project",
         "dependencies": {
           "Kritikos.AspNetCore.VersioningOptions": "[1.0.0, )",
-          "Microsoft.AspNetCore.OpenApi": "[8.0.8, )",
+          "Microsoft.AspNetCore.OpenApi": "[9.0.1, )",
           "Swashbuckle.AspNetCore": "[7.2.0, )",
           "Swashbuckle.AspNetCore.ReDoc": "[7.2.0, )"
         }
@@ -603,7 +603,7 @@
           "Kritikos.AspNetCore.SwaggerOptions": "[1.0.0, )",
           "Kritikos.AspNetCore.SwaggerVersioningOptions": "[1.0.0, )",
           "Kritikos.AspNetCore.VersioningOptions": "[1.0.0, )",
-          "Microsoft.AspNetCore.OpenApi": "[8.0.8, )",
+          "Microsoft.AspNetCore.OpenApi": "[9.0.1, )",
           "Swashbuckle.AspNetCore": "[7.2.0, )"
         }
       },
@@ -618,11 +618,11 @@
       },
       "Microsoft.AspNetCore.OpenApi": {
         "type": "CentralTransitive",
-        "requested": "[8.0.8, )",
-        "resolved": "8.0.8",
-        "contentHash": "wNHhohqP8rmsQ4UhKbd6jZMD6l+2Q/+DvRBT0Cgqeuglr13aF6sSJWicZKCIhZAUXzuhkdwtHVc95MlPlFk0dA==",
+        "requested": "[9.0.1, )",
+        "resolved": "9.0.1",
+        "contentHash": "xRJe8UrLnOGs6hOBrT/4r74q97626H0mABb/DV0smlReIx6uQCENAe+TUqF6hD3NtT4sB+qrvWhAej6kxPxgew==",
         "dependencies": {
-          "Microsoft.OpenApi": "1.4.3"
+          "Microsoft.OpenApi": "1.6.17"
         }
       },
       "Microsoft.Extensions.Logging.Abstractions": {

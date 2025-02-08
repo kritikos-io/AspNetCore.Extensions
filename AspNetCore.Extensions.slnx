@@ -21,6 +21,7 @@
     <File Path="samples\Directory.Build.props" />
   </Folder>
   <Folder Name="/src/">
+    <Project Path="AspNetCore.OpenApiExtensions\AspNetCore.OpenApiExtensions.csproj" Type="Classic C#" />
     <Project Path="src\AspNetCore.FeatureManagementOptions\AspNetCore.FeatureManagementOptions.csproj" Type="Classic C#" />
     <Project Path="src\AspNetCore.MinimalApiExtensions\AspNetCore.MinimalApiExtensions.csproj" Type="Classic C#" />
     <Project Path="src\AspNetCore.SwaggerFeatureManagementOptions\AspNetCore.SwaggerFeatureManagementOptions.csproj" Type="Classic C#" />
