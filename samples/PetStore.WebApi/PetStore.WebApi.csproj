@@ -5,15 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\AspNetCore.OpenApiFeatureManagementOptions\AspNetCore.OpenApiFeatureManagementOptions.csproj" />
-    <ProjectReference Include="..\..\AspNetCore.OpenApiOidcExtensions\AspNetCore.OpenApiOidcExtensions.csproj" />
-    <ProjectReference Include="..\..\AspNetCore.OpenApiVersioningOptions\AspNetCore.OpenApiVersioningOptions.csproj" />
-    <ProjectReference Include="..\..\src\AspNetCore.FeatureManagementOptions\AspNetCore.FeatureManagementOptions.csproj" />
-    <ProjectReference Include="..\..\src\AspNetCore.MinimalApiExtensions\AspNetCore.MinimalApiExtensions.csproj" />    
+    <PackageReference Include="Scalar.AspNetCore" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Scalar.AspNetCore" />
+    <ProjectReference Include="..\..\src\AspNetCore.FeatureManagementOptions\AspNetCore.FeatureManagementOptions.csproj" />
+    <ProjectReference Include="..\..\src\AspNetCore.MinimalApiExtensions\AspNetCore.MinimalApiExtensions.csproj" />
+    <ProjectReference Include="..\..\src\AspNetCore.OpenApiExtensions\AspNetCore.OpenApiExtensions.csproj" />
+    <ProjectReference Include="..\..\src\AspNetCore.OpenApiFeatureManagementOptions\AspNetCore.OpenApiFeatureManagementOptions.csproj" />
+    <ProjectReference Include="..\..\src\AspNetCore.OpenApiOidcExtensions\AspNetCore.OpenApiOidcExtensions.csproj" />
+    <ProjectReference Include="..\..\src\AspNetCore.OpenApiVersioningOptions\AspNetCore.OpenApiVersioningOptions.csproj" />
   </ItemGroup>
 
 </Project>

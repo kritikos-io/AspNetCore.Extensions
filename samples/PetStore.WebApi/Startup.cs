@@ -1,7 +1,5 @@
 ﻿namespace Kritikos.PetStore.WebApi;
 
-using System.Security.Cryptography.X509Certificates;
-
 using Asp.Versioning;
 
 using Kritikos.AspNetCore.MinimalApiExtensions.Extensions;
@@ -13,8 +11,6 @@ using Kritikos.AspNetCore.OpenApiOidcExtensions.DocumentTransformers;
 using Kritikos.AspNetCore.OpenApiVersioningOptions.DocumentTransformers;
 using Kritikos.AspNetCore.VersioningOptions;
 
-using Microsoft.AspNetCore.OpenApi;
-using Microsoft.Extensions.Options;
 using Microsoft.FeatureManagement;
 
 using Scalar.AspNetCore;
