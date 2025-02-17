@@ -8,7 +8,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\AspNetCore.OpenApiExtensions\AspNetCore.OpenApiExtensions.csproj" />
-      <ProjectReference Include="..\src\AspNetCore.VersioningOptions\AspNetCore.VersioningOptions.csproj" />
+      <ProjectReference Include="..\AspNetCore.VersioningOptions\AspNetCore.VersioningOptions.csproj" />
     </ItemGroup>
 
 </Project>

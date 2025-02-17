@@ -7,8 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\AspNetCore.OpenApiExtensions\AspNetCore.OpenApiExtensions.csproj" />
       <ProjectReference Include="..\AspNetCore.FeatureManagementOptions\AspNetCore.FeatureManagementOptions.csproj" />
+      <ProjectReference Include="..\AspNetCore.OpenApiExtensions\AspNetCore.OpenApiExtensions.csproj" />
     </ItemGroup>
 
 </Project>

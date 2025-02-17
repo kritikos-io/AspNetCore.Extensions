@@ -606,6 +606,7 @@
         "dependencies": {
           "Kritikos.AspNetCore.FeatureManagementOptions": "[1.0.0, )",
           "Kritikos.AspNetCore.MinimalApiExtensions": "[1.0.0, )",
+          "Kritikos.AspNetCore.OpenApiExtensions": "[1.0.0, )",
           "Kritikos.AspNetCore.OpenApiFeatureManagementOptions": "[1.0.0, )",
           "Kritikos.AspNetCore.OpenApiOidcExtensions": "[1.0.0, )",
           "Kritikos.AspNetCore.OpenApiVersioningOptions": "[1.0.0, )",
