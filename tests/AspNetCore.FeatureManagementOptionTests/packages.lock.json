@@ -500,11 +500,6 @@
         "resolved": "13.0.1",
         "contentHash": "ppPFpBcvxdsfUonNcvITKqLl3bqxWbDCZIzDWHzjpdAHRFfZe0Dw9HmA0+za13IdyrgJwpkDTDA9fHaxOrt20A=="
       },
-      "Scalar.AspNetCore": {
-        "type": "Transitive",
-        "resolved": "2.0.14",
-        "contentHash": "e4pXyxXpoHNPTPHTWjYLgIzilpbSYFNOqb8URMaP0vxMMKKB0Qn2FuBq1JQLW0hEPdZliW0WOYLOxczwOVHMhQ=="
-      },
       "System.Diagnostics.DiagnosticSource": {
         "type": "Transitive",
         "resolved": "8.0.1",
@@ -652,6 +647,12 @@
         "dependencies": {
           "Microsoft.FeatureManagement": "4.0.0"
         }
+      },
+      "Scalar.AspNetCore": {
+        "type": "CentralTransitive",
+        "requested": "[2.0.14, )",
+        "resolved": "2.0.14",
+        "contentHash": "e4pXyxXpoHNPTPHTWjYLgIzilpbSYFNOqb8URMaP0vxMMKKB0Qn2FuBq1JQLW0hEPdZliW0WOYLOxczwOVHMhQ=="
       }
     }
   }
