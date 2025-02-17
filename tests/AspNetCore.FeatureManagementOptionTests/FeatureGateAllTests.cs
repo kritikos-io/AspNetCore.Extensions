@@ -42,7 +42,7 @@ public class FeatureGateAllTests
       })
       .CreateClient();
 
-    var response = await client.GetAsync("/api/feature/and");
+    var response = await client.GetAsync("/api/v2/feature/and");
     Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
   }
 
@@ -56,7 +56,7 @@ public class FeatureGateAllTests
       })
       .CreateClient();
 
-    var response = await client.GetAsync("/api/feature/and");
+    var response = await client.GetAsync("/api/v2/feature/and");
 
     Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
   }
@@ -71,7 +71,7 @@ public class FeatureGateAllTests
       })
       .CreateClient();
 
-    var response = await client.GetAsync("/api/feature/and");
+    var response = await client.GetAsync("/api/v2/feature/and");
 
     Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
   }
@@ -86,7 +86,7 @@ public class FeatureGateAllTests
       })
       .CreateClient();
 
-    var response = await client.GetAsync("/api/feature/and");
+    var response = await client.GetAsync("/api/v2/feature/and");
     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
     var fromJsonAsync = await response.Content.ReadFromJsonAsync<string>();

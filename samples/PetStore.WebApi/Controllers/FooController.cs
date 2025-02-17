@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 [ApiController]
 [Route("api/v{apiVersion:apiVersion}/[controller]")]
 [ApiVersion(3)]
-public class FooController
+public class FooControllers
 {
   [HttpGet("")]
   public Ok GetFoo()

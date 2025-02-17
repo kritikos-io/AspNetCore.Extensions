@@ -31,11 +31,10 @@ public class FeatureGateEndpointFilter
     }
 
     List<string> featureStrings = [];
-    featureStrings.AddRange(features
+    featureStrings.AddRange([.. features
       .Select(static feature => Enum.GetName(feature.GetType(), feature))
       .OfType<string>()
-      .Where(static x => !string.IsNullOrWhiteSpace(x))
-      .ToList());
+      .Where(static x => !string.IsNullOrWhiteSpace(x))]);
 
     Features = featureStrings;
     RequirementType = requirementType;

@@ -13,8 +13,11 @@ public class FeatureGatedEndpoints : IEndpoint
   /// <inheritdoc />
   public void MapEndpoint(IEndpointRouteBuilder app)
   {
-    var group = app.MapGroup("/api/feature")
-        .WithOpenApi();
+    var group = app.MapGroup("/api/v{version:apiVersion}/feature")
+        .WithOpenApi()
+        .WithApiVersionSet(Program.VersionSet)
+        .MapToApiVersion(2)
+        .WithTags("Features");
 
     group.MapGet("single", static () => TypedResults.Ok("on"))
         .WithFeatureFlags("MyFeature");

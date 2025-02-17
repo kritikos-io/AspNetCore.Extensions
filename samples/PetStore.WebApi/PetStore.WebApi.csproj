@@ -5,16 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
-    <PackageReference Include="Swashbuckle.AspNetCore"/>
+    <ProjectReference Include="..\..\AspNetCore.OpenApiFeatureManagementOptions\AspNetCore.OpenApiFeatureManagementOptions.csproj" />
+    <ProjectReference Include="..\..\AspNetCore.OpenApiOidcExtensions\AspNetCore.OpenApiOidcExtensions.csproj" />
+    <ProjectReference Include="..\..\AspNetCore.OpenApiVersioningOptions\AspNetCore.OpenApiVersioningOptions.csproj" />
+    <ProjectReference Include="..\..\src\AspNetCore.FeatureManagementOptions\AspNetCore.FeatureManagementOptions.csproj" />
+    <ProjectReference Include="..\..\src\AspNetCore.MinimalApiExtensions\AspNetCore.MinimalApiExtensions.csproj" />    
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\AspNetCore.MinimalApiExtensions\AspNetCore.MinimalApiExtensions.csproj" />
-    <ProjectReference Include="..\..\src\AspNetCore.SwaggerFeatureManagementOptions\AspNetCore.SwaggerFeatureManagementOptions.csproj" />
-    <ProjectReference Include="..\..\src\AspNetCore.SwaggerOptions\AspNetCore.SwaggerOptions.csproj" />
-    <ProjectReference Include="..\..\src\AspNetCore.SwaggerVersioningOptions\AspNetCore.SwaggerVersioningOptions.csproj" />
-    <ProjectReference Include="..\..\src\AspNetCore.VersioningOptions\AspNetCore.VersioningOptions.csproj" />
+    <PackageReference Include="Scalar.AspNetCore" />
   </ItemGroup>
 
 </Project>

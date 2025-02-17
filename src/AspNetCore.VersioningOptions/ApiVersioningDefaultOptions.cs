@@ -18,6 +18,7 @@ public class ApiVersioningDefaultOptions
     options.ReportApiVersions = true;
     options.AssumeDefaultVersionWhenUnspecified = true;
     options.ApiVersionReader = new UrlSegmentApiVersionReader();
+    options.RouteConstraintName = "apiVersion";
   }
 
   /// <inheritdoc />
@@ -27,7 +28,7 @@ public class ApiVersioningDefaultOptions
 
     options.SubstituteApiVersionInUrl = true;
     options.AssumeDefaultVersionWhenUnspecified = true;
-    options.GroupNameFormat = "'v'VV";
+    options.GroupNameFormat = "'v'V";
     options.RouteConstraintName = "apiVersion";
   }
 }

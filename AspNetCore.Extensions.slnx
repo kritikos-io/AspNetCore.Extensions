@@ -22,12 +22,11 @@
   </Folder>
   <Folder Name="/src/">
     <Project Path="AspNetCore.OpenApiExtensions\AspNetCore.OpenApiExtensions.csproj" Type="Classic C#" />
+    <Project Path="AspNetCore.OpenApiFeatureManagementOptions\AspNetCore.OpenApiFeatureManagementOptions.csproj" Type="Classic C#" />
+    <Project Path="AspNetCore.OpenApiOidcExtensions\AspNetCore.OpenApiOidcExtensions.csproj" Type="Classic C#" />
     <Project Path="AspNetCore.OpenApiVersioningOptions\AspNetCore.OpenApiVersioningOptions.csproj" Type="Classic C#" />
     <Project Path="src\AspNetCore.FeatureManagementOptions\AspNetCore.FeatureManagementOptions.csproj" Type="Classic C#" />
     <Project Path="src\AspNetCore.MinimalApiExtensions\AspNetCore.MinimalApiExtensions.csproj" Type="Classic C#" />
-    <Project Path="src\AspNetCore.SwaggerFeatureManagementOptions\AspNetCore.SwaggerFeatureManagementOptions.csproj" Type="Classic C#" />
-    <Project Path="src\AspNetCore.SwaggerOptions\AspNetCore.SwaggerOptions.csproj" Type="Classic C#" />
-    <Project Path="src\AspNetCore.SwaggerVersioningOptions\AspNetCore.SwaggerVersioningOptions.csproj" Type="Classic C#" />
     <Project Path="src\AspNetCore.VersioningOptions\AspNetCore.VersioningOptions.csproj" Type="Classic C#" />
     <Project Path="src\HttpClient.Handlers\HttpClient.Handlers.csproj" Type="Classic C#" />
     <File Path="src\Directory.build.props" />

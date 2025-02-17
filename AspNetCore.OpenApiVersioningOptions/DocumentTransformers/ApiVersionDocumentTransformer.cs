@@ -4,13 +4,21 @@ using System.Text;
 
 using Asp.Versioning.ApiExplorer;
 
+using Kritikos.AspNetCore.OpenApiVersioningOptions.Options;
+
 using Microsoft.AspNetCore.OpenApi;
+using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 using Microsoft.OpenApi.Models;
 
-public class ApiVersionDocumentTransformer(IApiVersionDescriptionProvider versionProvider) : IOpenApiDocumentTransformer
+public class ApiVersionDocumentTransformer<TApiInfoOptions>(
+    IOptions<TApiInfoOptions> options,
+    IApiVersionDescriptionProvider versionProvider)
+    : IOpenApiDocumentTransformer
+    where TApiInfoOptions : OpenApiInfoOptions
 {
   private readonly IApiVersionDescriptionProvider versionProvider = versionProvider;
+  private readonly TApiInfoOptions options = options.Value;
 
   /// <inheritdoc />
   public Task TransformAsync(OpenApiDocument document, OpenApiDocumentTransformerContext context, CancellationToken cancellationToken)
@@ -23,12 +31,12 @@ public class ApiVersionDocumentTransformer(IApiVersionDescriptionProvider versio
     }
 
     document.Info.Version = apiDescription.ApiVersion.ToString();
-    document.Info.Title = "Job Vacancy API";
-    document.Info.Description = BuildDescription(apiDescription, "Find your next job!");
+    document.Info.Title = options.Title;
+    document.Info.Description = BuildDescription(apiDescription, options.Description);
 
-    document.Info.License = new OpenApiLicense { Name = "Apache License, Version 2.0", Url = new Uri("https://opensource.org/license/apache-2-0"), };
+    document.Info.License = new OpenApiLicense { Name = options.LicenseName, Url = options.LicenseUrl, };
 
-    document.Info.Contact = new OpenApiContact { Name = "Training Team", Email = "noreply@example.com", };
+    document.Info.Contact = new OpenApiContact { Name = options.ContactName, Email = options.ContactEmail, };
     return Task.CompletedTask;
   }
 

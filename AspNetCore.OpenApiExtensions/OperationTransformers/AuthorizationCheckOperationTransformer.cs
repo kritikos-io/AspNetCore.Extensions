@@ -12,8 +12,8 @@ public class AuthorizationCheckOperationTransformer : IOpenApiOperationTransform
   public Task TransformAsync(OpenApiOperation operation, OpenApiOperationTransformerContext context, CancellationToken cancellationToken)
   {
     var metadata = context.Description.ActionDescriptor.EndpointMetadata;
-    operation.OperationId ??= metadata.OfType<MethodInfo>().First().Name;
-    if (!metadata.OfType<IAuthorizeData>().Any())
+    operation.OperationId ??= metadata.OfType<MethodInfo>().FirstOrDefault()?.Name;
+    if (!metadata.OfType<IAuthorizeData>().Any() || string.IsNullOrWhiteSpace(operation.OperationId))
     {
       return Task.CompletedTask;
     }

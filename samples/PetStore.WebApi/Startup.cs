@@ -1,16 +1,23 @@
 ﻿namespace Kritikos.PetStore.WebApi;
 
+using System.Security.Cryptography.X509Certificates;
+
 using Asp.Versioning;
 
 using Kritikos.AspNetCore.MinimalApiExtensions.Extensions;
 using Kritikos.AspNetCore.MinimalApiExtensions.StartupBuilder;
-using Kritikos.AspNetCore.SwaggerFeatureManagementOptions;
-using Kritikos.AspNetCore.SwaggerOptions;
-using Kritikos.AspNetCore.SwaggerVersioningOptions;
+using Kritikos.AspNetCore.OpenApiExtensions.OperationTransformers;
+using Kritikos.AspNetCore.OpenApiExtensions.SchemaTransformers;
+using Kritikos.AspNetCore.OpenApiFeatureManagementOptions;
+using Kritikos.AspNetCore.OpenApiOidcExtensions.DocumentTransformers;
+using Kritikos.AspNetCore.OpenApiVersioningOptions.DocumentTransformers;
 using Kritikos.AspNetCore.VersioningOptions;
 
+using Microsoft.AspNetCore.OpenApi;
+using Microsoft.Extensions.Options;
 using Microsoft.FeatureManagement;
-using Microsoft.OpenApi.Models;
+
+using Scalar.AspNetCore;
 
 public class Startup : IWebApplicationStartup
 {
@@ -25,17 +32,43 @@ public class Startup : IWebApplicationStartup
 
     builder.Services.AddCorrelationHeader();
 
-    builder.Services.AddSwaggerDefaults();
-    builder.Services.AddSwaggerGen();
-
     builder.Services.AddProblemDetails();
 
     builder.Services.AddFeatureManagement();
-    builder.Services.AddSwaggerFeatureManagementDefaults();
+    builder.Services.AddHttpClient();
 
-    builder.Services.AddRedocDefaults();
+    builder.Services.AddOptionsDefinition<MyOpenApiInfoOptions>();
+    builder.Services.AddOptionsDefinition<MyOpenApiOpenIdOptions>();
+
+    builder.Services.AddOpenApi("v1",
+        options =>
+        {
+          options.AddDocumentTransformer<ApiVersionDocumentTransformer<MyOpenApiInfoOptions>>();
+          options.AddOperationTransformer<AuthorizationCheckOperationTransformer>();
+          options.AddSchemaTransformer<NullableSchemaTransformer>();
+          options.AddDocumentTransformer<FeatureFilterDocumentTransformer>();
+          options.AddDocumentTransformer<OidcSecuritySchemeTransformer<MyOpenApiOpenIdOptions>>();
+        });
+    builder.Services.AddOpenApi("v2",
+        options =>
+        {
+          options.AddDocumentTransformer<ApiVersionDocumentTransformer<MyOpenApiInfoOptions>>();
+          options.AddOperationTransformer<AuthorizationCheckOperationTransformer>();
+          options.AddSchemaTransformer<NullableSchemaTransformer>();
+          options.AddDocumentTransformer<FeatureFilterDocumentTransformer>();
+          options.AddDocumentTransformer<OidcSecuritySchemeTransformer<MyOpenApiOpenIdOptions>>();
+        });
+    builder.Services.AddOpenApi("v3",
+        options =>
+        {
+          options.AddDocumentTransformer<ApiVersionDocumentTransformer<MyOpenApiInfoOptions>>();
+          options.AddOperationTransformer<AuthorizationCheckOperationTransformer>();
+          options.AddSchemaTransformer<NullableSchemaTransformer>();
+          options.AddDocumentTransformer<FeatureFilterDocumentTransformer>();
+          options.AddDocumentTransformer<OidcSecuritySchemeTransformer<MyOpenApiOpenIdOptions>>();
+        });
+
     builder.Services.AddApiVersioningDefaults();
-    builder.Services.AddSwaggerVersioning(new OpenApiInfo() { Title = "PetStore API", });
   }
 
   /// <inheritdoc />
@@ -43,22 +76,20 @@ public class Startup : IWebApplicationStartup
   {
     ArgumentNullException.ThrowIfNull(app);
     Program.VersionSet = app.NewApiVersionSet()
-            .HasApiVersion(new ApiVersion(1))
-            .HasApiVersion(new ApiVersion(2))
-            .HasApiVersion(new ApiVersion(3))
-            .HasDeprecatedApiVersion(new ApiVersion(0))
-            .ReportApiVersions()
-            .Build();
+        .HasApiVersion(new ApiVersion(1))
+        .HasApiVersion(new ApiVersion(2))
+        .HasApiVersion(new ApiVersion(3))
+        .HasDeprecatedApiVersion(new ApiVersion(0))
+        .ReportApiVersions()
+        .Build();
 
-    app.UseSwagger();
     app.UseHttpsRedirection();
 
     app.UseRouting();
 
+    app.MapOpenApi();
+    app.MapScalarApiReference();
     app.UseCorrelationHeader();
     app.MapEndpoints();
-
-    app.UseVersionedSwaggerUI();
-    app.UseVersionedReDoc();
   }
 }

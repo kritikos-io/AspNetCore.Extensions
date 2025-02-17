@@ -39,7 +39,7 @@ public class FeatureGateTests
             .UseSetting("FeatureManagement:MyFeature", "true"))
         .CreateClient();
 
-    var response = await client.GetAsync("/api/feature/single");
+    var response = await client.GetAsync("/api/v2/feature/single");
     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
     var fromJsonAsync = await response.Content.ReadFromJsonAsync<string>();
@@ -53,7 +53,7 @@ public class FeatureGateTests
             .UseSetting("FeatureManagement:MyFeature", "false"))
         .CreateClient();
 
-    var response = await client.GetAsync("/api/feature/single");
+    var response = await client.GetAsync("/api/v2/feature/single");
     Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
   }
 }
