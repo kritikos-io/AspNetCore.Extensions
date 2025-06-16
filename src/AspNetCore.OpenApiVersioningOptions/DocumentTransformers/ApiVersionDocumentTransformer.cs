@@ -81,7 +81,7 @@ public class ApiVersionDocumentTransformer<TApiInfoOptions>(
       text.AppendLine();
 
       var rendered = false;
-      foreach (var link in policy.Links.Where(l => l.Type == "text/html"))
+      foreach (var link in policy.Links.Where(static l => l.Type == "text/html"))
       {
         if (!rendered)
         {

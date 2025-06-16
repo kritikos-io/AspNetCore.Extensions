@@ -22,7 +22,7 @@ public class FeatureFilterDocumentTransformer(IFeatureManager featureManager)
     ArgumentNullException.ThrowIfNull(document);
     ArgumentNullException.ThrowIfNull(context);
 
-    foreach (var apiDescription in context.DescriptionGroups.SelectMany(x => x.Items))
+    foreach (var apiDescription in context.DescriptionGroups.SelectMany(static x => x.Items))
     {
       var descriptor = apiDescription.ActionDescriptor;
       var shouldRemoveAction = descriptor switch
