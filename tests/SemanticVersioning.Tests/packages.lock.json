@@ -135,14 +135,6 @@
           "xunit.v3.runner.inproc.console": "[2.0.2]"
         }
       },
-      "xunit.v3.extensibility.core": {
-        "type": "Transitive",
-        "resolved": "2.0.2",
-        "contentHash": "4YPSALWtAafrrMr3O+6w/KI0FubKdY2ShigzUWIEgmdXJkU73v9H192dCpvDkIWRPa7OxBrGZ6mjS+A6poexSQ==",
-        "dependencies": {
-          "xunit.v3.common": "[2.0.2]"
-        }
-      },
       "xunit.v3.runner.common": {
         "type": "Transitive",
         "resolved": "2.0.2",
@@ -164,6 +156,15 @@
       },
       "Kritikos.SemanticVersioning": {
         "type": "Project"
+      },
+      "xunit.v3.extensibility.core": {
+        "type": "CentralTransitive",
+        "requested": "[2.0.2, )",
+        "resolved": "2.0.2",
+        "contentHash": "4YPSALWtAafrrMr3O+6w/KI0FubKdY2ShigzUWIEgmdXJkU73v9H192dCpvDkIWRPa7OxBrGZ6mjS+A6poexSQ==",
+        "dependencies": {
+          "xunit.v3.common": "[2.0.2]"
+        }
       }
     }
   }

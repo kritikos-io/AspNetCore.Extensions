@@ -21,16 +21,14 @@ public class EndpointVersioningTests
     ArgumentNullException.ThrowIfNull(factory);
 
     this.factory = factory;
-    factory.WithWebHostBuilder(
-        builder =>
-        {
-          builder.ConfigureTestServices(
-              services =>
-              {
-                services.AddApiVersioningDefaults();
-                services.AddEndpoints(this.GetType().Assembly);
-              });
-        });
+    factory.WithWebHostBuilder(builder =>
+    {
+      builder.ConfigureTestServices(services =>
+      {
+        services.AddApiVersioningDefaults();
+        services.AddEndpoints(this.GetType().Assembly);
+      });
+    });
   }
 
   [Fact]
@@ -39,10 +37,10 @@ public class EndpointVersioningTests
     var client = factory.WithWebHostBuilder(static _ => { })
         .CreateClient();
 
-    var response = await client.GetAsync("/api/v1/pet/5");
+    var response = await client.GetAsync("/api/v1/pet/5", TestContext.Current.CancellationToken);
     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-    var fromJsonAsync = await response.Content.ReadFromJsonAsync<PetV1Dto>();
+    var fromJsonAsync = await response.Content.ReadFromJsonAsync<PetV1Dto>(TestContext.Current.CancellationToken);
     Assert.NotNull(fromJsonAsync);
 
     var expected = new PetV1Dto("Sir Paddington", 3);
@@ -56,10 +54,10 @@ public class EndpointVersioningTests
     var client = factory.WithWebHostBuilder(static _ => { })
         .CreateClient();
 
-    var response = await client.GetAsync("/api/v2/pet/5");
+    var response = await client.GetAsync("/api/v2/pet/5", TestContext.Current.CancellationToken);
     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-    var fromJsonAsync = await response.Content.ReadFromJsonAsync<PetV2Dto>();
+    var fromJsonAsync = await response.Content.ReadFromJsonAsync<PetV2Dto>(TestContext.Current.CancellationToken);
     Assert.NotNull(fromJsonAsync);
 
     var expected = new PetV2Dto("Snuggles", "McFluff", 5);

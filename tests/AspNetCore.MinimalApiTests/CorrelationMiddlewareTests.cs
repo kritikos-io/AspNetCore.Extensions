@@ -24,7 +24,7 @@ public class CorrelationMiddlewareTests
   {
     var client = factory.CreateClient();
 
-    var response = await client.GetAsync("api/v1/pet/3");
+    var response = await client.GetAsync("api/v1/pet/3", TestContext.Current.CancellationToken);
 
     response.EnsureSuccessStatusCode();
     Assert.True(response.Headers.Contains(CorrelationHeaderOptions.DefaultHeader));
@@ -37,7 +37,7 @@ public class CorrelationMiddlewareTests
     var client = factory.CreateClient();
 
     client.DefaultRequestHeaders.Add(CorrelationHeaderOptions.DefaultHeader, correlation);
-    var response = await client.GetAsync("api/v1/pet/3");
+    var response = await client.GetAsync("api/v1/pet/3", TestContext.Current.CancellationToken);
 
     response.EnsureSuccessStatusCode();
     Assert.True(response.Headers.Contains(CorrelationHeaderOptions.DefaultHeader));

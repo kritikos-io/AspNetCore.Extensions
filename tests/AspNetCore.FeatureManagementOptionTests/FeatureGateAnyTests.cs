@@ -42,7 +42,7 @@ public class FeatureGateAnyTests
         })
         .CreateClient();
 
-    var response = await client.GetAsync("/api/v2/feature/or");
+    var response = await client.GetAsync("/api/v2/feature/or", TestContext.Current.CancellationToken);
     Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
   }
 
@@ -56,10 +56,10 @@ public class FeatureGateAnyTests
         })
         .CreateClient();
 
-    var response = await client.GetAsync("/api/v2/feature/or");
+    var response = await client.GetAsync("/api/v2/feature/or", TestContext.Current.CancellationToken);
     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-    var fromJsonAsync = await response.Content.ReadFromJsonAsync<string>();
+    var fromJsonAsync = await response.Content.ReadFromJsonAsync<string>(TestContext.Current.CancellationToken);
     Assert.Equal("on", fromJsonAsync);
   }
 
@@ -73,10 +73,10 @@ public class FeatureGateAnyTests
         })
         .CreateClient();
 
-    var response = await client.GetAsync("/api/v2/feature/or");
+    var response = await client.GetAsync("/api/v2/feature/or", TestContext.Current.CancellationToken);
     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-    var fromJsonAsync = await response.Content.ReadFromJsonAsync<string>();
+    var fromJsonAsync = await response.Content.ReadFromJsonAsync<string>(TestContext.Current.CancellationToken);
     Assert.Equal("on", fromJsonAsync);
   }
 
@@ -90,10 +90,10 @@ public class FeatureGateAnyTests
         })
         .CreateClient();
 
-    var response = await client.GetAsync("/api/v2/feature/or");
+    var response = await client.GetAsync("/api/v2/feature/or", TestContext.Current.CancellationToken);
     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-    var fromJsonAsync = await response.Content.ReadFromJsonAsync<string>();
+    var fromJsonAsync = await response.Content.ReadFromJsonAsync<string>(TestContext.Current.CancellationToken);
     Assert.Equal("on", fromJsonAsync);
   }
 }

@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.FeatureManagement;
 
 public class FeatureGateAllTests
-  : IClassFixture<WebApplicationFactory<Program>>
+    : IClassFixture<WebApplicationFactory<Program>>
 {
   private readonly WebApplicationFactory<Program> factory;
 
@@ -36,13 +36,13 @@ public class FeatureGateAllTests
   public async Task EndpointFeatureFilter_with_and_filter_should_return_not_found_when_both_features_are_disabled()
   {
     var client = factory.WithWebHostBuilder(static builder =>
-      {
-        builder.UseSetting("FeatureManagement:FirstAndFlag", "false");
-        builder.UseSetting("FeatureManagement:SecondAndFlag", "false");
-      })
-      .CreateClient();
+        {
+          builder.UseSetting("FeatureManagement:FirstAndFlag", "false");
+          builder.UseSetting("FeatureManagement:SecondAndFlag", "false");
+        })
+        .CreateClient();
 
-    var response = await client.GetAsync("/api/v2/feature/and");
+    var response = await client.GetAsync("/api/v2/feature/and", TestContext.Current.CancellationToken);
     Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
   }
 
@@ -50,13 +50,13 @@ public class FeatureGateAllTests
   public async Task EndpointFeatureFilter_with_and_filter_should_should_return_not_found_when_only_first_flag_is_enabled()
   {
     var client = factory.WithWebHostBuilder(static builder =>
-      {
-        builder.UseSetting("FeatureManagement:FirstAndFlag", "true");
-        builder.UseSetting("FeatureManagement:SecondAndFlag", "false");
-      })
-      .CreateClient();
+        {
+          builder.UseSetting("FeatureManagement:FirstAndFlag", "true");
+          builder.UseSetting("FeatureManagement:SecondAndFlag", "false");
+        })
+        .CreateClient();
 
-    var response = await client.GetAsync("/api/v2/feature/and");
+    var response = await client.GetAsync("/api/v2/feature/and", TestContext.Current.CancellationToken);
 
     Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
   }
@@ -65,13 +65,13 @@ public class FeatureGateAllTests
   public async Task EndpointFeatureFilter_with_and_filter_should_should_return_not_found_when_only_second_flag_is_enabled()
   {
     var client = factory.WithWebHostBuilder(static builder =>
-      {
-        builder.UseSetting("FeatureManagement:FirstAndFlag", "false");
-        builder.UseSetting("FeatureManagement:SecondAndFlag", "true");
-      })
-      .CreateClient();
+        {
+          builder.UseSetting("FeatureManagement:FirstAndFlag", "false");
+          builder.UseSetting("FeatureManagement:SecondAndFlag", "true");
+        })
+        .CreateClient();
 
-    var response = await client.GetAsync("/api/v2/feature/and");
+    var response = await client.GetAsync("/api/v2/feature/and", TestContext.Current.CancellationToken);
 
     Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
   }
@@ -80,16 +80,16 @@ public class FeatureGateAllTests
   public async Task EndpointFeatureFilter_with_and_filter_should_be_transparent_when_both_flags_are_enabled()
   {
     var client = factory.WithWebHostBuilder(static builder =>
-      {
-        builder.UseSetting("FeatureManagement:FirstAndFlag", "true");
-        builder.UseSetting("FeatureManagement:SecondAndFlag", "true");
-      })
-      .CreateClient();
+        {
+          builder.UseSetting("FeatureManagement:FirstAndFlag", "true");
+          builder.UseSetting("FeatureManagement:SecondAndFlag", "true");
+        })
+        .CreateClient();
 
-    var response = await client.GetAsync("/api/v2/feature/and");
+    var response = await client.GetAsync("/api/v2/feature/and", TestContext.Current.CancellationToken);
     Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-    var fromJsonAsync = await response.Content.ReadFromJsonAsync<string>();
+    var fromJsonAsync = await response.Content.ReadFromJsonAsync<string>(TestContext.Current.CancellationToken);
     Assert.Equal("on", fromJsonAsync);
   }
 }
