@@ -13,6 +13,12 @@ using Microsoft.Extensions.Options;
 
 public static class KritikosAspNetCoreDependencyInjectionsExtensions
 {
+  /// <summary>
+  /// Adds services required for using correlation headers in the application.
+  /// </summary>
+  /// <param name="services">The <see cref="IServiceCollection"/> to register the service to.</param>
+  /// <param name="configure">An <see cref="T:System.Action`1" /> to configure the provided <see cref="T:CorrelationHeaderOptions" />.</param>
+  /// <returns></returns>
   public static IServiceCollection AddCorrelationHeader(this IServiceCollection services, Action<CorrelationHeaderOptions>? configure = null)
   {
     ArgumentNullException.ThrowIfNull(services);
@@ -28,6 +34,7 @@ public static class KritikosAspNetCoreDependencyInjectionsExtensions
   /// Registers a background service that runs periodically.
   /// </summary>
   /// <param name="services">The <see cref="IServiceCollection"/> to register the service to.</param>
+  /// <param name="configure">An <see cref="T:System.Action`1" /> to configure the provided <see cref="T:PeriodicBackgroundServiceOptions" />.</param>
   /// <typeparam name="TService">The type of <see cref="PeriodicBackgroundService{TService,TOptions}"/> to register.</typeparam>
   /// <typeparam name="TOptions">The type of <see cref="PeriodicBackgroundServiceOptions"/> to use in configuring the <see cref="PeriodicBackgroundService{TService,TOptions}"/>.</typeparam>
   /// <returns>A <see cref="IServiceCollection"/> containing <see cref="PeriodicBackgroundService{TService,TOptions}"/>.</returns>
