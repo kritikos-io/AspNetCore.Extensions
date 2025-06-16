@@ -4,9 +4,9 @@
     "net9.0": {
       "GitVersion.MsBuild": {
         "type": "Direct",
-        "requested": "[6.1.0, )",
-        "resolved": "6.1.0",
-        "contentHash": "qZFJ+vJQp/BybHH15RUq15Cg46tHXVKaxwdDFEvrA3MjClEXHpmDwKQzvaPOk9ysS2h6A+fOzcsyXiXqRbF5ZA=="
+        "requested": "[6.3.0, )",
+        "resolved": "6.3.0",
+        "contentHash": "suTxk2mb96kABSJZrSGvzh9423fVbdOM18nSQOrLbp0tKrX+khi1ytfkHzoPI0I2xvmDzTsfKtHDd61Zc5MX0A=="
       },
       "Microsoft.Bcl.TimeProvider": {
         "type": "Transitive",
@@ -88,22 +88,17 @@
       "Microsoft.Extensions.Primitives": {
         "type": "Transitive",
         "resolved": "2.1.1",
-        "contentHash": "scJ1GZNIxMmjpENh0UZ8XCQ6vzr/LzeF9WvEA51Ix2OQGAs9WPgPu8ABVUdvpKPLuor/t05gm6menJK3PwqOXg==",
-        "dependencies": {
-          "System.Memory": "4.5.1",
-          "System.Runtime.CompilerServices.Unsafe": "4.5.1"
-        }
+        "contentHash": "scJ1GZNIxMmjpENh0UZ8XCQ6vzr/LzeF9WvEA51Ix2OQGAs9WPgPu8ABVUdvpKPLuor/t05gm6menJK3PwqOXg=="
       },
       "Microsoft.FeatureManagement": {
         "type": "Transitive",
-        "resolved": "4.0.0",
-        "contentHash": "NUm3m815Qx9Y63W0WArpwv6auyK/mRInlqadHFf3oiC8z6hpy61LVDY3JgWE/PV4PVKKUg2MO9LkI6q92O60Hg==",
+        "resolved": "4.1.0",
+        "contentHash": "b0IpwPFjAqGj1x9pcr0CG0l2eS1WBkJeV3hgmL1WjrKFxTVL6CCf67qoNaCWw1GNidoqAJVZQPPFiWz6xU5dPg==",
         "dependencies": {
           "Microsoft.Bcl.TimeProvider": "8.0.1",
           "Microsoft.Extensions.Caching.Memory": "2.1.23",
           "Microsoft.Extensions.Configuration.Binder": "2.1.10",
-          "Microsoft.Extensions.Logging": "2.1.1",
-          "System.Diagnostics.DiagnosticSource": "8.0.1"
+          "Microsoft.Extensions.Logging": "2.1.1"
         }
       },
       "Microsoft.OpenApi": {
@@ -111,49 +106,34 @@
         "resolved": "1.6.17",
         "contentHash": "Le+kehlmrlQfuDFUt1zZ2dVwrhFQtKREdKBo+rexOwaCoYP0/qpgT9tLxCsZjsgR5Itk1UKPcbgO+FyaNid/bA=="
       },
-      "System.Diagnostics.DiagnosticSource": {
-        "type": "Transitive",
-        "resolved": "8.0.1",
-        "contentHash": "vaoWjvkG1aenR2XdjaVivlCV9fADfgyhW5bZtXT23qaEea0lWiUljdQuze4E31vKM7ZWJaSUsbYIKE3rnzfZUg=="
-      },
-      "System.Memory": {
-        "type": "Transitive",
-        "resolved": "4.5.1",
-        "contentHash": "sDJYJpGtTgx+23Ayu5euxG5mAXWdkDb4+b0rD0Cab0M1oQS9H0HXGPriKcqpXuiJDTV7fTp/d+fMDJmnr6sNvA=="
-      },
-      "System.Runtime.CompilerServices.Unsafe": {
-        "type": "Transitive",
-        "resolved": "4.5.1",
-        "contentHash": "Zh8t8oqolRaFa9vmOZfdQm/qKejdqz0J9kr7o2Fu0vPeoH3BL1EOXipKWwkWtLT1JPzjByrF19fGuFlNbmPpiw=="
-      },
       "Kritikos.AspNetCore.FeatureManagementOptions": {
         "type": "Project",
         "dependencies": {
-          "Microsoft.FeatureManagement.AspNetCore": "[4.0.0, )"
+          "Microsoft.FeatureManagement.AspNetCore": "[4.1.0, )"
         }
       },
       "Kritikos.AspNetCore.OpenApiExtensions": {
         "type": "Project",
         "dependencies": {
-          "Microsoft.AspNetCore.OpenApi": "[9.0.2, )"
+          "Microsoft.AspNetCore.OpenApi": "[9.0.6, )"
         }
       },
       "Microsoft.AspNetCore.OpenApi": {
         "type": "CentralTransitive",
-        "requested": "[9.0.2, )",
-        "resolved": "9.0.2",
-        "contentHash": "JUndpjRNdG8GvzBLH/J4hen4ehWaPcshtiQ6+sUs1Bcj3a7dOsmWpDloDlpPeMOVSlhHwUJ3Xld0ClZjsFLgFQ==",
+        "requested": "[9.0.6, )",
+        "resolved": "9.0.6",
+        "contentHash": "MOJ4DG1xd3NlWMYh+JdGNT9uvBtEk1XQU/FQlpNZFlAzM8t0oB5IimvnGlnK7jmyY4vQagLPB1xw1HjJ8CHrZg==",
         "dependencies": {
           "Microsoft.OpenApi": "1.6.17"
         }
       },
       "Microsoft.FeatureManagement.AspNetCore": {
         "type": "CentralTransitive",
-        "requested": "[4.0.0, )",
-        "resolved": "4.0.0",
-        "contentHash": "BI4zVyKPrLrCGeIbBAgc9wC/ctm+MY2biJY1ZTxaUjMWwyZlwWrPAKsiuSUCu7aJtW/4z6kbpLNOhXTM2GwhvA==",
+        "requested": "[4.1.0, )",
+        "resolved": "4.1.0",
+        "contentHash": "k2XdVC9LA9UJqLgVOrm3sYmBKEVuDUJHl9FqLEbUUQ8x6xDeWqucXMa/MurYF4oAeVy4B1LTRWFbb93MVR5rMQ==",
         "dependencies": {
-          "Microsoft.FeatureManagement": "4.0.0"
+          "Microsoft.FeatureManagement": "4.1.0"
         }
       }
     }
