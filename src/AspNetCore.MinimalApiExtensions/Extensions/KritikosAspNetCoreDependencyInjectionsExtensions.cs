@@ -31,13 +31,14 @@ public static class KritikosAspNetCoreDependencyInjectionsExtensions
   /// <typeparam name="TService">The type of <see cref="PeriodicBackgroundService{TService,TOptions}"/> to register.</typeparam>
   /// <typeparam name="TOptions">The type of <see cref="PeriodicBackgroundServiceOptions"/> to use in configuring the <see cref="PeriodicBackgroundService{TService,TOptions}"/>.</typeparam>
   /// <returns>A <see cref="IServiceCollection"/> containing <see cref="PeriodicBackgroundService{TService,TOptions}"/>.</returns>
-  public static IServiceCollection AddPeriodicBackgroundService<TService, TOptions>(this IServiceCollection services)
+  public static IServiceCollection AddPeriodicBackgroundService<TService, TOptions>(this IServiceCollection services, Action<TOptions>? configure = null)
       where TService : PeriodicBackgroundService<TService, TOptions>
       where TOptions : PeriodicBackgroundServiceOptions, IOptionsDefinition, new()
   {
     ArgumentNullException.ThrowIfNull(services);
 
     services.AddOptionsDefinition<TOptions>();
+    services.Configure(configure ?? (static _ => { }));
     return services.AddHostedService<TService>();
   }
 
