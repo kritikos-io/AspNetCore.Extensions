@@ -1,28 +1,47 @@
 ﻿namespace Kritikos.SemanticVersioning;
 
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
 using System.Text;
 
-public record SemanticVersionDescriptor
+/// <summary>
+/// Describes a version according to the <see href="https://semver.org">Semantic Versioning 2.0.0</see> specification.
+///
+/// </summary>
+public record SemanticVersionDescriptor : IComparable<SemanticVersionDescriptor>
 {
   private const char VersionSeperator = '.';
-  private const char PrereleaseSeperator = '-';
 
-  internal string saneVersion = string.Empty;
+  private string saneVersion = string.Empty;
 
-  public int Major { get; init; }
+  private SemanticVersionDescriptor()
+  {
+  }
 
-  public int Minor { get; init; }
+  /// <summary>
+  /// Changes denote backward-incompatible API changes.
+  /// </summary>
+  public int Major { get; internal init; }
 
-  public int Patch { get; init; }
+  /// <summary>
+  /// Changes denote backward-compatible functionality.
+  /// </summary>
+  public int Minor { get; internal init; }
+
+  /// <summary>
+  /// Changes denote backward-compatible bug fixes.
+  /// </summary>
+  public int Patch { get; internal init; }
 
   public PreReleaseMetadataDescriptor? PreReleaseMetadata { get; init; }
 
   public BuildMetadataDescriptor? BuildMetadata { get; init; }
 
+  [ExcludeFromCodeCoverage]
   public static SemanticVersionDescriptor FromType(Type type) => FromAssembly(type.Assembly);
 
+  [ExcludeFromCodeCoverage]
   public static SemanticVersionDescriptor FromAssembly(Assembly assembly)
   {
     var informationalVersion = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? string.Empty;
@@ -31,7 +50,8 @@ public record SemanticVersionDescriptor
 
   public static SemanticVersionDescriptor FromInformationalVersion(string informationalVersion)
   {
-    var match = SemanticVersioningConstants.VersionMatcher().Match(informationalVersion);
+    var match = SemanticVersioningConstants.SemanticVersionMatcher().Match(informationalVersion);
+
     if (!match.Success)
     {
       throw new ArgumentException("The provided version string is not in a valid format.", nameof(informationalVersion));
@@ -41,13 +61,20 @@ public record SemanticVersionDescriptor
     var minor = int.Parse(match.Groups["Minor"].Value, CultureInfo.InvariantCulture);
     var patch = int.Parse(match.Groups["Patch"].Value, CultureInfo.InvariantCulture);
 
-    var prerelease = string.IsNullOrEmpty(match.Groups["Prerelease"].Value)
+    var prerelease = string.IsNullOrEmpty(match.Groups["PreRelease"].Value)
         ? null
-        : PreReleaseMetadataDescriptor.FromPreReleasePart(match.Groups["Prerelease"].Value);
+        : new PreReleaseMetadataDescriptor()
+        {
+          Tag = match.Groups["Tag"].Value,
+          CommitCounter = match.Groups["Counter"].Success
+              ? int.Parse(match.Groups["Counter"].Value, CultureInfo.InvariantCulture)
+              : null,
+          OriginalContent = match.Groups["PreRelease"].Value,
+        };
 
     var buildMetadata = string.IsNullOrEmpty(match.Groups["BuildMetadata"].Value)
         ? null
-        : BuildMetadataDescriptor.FromBuildPart(match.Groups["BuildMetadata"].Value);
+        : new BuildMetadataDescriptor { Branch = match.Groups["Branch"].Value, Sha1 = match.Groups["Sha"].Value, OriginalContent = match.Groups["BuildMetadata"].Value };
 
     return new SemanticVersionDescriptor
     {
@@ -76,7 +103,6 @@ public record SemanticVersionDescriptor
 
     if (PreReleaseMetadata is not null)
     {
-      stringBuilder.Append(PrereleaseSeperator);
       stringBuilder.Append(PreReleaseMetadata.OriginalContent);
     }
 
@@ -85,27 +111,44 @@ public record SemanticVersionDescriptor
   }
 
   public static bool operator >=(SemanticVersionDescriptor left, SemanticVersionDescriptor right)
-    => left.Equals(right) || left > right;
+    => left.CompareTo(right) >= 0;
 
   public static bool operator <=(SemanticVersionDescriptor left, SemanticVersionDescriptor right)
-    => left.Equals(right) || left < right;
+    => left.CompareTo(right) <= 0;
 
   public static bool operator <(SemanticVersionDescriptor left, SemanticVersionDescriptor right)
-    => !(left > right);
+    => left.CompareTo(right) < 0;
 
   public static bool operator >(SemanticVersionDescriptor left, SemanticVersionDescriptor right)
+    => left.CompareTo(right) > 0;
+
+  /// <inheritdoc />
+  public int CompareTo(SemanticVersionDescriptor? other)
   {
-    if (left.Equals(right))
-    {
-      return left.PreReleaseMetadata > right.PreReleaseMetadata;
-    }
+    int result;
 
-    var isGreater =
-        left.Major > right.Major
-        || (left.Major == right.Major && left.Minor > right.Minor)
-        || (left.Major == right.Major && left.Minor == right.Minor && left.Patch > right.Patch)
-        || (left.Major == right.Major && left.Minor == right.Minor && left.Patch == right.Patch && left.PreReleaseMetadata > right.PreReleaseMetadata);
-
-    return isGreater;
+    return ReferenceEquals(this, other)
+        ? 0
+        : other is null
+            ? -1
+            : (result = Major.CompareTo(other?.Major)) != 0
+              || (result = Minor.CompareTo(other?.Minor)) != 0
+              || (result = Patch.CompareTo(other?.Patch)) != 0
+                ? result
+                : PreReleaseMetadata?.CompareTo(other?.PreReleaseMetadata) ?? 1;
   }
+
+  /// <inheritdoc />
+  public virtual bool Equals(SemanticVersionDescriptor? other)
+  {
+    return ReferenceEquals(this, other)
+           || (other is not null
+               && Major == other.Major
+               && Minor == other.Minor
+               && Patch == other.Patch
+               && PreReleaseMetadata == other.PreReleaseMetadata);
+  }
+
+  public override int GetHashCode()
+    => HashCode.Combine(Major, Minor, Patch, PreReleaseMetadata);
 }

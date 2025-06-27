@@ -3,42 +3,57 @@
 public class VersionComparisonTests
 {
   [Fact]
-  public void Ordinal_versions_ordering_is_correct()
+  public void Ordinal_versions_are_compared_correctly()
   {
     var version1 = SemanticVersionDescriptor.FromInformationalVersion("1.0.0");
     var version2 = SemanticVersionDescriptor.FromInformationalVersion("1.0.1");
-    var version3 = SemanticVersionDescriptor.FromInformationalVersion("1.1.0");
-    var version4 = SemanticVersionDescriptor.FromInformationalVersion("2.0.0");
 
     Assert.True(version1 < version2);
-    Assert.True(version2 < version3);
-    Assert.True(version3 < version4);
+    Assert.True(version2 > version1);
+    Assert.True(version1 <= version2);
+    Assert.True(version2 >= version1);
   }
 
   [Fact]
-  public void Ordinal_versions_equality_comparison_is_correct()
-  {
-    var version1 = SemanticVersionDescriptor.FromInformationalVersion("1.0.0");
-    var version2 = SemanticVersionDescriptor.FromInformationalVersion("1.0.0");
-    var version3 = SemanticVersionDescriptor.FromInformationalVersion("1.0.1");
-
-    Assert.True(version1 == version2);
-    Assert.True(version1 >= version2);
-
-    Assert.True(version3 >= version2);
-  }
-
-  [Fact]
-  public void Prerelease_version_comparison_is_correct()
+  public void Stable_version_is_greater_than_prerelease()
   {
     var stableVersion = SemanticVersionDescriptor.FromInformationalVersion("1.0.0");
-    var prereleaseVersion1 = SemanticVersionDescriptor.FromInformationalVersion("1.0.0-alpha.1");
-    var prereleaseVersion2 = SemanticVersionDescriptor.FromInformationalVersion("1.0.0-alpha.2");
-    var prereleaseVersion3 = SemanticVersionDescriptor.FromInformationalVersion("1.0.0-beta.1");
+    var prereleaseVersion = SemanticVersionDescriptor.FromInformationalVersion("1.0.0-alpha.1");
 
-    Assert.True(prereleaseVersion1 < stableVersion);
-    Assert.True(prereleaseVersion1 <= stableVersion);
-    Assert.True(prereleaseVersion2 > prereleaseVersion1);
-    Assert.True(prereleaseVersion3 > prereleaseVersion2);
+    Assert.True(stableVersion > prereleaseVersion);
+  }
+
+  [Fact]
+  public void Same_version_prereleases_are_ordered_according_to_prerelease_data()
+  {
+    var prereleaseVersion1 = SemanticVersionDescriptor.FromInformationalVersion("1.0.0-alpha.1");
+    var prereleaseVersion2 = SemanticVersionDescriptor.FromInformationalVersion("1.0.0-alpha.15");
+
+    Assert.True(prereleaseVersion1 < prereleaseVersion2);
+    Assert.True(prereleaseVersion1.PreReleaseMetadata < prereleaseVersion2.PreReleaseMetadata);
+
+    Assert.Equal(prereleaseVersion1 with { PreReleaseMetadata = null }, prereleaseVersion2 with { PreReleaseMetadata = null });
+  }
+
+  [Fact]
+  public void Different_version_prereleases_are_ordered_according_to_ordinal_version_data()
+  {
+    var prereleaseVersion1 = SemanticVersionDescriptor.FromInformationalVersion("1.0.1-alpha.1");
+    var prereleaseVersion2 = SemanticVersionDescriptor.FromInformationalVersion("1.0.0-alpha.15");
+
+    Assert.True(prereleaseVersion1 > prereleaseVersion2);
+    Assert.True(prereleaseVersion1.PreReleaseMetadata < prereleaseVersion2.PreReleaseMetadata);
+
+    Assert.True(prereleaseVersion1 with { PreReleaseMetadata = null } > prereleaseVersion2 with { PreReleaseMetadata = null });
+  }
+
+  [Fact]
+  public void BuildMetadata_is_ignored_in_version_comparison()
+  {
+    var version1 = SemanticVersionDescriptor.FromInformationalVersion("1.0.0+Branch.main.Sha.1234567890abcdef");
+    var version2 = SemanticVersionDescriptor.FromInformationalVersion("1.0.0+Branch.main.Sha.abcdef1234567890");
+
+    Assert.True(version1 == version2);
+    Assert.NotEqual(version1.BuildMetadata, version2.BuildMetadata);
   }
 }

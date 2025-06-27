@@ -1,49 +1,40 @@
 ﻿namespace Kritikos.SemanticVersioning;
 
-using System.Globalization;
-
-public record PreReleaseMetadataDescriptor
+/// <summary>
+/// Describes any pre-release metadata found in a semantic version.
+/// </summary>
+/// <remarks>
+/// This follows the specification, but additionally accounts for a commit counter as used by GitVersion.
+/// </remarks>
+public record PreReleaseMetadataDescriptor : IComparable<PreReleaseMetadataDescriptor>
 {
+  internal PreReleaseMetadataDescriptor()
+  {
+  }
+
   internal string OriginalContent { get; set; } = string.Empty;
 
-  public string Tag { get; init; } = string.Empty;
-  public int? CommitCounter { get; init; }
+  public string Tag { get; internal init; } = string.Empty;
 
-  public static PreReleaseMetadataDescriptor? FromPreReleasePart(string preReleasePart)
-  {
-    var match = SemanticVersioningConstants.PreReleaseMatcher().Match(preReleasePart);
-
-    var result = match.Success
-        ? new PreReleaseMetadataDescriptor
-        {
-          Tag = match.Groups["Tag"].Value,
-          CommitCounter = match.Groups["Counter"].Success
-              ? int.Parse(match.Groups["Counter"].Value, CultureInfo.InvariantCulture)
-              : null,
-          OriginalContent = preReleasePart,
-        }
-        : null;
-
-    return result;
-  }
+  public int? CommitCounter { get; internal init; }
 
   public static bool operator >=(PreReleaseMetadataDescriptor? left, PreReleaseMetadataDescriptor? right)
-    => left == right || left > right;
+    => left?.CompareTo(right) >= 0;
 
   public static bool operator <=(PreReleaseMetadataDescriptor? left, PreReleaseMetadataDescriptor? right)
-    => left == right || left < right;
+    => left?.CompareTo(right) <= 0;
 
   public static bool operator <(PreReleaseMetadataDescriptor? left, PreReleaseMetadataDescriptor? right)
-    => !(left > right);
+    => left?.CompareTo(right) < 0;
 
   public static bool operator >(PreReleaseMetadataDescriptor? left, PreReleaseMetadataDescriptor? right)
-  {
-    return left switch
-    {
-      null when right is not null => true,
-      not null when right is null => false,
-      null when right is null => false,
-      _ => string.Compare(left!.OriginalContent, right.OriginalContent, StringComparison.Ordinal) > 0,
-    };
-  }
+    => left?.CompareTo(right) > 0;
+
+  /// <inheritdoc />
+  public int CompareTo(PreReleaseMetadataDescriptor? other)
+    => ReferenceEquals(this, other)
+        ? 0
+        : other is null
+            ? -1
+            : string.CompareOrdinal(OriginalContent, other.OriginalContent);
 }
