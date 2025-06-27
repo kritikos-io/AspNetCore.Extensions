@@ -1,5 +1,7 @@
 ﻿namespace Kritikos.AspNetCore.MinimalApiExtensions.Extensions;
 
+using System.Collections.Concurrent;
+using System.Linq.Expressions;
 using System.Reflection;
 
 using Kritikos.AspNetCore.MinimalApiExtensions.Contracts;
@@ -13,6 +15,25 @@ using Microsoft.Extensions.Options;
 
 public static class KritikosAspNetCoreDependencyInjectionsExtensions
 {
+  private static readonly ConcurrentDictionary<Type, Action<IServiceCollection>?> CachedInvokers = new();
+
+  private static readonly MethodInfo? AddOptionsDefinitionMethodInfo = typeof(KritikosAspNetCoreDependencyInjectionsExtensions)
+      .GetMethod(nameof(AddOptionsDefinition), BindingFlags.Static | BindingFlags.Public);
+
+  private static Action<IServiceCollection>? BuildOptionsDefinitionInvoker(Type optionsType)
+  {
+    var closedMethod = AddOptionsDefinitionMethodInfo?.MakeGenericMethod(optionsType);
+    if (closedMethod is null)
+    {
+      return null;
+    }
+
+    var servicesParameter = Expression.Parameter(typeof(IServiceCollection), "services");
+    var name = Expression.Constant(null, typeof(string));
+    var call = Expression.Call(closedMethod, servicesParameter, name);
+    return Expression.Lambda<Action<IServiceCollection>>(call, servicesParameter).Compile();
+  }
+
   /// <summary>
   /// Adds services required for using correlation headers in the application.
   /// </summary>
@@ -66,6 +87,46 @@ public static class KritikosAspNetCoreDependencyInjectionsExtensions
     services.AddOptionsWithValidateOnStart<TOptions>(name)
         .BindConfiguration(TOptions.Location)
         .ValidateDataAnnotations();
+
+    return services;
+  }
+
+  /// <summary>
+  /// Adds all discovered <seealso cref="IOptionsDefinition"/> implementations from the provided assembly to the <see cref="IServiceCollection"/>.
+  /// </summary>
+  /// <remarks>
+  /// The <seealso cref="OptionsBuilderExtensions.ValidateOnStart{TOptions}(OptionsBuilder{TOptions})"/> extension is called by this method.
+  /// </remarks>
+  /// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>
+  /// <param name="type">The type used to discover the assembly containing <seealso cref="IOptionsDefinition"/> implementations.</param>
+  /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
+  public static IServiceCollection AddOptionsDefinitions(this IServiceCollection services, Type type)
+  {
+    ArgumentNullException.ThrowIfNull(services);
+    return services.AddOptionsDefinitions(type.Assembly);
+  }
+
+  /// <summary>
+  /// Adds all discovered <seealso cref="IOptionsDefinition"/> implementations from the provided assembly to the <see cref="IServiceCollection"/>.
+  /// </summary>
+  /// <remarks>
+  /// The <seealso cref="OptionsBuilderExtensions.ValidateOnStart{TOptions}(OptionsBuilder{TOptions})"/> extension is called by this method.
+  /// </remarks>
+  /// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>
+  /// <param name="assembly">The assembly to scan for <seealso cref="IOptionsDefinition"/> implementations.</param>
+  /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
+  public static IServiceCollection AddOptionsDefinitions(this IServiceCollection services, Assembly assembly)
+  {
+    foreach (var typeInfo in assembly.DefinedTypes)
+    {
+      if (typeInfo.IsAbstract || typeInfo.IsInterface || !typeInfo.IsAssignableTo(typeof(IOptionsDefinition)))
+      {
+        continue;
+      }
+
+      CachedInvokers.GetOrAdd(typeInfo.AsType(), BuildOptionsDefinitionInvoker)
+          ?.Invoke(services);
+    }
 
     return services;
   }
