@@ -29,6 +29,7 @@
     <Project Path="src\AspNetCore.OpenApiVersioningOptions\AspNetCore.OpenApiVersioningOptions.csproj" Type="Classic C#" />
     <Project Path="src\AspNetCore.VersioningOptions\AspNetCore.VersioningOptions.csproj" Type="Classic C#" />
     <Project Path="src\HttpClient.Handlers\HttpClient.Handlers.csproj" Type="Classic C#" />
+    <Project Path="src\PagedResults\PagedResults.csproj" Type="Classic C#" />
     <Project Path="src\SemanticVersioning.DependencyInjection\SemanticVersioning.DependencyInjection.csproj" Type="Classic C#" />
     <Project Path="src\SemanticVersioning\SemanticVersioning.csproj" Type="Classic C#" />
     <File Path="src\Directory.build.props" />
