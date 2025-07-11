@@ -76,7 +76,7 @@ public static class OffsetPagedResultExtensions
     return result;
   }
 
-  public static async Task<OffsetPagedResult<TDestination>> ToPagedListAsync<TSource, TDestination>(
+  public static async Task<OffsetPagedResult<TDestination>> ToOffsetPagedAsync<TSource, TDestination>(
       this IOrderedQueryable<TSource> source,
       Expression<Func<TSource, TDestination>> mapper,
       int page,
