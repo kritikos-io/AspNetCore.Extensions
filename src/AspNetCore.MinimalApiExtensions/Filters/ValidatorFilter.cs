@@ -23,7 +23,8 @@ public class ValidatorFilter(IServiceProviderIsService isServiceProvider) : IEnd
 
     var validationResult = new Collection<ValidationResult>();
 
-    foreach (var argument in context.Arguments.Where(x => x is not null && x.GetType().IsClass && !isServiceProvider.IsService(x.GetType())))
+    foreach (var argument in context.Arguments.Where(x =>
+               x is not null && x.GetType().IsClass && !isServiceProvider.IsService(x.GetType())))
     {
       var type = argument?.GetType();
       if (type is null || argument is null)
@@ -39,10 +40,9 @@ public class ValidatorFilter(IServiceProviderIsService isServiceProvider) : IEnd
       }
 
       var errors = validationResult.GroupBy(x => x.MemberNames.First())
-          .ToDictionary(
-              x => x.Key,
-              x => x.Select(y => y.ErrorMessage ?? string.Empty)
-                  .ToArray());
+        .ToDictionary(
+          x => x.Key,
+          x => x.Select(y => y.ErrorMessage ?? string.Empty).ToArray());
       return Results.ValidationProblem(errors);
     }
 

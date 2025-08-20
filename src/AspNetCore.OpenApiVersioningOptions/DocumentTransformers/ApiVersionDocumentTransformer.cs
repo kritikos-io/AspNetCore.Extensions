@@ -23,6 +23,8 @@ public class ApiVersionDocumentTransformer<TApiInfoOptions>(
   /// <inheritdoc />
   public Task TransformAsync(OpenApiDocument document, OpenApiDocumentTransformerContext context, CancellationToken cancellationToken)
   {
+    ArgumentNullException.ThrowIfNull(document);
+
     var apiDescription = versionProvider.ApiVersionDescriptions
         .SingleOrDefault(x => x.GroupName == context.DocumentName);
     if (apiDescription == null)
@@ -40,7 +42,7 @@ public class ApiVersionDocumentTransformer<TApiInfoOptions>(
     return Task.CompletedTask;
   }
 
-  public static string BuildDescription(ApiVersionDescription api, string description)
+  private static string BuildDescription(ApiVersionDescription api, string description)
   {
     var text = new StringBuilder(description);
     if (api.IsDeprecated)

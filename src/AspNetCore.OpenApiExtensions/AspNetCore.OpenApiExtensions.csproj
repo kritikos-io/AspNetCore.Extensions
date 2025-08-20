@@ -10,4 +10,8 @@
       <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\AspNetCore.MinimalApiExtensions\AspNetCore.MinimalApiExtensions.csproj" />
+    </ItemGroup>
+
 </Project>

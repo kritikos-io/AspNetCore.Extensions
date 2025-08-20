@@ -2,7 +2,7 @@
 
 using Kritikos.AspNetCore.MinimalApiExtensions.Contracts;
 
-public class DiscoveryEndpoint : IEndpoint
+public sealed class DiscoveryEndpoint : IEndpoint
 {
   /// <inheritdoc />
   public void MapEndpoint(IEndpointRouteBuilder app)

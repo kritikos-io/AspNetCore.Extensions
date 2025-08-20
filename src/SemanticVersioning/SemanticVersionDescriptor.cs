@@ -131,11 +131,11 @@ public record SemanticVersionDescriptor : IComparable<SemanticVersionDescriptor>
         ? 0
         : other is null
             ? -1
-            : (result = Major.CompareTo(other?.Major)) != 0
-              || (result = Minor.CompareTo(other?.Minor)) != 0
-              || (result = Patch.CompareTo(other?.Patch)) != 0
+            : (result = Major.CompareTo(other.Major)) != 0
+              || (result = Minor.CompareTo(other.Minor)) != 0
+              || (result = Patch.CompareTo(other.Patch)) != 0
                 ? result
-                : PreReleaseMetadata?.CompareTo(other?.PreReleaseMetadata) ?? 1;
+                : PreReleaseMetadata?.CompareTo(other.PreReleaseMetadata) ?? 1;
   }
 
   /// <inheritdoc />

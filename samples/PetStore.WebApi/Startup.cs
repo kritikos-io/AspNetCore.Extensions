@@ -8,9 +8,11 @@ using Kritikos.AspNetCore.OpenApiExtensions.OperationTransformers;
 using Kritikos.AspNetCore.OpenApiExtensions.SchemaTransformers;
 using Kritikos.AspNetCore.OpenApiFeatureManagementOptions;
 using Kritikos.AspNetCore.OpenApiOidcExtensions.DocumentTransformers;
+using Kritikos.AspNetCore.OpenApiVersioningOptions;
 using Kritikos.AspNetCore.OpenApiVersioningOptions.DocumentTransformers;
 using Kritikos.AspNetCore.VersioningOptions;
 
+using Microsoft.Extensions.Options;
 using Microsoft.FeatureManagement;
 
 using Scalar.AspNetCore;
@@ -36,56 +38,66 @@ public class Startup : IWebApplicationStartup
     builder.Services.AddOptionsDefinition<MyOpenApiInfoOptions>();
     builder.Services.AddOptionsDefinition<MyOpenApiOpenIdOptions>();
 
-    builder.Services.AddOpenApi("v1",
-        options =>
-        {
-          options.AddDocumentTransformer<ApiVersionDocumentTransformer<MyOpenApiInfoOptions>>();
-          options.AddOperationTransformer<AuthorizationCheckOperationTransformer>();
-          options.AddSchemaTransformer<NullableSchemaTransformer>();
-          options.AddDocumentTransformer<FeatureFilterDocumentTransformer>();
-          options.AddDocumentTransformer<OidcSecuritySchemeTransformer<MyOpenApiOpenIdOptions>>();
-        });
-    builder.Services.AddOpenApi("v2",
-        options =>
-        {
-          options.AddDocumentTransformer<ApiVersionDocumentTransformer<MyOpenApiInfoOptions>>();
-          options.AddOperationTransformer<AuthorizationCheckOperationTransformer>();
-          options.AddSchemaTransformer<NullableSchemaTransformer>();
-          options.AddDocumentTransformer<FeatureFilterDocumentTransformer>();
-          options.AddDocumentTransformer<OidcSecuritySchemeTransformer<MyOpenApiOpenIdOptions>>();
-        });
-    builder.Services.AddOpenApi("v3",
-        options =>
-        {
-          options.AddDocumentTransformer<ApiVersionDocumentTransformer<MyOpenApiInfoOptions>>();
-          options.AddOperationTransformer<AuthorizationCheckOperationTransformer>();
-          options.AddSchemaTransformer<NullableSchemaTransformer>();
-          options.AddDocumentTransformer<FeatureFilterDocumentTransformer>();
-          options.AddDocumentTransformer<OidcSecuritySchemeTransformer<MyOpenApiOpenIdOptions>>();
-        });
+    builder.Services.AddVersionedOpenApi<Program>(static options =>
+    {
+      options.AddSchemaTransformer<NullableSchemaTransformer>();
+      options.AddOperationTransformer<AuthorizationCheckOperationTransformer>();
+
+      options.AddDocumentTransformer<ApiVersionDocumentTransformer<MyOpenApiInfoOptions>>();
+      options.AddDocumentTransformer<FeatureFilterDocumentTransformer>();
+
+      options.AddDocumentTransformer<OidcSecuritySchemeTransformer<MyOpenApiOpenIdOptions>>();
+    });
 
     builder.Services.AddApiVersioningDefaults();
+
+    builder.Services.AddApiVersionModelProvider<Program>();
+    builder.Services.AddApiVersionSetProvider<Program>();
   }
 
   /// <inheritdoc />
   public void Configure(WebApplication app)
   {
-    ArgumentNullException.ThrowIfNull(app);
-    Program.VersionSet = app.NewApiVersionSet()
-        .HasApiVersion(new ApiVersion(1))
-        .HasApiVersion(new ApiVersion(2))
-        .HasApiVersion(new ApiVersion(3))
-        .HasDeprecatedApiVersion(new ApiVersion(0))
-        .ReportApiVersions()
-        .Build();
+    app.AddApiVersionSet<Program>(static options => options
+      .ReportApiVersions());
 
     app.UseHttpsRedirection();
 
     app.UseRouting();
 
     app.MapOpenApi();
-    app.MapScalarApiReference();
+    app.MapScalarApiReference(o =>
+    {
+      var options = app.Services.GetRequiredService<IOptions<MyOpenApiOpenIdOptions>>().Value;
+
+      o.AddDocuments(Program.VersionModel.ImplementedApiVersions.Select(static v => $"v{v}"));
+      o.WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
+      o.AddPreferredSecuritySchemes("oidc");
+      o.AddAuthorizationCodeFlow("oidc", flow =>
+      {
+        flow.WithClientId(options.ClientId);
+        flow.SelectedScopes = ["openid", "profile", "email"];
+        flow.Pkce = Pkce.Sha256;
+      });
+    });
+
+    var neutral = app.NewApiVersionSet("neutral")
+      .IsApiVersionNeutral()
+      .Build();
+    app
+      .MapGroup("api")
+      .WithApiVersionSet(neutral)
+      .IsApiVersionNeutral()
+      .MapGet("versions", static (ApiVersionModel versions) =>
+      {
+        var result = new VersionDto([.. versions.SupportedApiVersions.Select(static x => $"v{x}")],
+          [.. versions.DeprecatedApiVersions.Select(static x => $"v{x}")]);
+        return TypedResults.Ok(result);
+      });
+
     app.UseCorrelationHeader();
     app.MapEndpoints();
   }
 }
+
+public record VersionDto(ICollection<string> SupportedVersions, ICollection<string> DeprecatedVersions);

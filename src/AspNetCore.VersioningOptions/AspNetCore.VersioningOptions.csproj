@@ -8,4 +8,9 @@
     <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AspNetCore.MinimalApiExtensions\AspNetCore.MinimalApiExtensions.csproj" />
+  </ItemGroup>
+
 </Project>
+ 

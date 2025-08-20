@@ -2,7 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
+    <NoWarn>$(NoWarn);CA1515</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="AspNetCore.FeatureManagementOptionTests" />
+    <InternalsVisibleTo Include="AspNetCore.MinimalApiTests" />
+    <InternalsVisibleTo Include="AspNetCore.VersioningTests" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Scalar.AspNetCore" />

@@ -3,11 +3,12 @@
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
 
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
 public class ApiVersioningDefaultOptions
-    : IConfigureOptions<ApiVersioningOptions>,
-        IConfigureOptions<ApiExplorerOptions>
+  : IConfigureOptions<ApiVersioningOptions>,
+    IConfigureOptions<ApiExplorerOptions>
 {
   /// <inheritdoc />
   public void Configure(ApiVersioningOptions options)
@@ -18,7 +19,7 @@ public class ApiVersioningDefaultOptions
     options.ReportApiVersions = true;
     options.AssumeDefaultVersionWhenUnspecified = true;
     options.ApiVersionReader = new UrlSegmentApiVersionReader();
-    options.RouteConstraintName = "apiVersion";
+    options.UnsupportedApiVersionStatusCode = StatusCodes.Status503ServiceUnavailable;
   }
 
   /// <inheritdoc />
@@ -26,9 +27,9 @@ public class ApiVersioningDefaultOptions
   {
     ArgumentNullException.ThrowIfNull(options);
 
-    options.SubstituteApiVersionInUrl = true;
     options.AssumeDefaultVersionWhenUnspecified = true;
-    options.GroupNameFormat = "'v'V";
+    options.SubstituteApiVersionInUrl = true;
     options.RouteConstraintName = "apiVersion";
+    options.GroupNameFormat = "'v'V";
   }
 }

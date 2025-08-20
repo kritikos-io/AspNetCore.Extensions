@@ -17,7 +17,8 @@ public static class KritikosAspNetCoreDependencyInjectionsExtensions
 {
   private static readonly ConcurrentDictionary<Type, Action<IServiceCollection>?> CachedInvokers = new();
 
-  private static readonly MethodInfo? AddOptionsDefinitionMethodInfo = typeof(KritikosAspNetCoreDependencyInjectionsExtensions)
+  private static readonly MethodInfo? AddOptionsDefinitionMethodInfo =
+    typeof(KritikosAspNetCoreDependencyInjectionsExtensions)
       .GetMethod(nameof(AddOptionsDefinition), BindingFlags.Static | BindingFlags.Public);
 
   private static Action<IServiceCollection>? BuildOptionsDefinitionInvoker(Type optionsType)
@@ -38,9 +39,10 @@ public static class KritikosAspNetCoreDependencyInjectionsExtensions
   /// Adds services required for using correlation headers in the application.
   /// </summary>
   /// <param name="services">The <see cref="IServiceCollection"/> to register the service to.</param>
-  /// <param name="configure">An <see cref="T:System.Action`1" /> to configure the provided <see cref="T:CorrelationHeaderOptions" />.</param>
+  /// <param name="configure">An <see cref="System.Action{T}" /> to configure the provided <see cref="CorrelationHeaderOptions" />.</param>
   /// <returns></returns>
-  public static IServiceCollection AddCorrelationHeader(this IServiceCollection services, Action<CorrelationHeaderOptions>? configure = null)
+  public static IServiceCollection AddCorrelationHeader(this IServiceCollection services,
+    Action<CorrelationHeaderOptions>? configure = null)
   {
     ArgumentNullException.ThrowIfNull(services);
 
@@ -55,13 +57,14 @@ public static class KritikosAspNetCoreDependencyInjectionsExtensions
   /// Registers a background service that runs periodically.
   /// </summary>
   /// <param name="services">The <see cref="IServiceCollection"/> to register the service to.</param>
-  /// <param name="configure">An <see cref="T:System.Action`1" /> to configure the provided <see cref="T:PeriodicBackgroundServiceOptions" />.</param>
+  /// <param name="configure">An <see cref="System.Action{T}" /> to configure the provided <see cref="PeriodicBackgroundServiceOptions" />.</param>
   /// <typeparam name="TService">The type of <see cref="PeriodicBackgroundService{TService,TOptions}"/> to register.</typeparam>
   /// <typeparam name="TOptions">The type of <see cref="PeriodicBackgroundServiceOptions"/> to use in configuring the <see cref="PeriodicBackgroundService{TService,TOptions}"/>.</typeparam>
   /// <returns>A <see cref="IServiceCollection"/> containing <see cref="PeriodicBackgroundService{TService,TOptions}"/>.</returns>
-  public static IServiceCollection AddPeriodicBackgroundService<TService, TOptions>(this IServiceCollection services, Action<TOptions>? configure = null)
-      where TService : PeriodicBackgroundService<TService, TOptions>
-      where TOptions : PeriodicBackgroundServiceOptions, IOptionsDefinition, new()
+  public static IServiceCollection AddPeriodicBackgroundService<TService, TOptions>(this IServiceCollection services,
+    Action<TOptions>? configure = null)
+    where TService : PeriodicBackgroundService<TService, TOptions>
+    where TOptions : PeriodicBackgroundServiceOptions, IOptionsDefinition, new()
   {
     ArgumentNullException.ThrowIfNull(services);
 
@@ -78,15 +81,16 @@ public static class KritikosAspNetCoreDependencyInjectionsExtensions
   /// </remarks>
   /// <typeparam name="TOptions">The options type to be configured.</typeparam>
   /// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>
+  /// <param name="name">The name of the options instance.</param>
   /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
-  public static IServiceCollection AddOptionsDefinition<TOptions>(this IServiceCollection services, string name = null)
-      where TOptions : class, IOptionsDefinition
+  public static IServiceCollection AddOptionsDefinition<TOptions>(this IServiceCollection services, string? name = null)
+    where TOptions : class, IOptionsDefinition
   {
     ArgumentNullException.ThrowIfNull(services);
 
     services.AddOptionsWithValidateOnStart<TOptions>(name)
-        .BindConfiguration(TOptions.Location)
-        .ValidateDataAnnotations();
+      .BindConfiguration(TOptions.Location)
+      .ValidateDataAnnotations();
 
     return services;
   }
@@ -102,7 +106,9 @@ public static class KritikosAspNetCoreDependencyInjectionsExtensions
   /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
   public static IServiceCollection AddOptionsDefinitions(this IServiceCollection services, Type type)
   {
+    ArgumentNullException.ThrowIfNull(type);
     ArgumentNullException.ThrowIfNull(services);
+
     return services.AddOptionsDefinitions(type.Assembly);
   }
 
@@ -117,6 +123,8 @@ public static class KritikosAspNetCoreDependencyInjectionsExtensions
   /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
   public static IServiceCollection AddOptionsDefinitions(this IServiceCollection services, Assembly assembly)
   {
+    ArgumentNullException.ThrowIfNull(assembly);
+
     foreach (var typeInfo in assembly.DefinedTypes)
     {
       if (typeInfo.IsAbstract || typeInfo.IsInterface || !typeInfo.IsAssignableTo(typeof(IOptionsDefinition)))
@@ -125,7 +133,7 @@ public static class KritikosAspNetCoreDependencyInjectionsExtensions
       }
 
       CachedInvokers.GetOrAdd(typeInfo.AsType(), BuildOptionsDefinitionInvoker)
-          ?.Invoke(services);
+        ?.Invoke(services);
     }
 
     return services;
@@ -159,10 +167,10 @@ public static class KritikosAspNetCoreDependencyInjectionsExtensions
     ArgumentNullException.ThrowIfNull(assembly);
 
     var serviceDescriptors = assembly
-        .DefinedTypes
-        .Where(static type => type is { IsAbstract: false, IsInterface: false } && type.IsAssignableTo(typeof(IEndpoint)))
-        .Select(static type => ServiceDescriptor.Singleton(typeof(IEndpoint), type))
-        .ToArray();
+      .DefinedTypes
+      .Where(static type => type is { IsAbstract: false, IsInterface: false } && type.IsAssignableTo(typeof(IEndpoint)))
+      .Select(static type => ServiceDescriptor.Singleton(typeof(IEndpoint), type))
+      .ToArray();
 
     services.TryAddEnumerable(serviceDescriptors);
     return services;

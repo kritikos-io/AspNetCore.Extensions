@@ -5,10 +5,12 @@ using System.ComponentModel.DataAnnotations;
 using Kritikos.AspNetCore.MinimalApiExtensions.Contracts;
 using Kritikos.AspNetCore.MinimalApiExtensions.Filters;
 using Kritikos.PetStore.WebApi.Controllers;
+using Kritikos.PetStore.WebApi.Models.V1;
+using Kritikos.PetStore.WebApi.Models.V2;
 
 using Microsoft.AspNetCore.Http.HttpResults;
 
-public class PetEndpoints : IEndpoint
+public sealed class PetEndpoints : IEndpoint
 {
   /// <inheritdoc />
   public void MapEndpoint(IEndpointRouteBuilder app)
@@ -16,22 +18,22 @@ public class PetEndpoints : IEndpoint
     var group = app.MapGroup("api/v{apiVersion:apiVersion}");
 
     var v1 = group.MapGroup("pet")
-        .WithApiVersionSet(Program.VersionSet)
-        .MapToApiVersion(1)
-        .WithTags("Pet")
-        .WithOpenApi();
+      .WithApiVersionSet(Program.VersionSet)
+      .MapToApiVersion(1)
+      .WithTags("Pet")
+      .WithOpenApi();
 
     v1.MapGet("{id:long}", GetPetsV1).AddEndpointFilter<ValidatorFilter>();
     v1
-        .AddEndpointFilter<ValidatorFilter>()
-        .MapPost("{id:long}", static ([Required] long id, CreateFooDto dto) => TypedResults.Ok(dto));
+      .AddEndpointFilter<ValidatorFilter>()
+      .MapPost("{id:long}", static ([Required] long id, CreateFooDto dto) => TypedResults.Ok(dto));
 
     var v2 = group.MapGroup("pet")
-        .WithApiVersionSet(Program.VersionSet)
-        .MapToApiVersion(2)
-        .WithTags("Pet")
-        .WithOpenApi()
-        .AddEndpointFilter<ValidatorFilter>();
+      .WithApiVersionSet(Program.VersionSet)
+      .MapToApiVersion(2)
+      .WithTags("Pet")
+      .WithOpenApi()
+      .AddEndpointFilter<ValidatorFilter>();
 
     v2.MapGet("{id:long}", GetPetsV2);
     v2.MapPost(string.Empty, CreatePetV2);
@@ -45,12 +47,3 @@ public class PetEndpoints : IEndpoint
 
   public Ok CreatePetV2(PetV2Dto dto) => TypedResults.Ok();
 }
-
-public record PetV1Dto(string Name, int Age);
-
-public record PetV2Dto(
-    [property: Required]
-    [property: MinLength(3)]
-    string FirstName,
-    [property: EmailAddress] string LastName,
-    int Age);

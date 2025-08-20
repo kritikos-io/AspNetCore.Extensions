@@ -7,4 +7,6 @@ public class MyOpenApiOpenIdOptions : OpenApiOpenIdOptions, IOptionsDefinition
 {
   /// <inheritdoc />
   public static string Location { get; } = "Authentication:OpenId";
+
+  public string ClientId { get; set; } = string.Empty;
 }

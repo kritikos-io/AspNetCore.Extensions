@@ -6,7 +6,8 @@ using System.Net.Http.Json;
 
 using Kritikos.AspNetCore.MinimalApiExtensions.Extensions;
 using Kritikos.AspNetCore.VersioningOptions;
-using Kritikos.PetStore.WebApi.Endpoints;
+using Kritikos.PetStore.WebApi.Models.V1;
+using Kritikos.PetStore.WebApi.Models.V2;
 
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;

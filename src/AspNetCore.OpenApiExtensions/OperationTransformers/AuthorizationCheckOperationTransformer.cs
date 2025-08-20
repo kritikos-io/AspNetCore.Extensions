@@ -9,8 +9,12 @@ using Microsoft.OpenApi.Models;
 public class AuthorizationCheckOperationTransformer : IOpenApiOperationTransformer
 {
   /// <inheritdoc />
-  public Task TransformAsync(OpenApiOperation operation, OpenApiOperationTransformerContext context, CancellationToken cancellationToken)
+  public Task TransformAsync(OpenApiOperation operation, OpenApiOperationTransformerContext context,
+    CancellationToken cancellationToken)
   {
+    ArgumentNullException.ThrowIfNull(operation);
+    ArgumentNullException.ThrowIfNull(context);
+
     var metadata = context.Description.ActionDescriptor.EndpointMetadata;
     operation.OperationId ??= metadata.OfType<MethodInfo>().FirstOrDefault()?.Name;
     if (!metadata.OfType<IAuthorizeData>().Any() || string.IsNullOrWhiteSpace(operation.OperationId))
@@ -21,7 +25,10 @@ public class AuthorizationCheckOperationTransformer : IOpenApiOperationTransform
     operation.Responses.TryAdd("401", new OpenApiResponse { Description = "Unauthorized" });
     operation.Responses.TryAdd("403", new OpenApiResponse { Description = "Forbidden" });
 
-    var oAuthScheme = new OpenApiSecurityScheme { Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "openid" } };
+    var oAuthScheme = new OpenApiSecurityScheme
+    {
+      Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "openid" }
+    };
 
     operation.Security = [new() { [oAuthScheme] = ["openid"] }];
 

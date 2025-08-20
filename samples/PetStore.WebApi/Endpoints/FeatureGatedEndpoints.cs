@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.FeatureManagement;
 
-public class FeatureGatedEndpoints : IEndpoint
+public sealed class FeatureGatedEndpoints : IEndpoint
 {
   /// <inheritdoc />
   public void MapEndpoint(IEndpointRouteBuilder app)

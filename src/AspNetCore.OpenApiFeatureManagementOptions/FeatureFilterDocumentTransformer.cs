@@ -12,12 +12,13 @@ using Microsoft.FeatureManagement.Mvc;
 using Microsoft.OpenApi.Models;
 
 public class FeatureFilterDocumentTransformer(IFeatureManager featureManager)
-    : IOpenApiDocumentTransformer
+  : IOpenApiDocumentTransformer
 {
   private readonly IFeatureManager featureManager = featureManager;
 
   /// <inheritdoc />
-  public Task TransformAsync(OpenApiDocument document, OpenApiDocumentTransformerContext context, CancellationToken cancellationToken)
+  public async Task TransformAsync(OpenApiDocument document, OpenApiDocumentTransformerContext context,
+    CancellationToken cancellationToken)
   {
     ArgumentNullException.ThrowIfNull(document);
     ArgumentNullException.ThrowIfNull(context);
@@ -28,8 +29,8 @@ public class FeatureFilterDocumentTransformer(IFeatureManager featureManager)
       var shouldRemoveAction = descriptor switch
       {
         ControllerActionDescriptor controllerActionDescriptor => IsControllerFeatureGateClosed(
-            controllerActionDescriptor),
-        { } actionDescriptor => IsEndpointFeatureClosed(actionDescriptor).Result,
+          controllerActionDescriptor),
+        { } actionDescriptor => await IsEndpointFeatureClosed(actionDescriptor),
         _ => throw new ArgumentException(nameof(context.DescriptionGroups)),
       };
 
@@ -39,18 +40,17 @@ public class FeatureFilterDocumentTransformer(IFeatureManager featureManager)
       }
 
       var key = $"/{apiDescription.RelativePath}";
-      if (Enum.TryParse<OperationType>(apiDescription.HttpMethod, true, out var operation))
+      if (document.Paths.TryGetValue(key, out var path)
+          && Enum.TryParse<OperationType>(apiDescription.HttpMethod, true, out var operation))
       {
-        document.Paths[key].Operations.Remove(operation);
+        path.Operations.Remove(operation);
       }
 
-      if (!document.Paths[key].Operations.Any())
+      if (path != null && !path.Operations.Any())
       {
         document.Paths.Remove(key);
       }
     }
-
-    return Task.CompletedTask;
   }
 
   private async Task<bool> IsEndpointFeatureClosed(ActionDescriptor descriptor)
@@ -83,11 +83,11 @@ public class FeatureFilterDocumentTransformer(IFeatureManager featureManager)
   private bool IsControllerFeatureGateClosed(ControllerActionDescriptor descriptor)
   {
     var controllerAttributes = descriptor.ControllerTypeInfo
-        .GetCustomAttributes<FeatureGateAttribute>()
-        .ToList();
+      .GetCustomAttributes<FeatureGateAttribute>()
+      .ToList();
     var actionAttributes = descriptor.MethodInfo
-        .GetCustomAttributes<FeatureGateAttribute>()
-        .ToList();
+      .GetCustomAttributes<FeatureGateAttribute>()
+      .ToList();
 
     if (actionAttributes.Count == 0 && controllerAttributes.Count == 0)
     {
@@ -95,24 +95,22 @@ public class FeatureFilterDocumentTransformer(IFeatureManager featureManager)
     }
 
     var enabledOnControllerLevel =
-        controllerAttributes.Select(
-                attribute => attribute.RequirementType switch
-                {
-                  RequirementType.Any => attribute.Features.Any(feature => featureManager.IsEnabledAsync(feature).Result),
-                  RequirementType.All => attribute.Features.All(feature => featureManager.IsEnabledAsync(feature).Result),
-                  _ => throw new ArgumentException(nameof(attribute.RequirementType)),
-                })
-            .ToList();
+      controllerAttributes.Select(attribute => attribute.RequirementType switch
+        {
+          RequirementType.Any => attribute.Features.Any(feature => featureManager.IsEnabledAsync(feature).Result),
+          RequirementType.All => attribute.Features.All(feature => featureManager.IsEnabledAsync(feature).Result),
+          _ => throw new ArgumentException(nameof(attribute.RequirementType)),
+        })
+        .ToList();
 
     var enabledOnActionLevel =
-        actionAttributes.Select(
-                attribute => attribute.RequirementType switch
-                {
-                  RequirementType.Any => attribute.Features.Any(feature => featureManager.IsEnabledAsync(feature).Result),
-                  RequirementType.All => attribute.Features.All(feature => featureManager.IsEnabledAsync(feature).Result),
-                  _ => throw new ArgumentException(nameof(attribute.RequirementType)),
-                })
-            .ToList();
+      actionAttributes.Select(attribute => attribute.RequirementType switch
+        {
+          RequirementType.Any => attribute.Features.Any(feature => featureManager.IsEnabledAsync(feature).Result),
+          RequirementType.All => attribute.Features.All(feature => featureManager.IsEnabledAsync(feature).Result),
+          _ => throw new ArgumentException(nameof(attribute.RequirementType)),
+        })
+        .ToList();
 
     return !(enabledOnControllerLevel.All(x => x) && enabledOnActionLevel.All(x => x));
   }
