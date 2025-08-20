@@ -4,9 +4,9 @@
     "net9.0": {
       "GitVersion.MsBuild": {
         "type": "Direct",
-        "requested": "[6.3.0, )",
-        "resolved": "6.3.0",
-        "contentHash": "suTxk2mb96kABSJZrSGvzh9423fVbdOM18nSQOrLbp0tKrX+khi1ytfkHzoPI0I2xvmDzTsfKtHDd61Zc5MX0A=="
+        "requested": "[6.4.0, )",
+        "resolved": "6.4.0",
+        "contentHash": "U3GowPObvH43MBoB+N9HmaP7R9DGOrrGwbuTZIfia6RSFi/7bApoT7RQFMA9QWpZ9pJF6TKysCaxcv7Qwzucqw=="
       },
       "Asp.Versioning.Abstractions": {
         "type": "Transitive",
@@ -42,16 +42,21 @@
         "resolved": "1.6.17",
         "contentHash": "Le+kehlmrlQfuDFUt1zZ2dVwrhFQtKREdKBo+rexOwaCoYP0/qpgT9tLxCsZjsgR5Itk1UKPcbgO+FyaNid/bA=="
       },
+      "Kritikos.AspNetCore.MinimalApiExtensions": {
+        "type": "Project"
+      },
       "Kritikos.AspNetCore.OpenApiExtensions": {
         "type": "Project",
         "dependencies": {
+          "Kritikos.AspNetCore.MinimalApiExtensions": "[1.0.0, )",
           "Microsoft.AspNetCore.OpenApi": "[9.0.6, )"
         }
       },
       "Kritikos.AspNetCore.VersioningOptions": {
         "type": "Project",
         "dependencies": {
-          "Asp.Versioning.Mvc.ApiExplorer": "[8.1.0, )"
+          "Asp.Versioning.Mvc.ApiExplorer": "[8.1.0, )",
+          "Kritikos.AspNetCore.MinimalApiExtensions": "[1.0.0, )"
         }
       },
       "Asp.Versioning.Mvc.ApiExplorer": {

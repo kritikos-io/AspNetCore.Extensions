@@ -4,23 +4,15 @@
     "net9.0": {
       "GitVersion.MsBuild": {
         "type": "Direct",
-        "requested": "[6.3.0, )",
-        "resolved": "6.3.0",
-        "contentHash": "suTxk2mb96kABSJZrSGvzh9423fVbdOM18nSQOrLbp0tKrX+khi1ytfkHzoPI0I2xvmDzTsfKtHDd61Zc5MX0A==",
-        "dependencies": {
-          "System.Collections.Immutable": "9.0.2"
-        }
+        "requested": "[6.4.0, )",
+        "resolved": "6.4.0",
+        "contentHash": "U3GowPObvH43MBoB+N9HmaP7R9DGOrrGwbuTZIfia6RSFi/7bApoT7RQFMA9QWpZ9pJF6TKysCaxcv7Qwzucqw=="
       },
       "Microsoft.Extensions.DependencyInjection.Abstractions": {
         "type": "Direct",
         "requested": "[9.0.6, )",
         "resolved": "9.0.6",
         "contentHash": "0Zn6nR/6g+90MxskZyOOMPQvnPnrrGu6bytPwkV+azDcTtCSuQ1+GJUrg8Klmnrjk1i6zMpw2lXijl+tw7Q3kA=="
-      },
-      "System.Collections.Immutable": {
-        "type": "Transitive",
-        "resolved": "9.0.2",
-        "contentHash": "QKh9+kczG7TQbQZ6tF2S6bK9B8ewHXEkYmMP2iqefzwJEfEkiflheAX6VEaPLJ6Tq9RoKuQ5R3qPYla6wJ6Opg=="
       },
       "Kritikos.SemanticVersioning": {
         "type": "Project"

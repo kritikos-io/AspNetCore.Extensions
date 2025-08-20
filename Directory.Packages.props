@@ -1,7 +1,7 @@
 <Project>
   <ItemGroup Label="Packages">
     <PackageVersion Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
-    <PackageVersion Include="GitVersion.MsBuild" Version="6.3.0" />
+    <PackageVersion Include="GitVersion.MsBuild" Version="6.4.0" />
     <PackageVersion Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="9.0.6" />
     <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="9.0.6" />
     <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.6" />

@@ -578,6 +578,7 @@
       "Kritikos.AspNetCore.OpenApiExtensions": {
         "type": "Project",
         "dependencies": {
+          "Kritikos.AspNetCore.MinimalApiExtensions": "[1.0.0, )",
           "Microsoft.AspNetCore.OpenApi": "[9.0.6, )"
         }
       },
@@ -605,7 +606,8 @@
       "Kritikos.AspNetCore.VersioningOptions": {
         "type": "Project",
         "dependencies": {
-          "Asp.Versioning.Mvc.ApiExplorer": "[8.1.0, )"
+          "Asp.Versioning.Mvc.ApiExplorer": "[8.1.0, )",
+          "Kritikos.AspNetCore.MinimalApiExtensions": "[1.0.0, )"
         }
       },
       "Kritikos.PetStore.WebApi": {
