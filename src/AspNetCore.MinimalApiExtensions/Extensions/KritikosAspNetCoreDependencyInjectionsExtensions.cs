@@ -82,14 +82,19 @@ public static class KritikosAspNetCoreDependencyInjectionsExtensions
   /// <typeparam name="TOptions">The options type to be configured.</typeparam>
   /// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>
   /// <param name="name">The name of the options instance.</param>
+  /// <param name="location">The name of the configuration section to bind from for named instances.</param>
   /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
-  public static IServiceCollection AddOptionsDefinition<TOptions>(this IServiceCollection services, string? name = null)
+  public static IServiceCollection AddOptionsDefinition<TOptions>(this IServiceCollection services, string? name = null,
+    string? location = null)
     where TOptions : class, IOptionsDefinition
   {
     ArgumentNullException.ThrowIfNull(services);
 
     services.AddOptionsWithValidateOnStart<TOptions>(name)
-      .BindConfiguration(TOptions.Location)
+      .BindConfiguration(
+        string.IsNullOrWhiteSpace(name)
+          ? TOptions.Location
+          : location ?? Options.DefaultName)
       .ValidateDataAnnotations();
 
     return services;
