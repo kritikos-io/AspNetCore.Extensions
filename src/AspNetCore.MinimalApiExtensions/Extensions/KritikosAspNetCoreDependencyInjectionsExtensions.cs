@@ -31,7 +31,8 @@ public static class KritikosAspNetCoreDependencyInjectionsExtensions
 
     var servicesParameter = Expression.Parameter(typeof(IServiceCollection), "services");
     var name = Expression.Constant(null, typeof(string));
-    var call = Expression.Call(closedMethod, servicesParameter, name);
+    var location = Expression.Constant(null, typeof(string));
+    var call = Expression.Call(closedMethod, servicesParameter, name, location);
     return Expression.Lambda<Action<IServiceCollection>>(call, servicesParameter).Compile();
   }
 
