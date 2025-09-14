@@ -10,9 +10,9 @@
       },
       "Microsoft.AspNetCore.Authentication.OpenIdConnect": {
         "type": "Direct",
-        "requested": "[9.0.6, )",
-        "resolved": "9.0.6",
-        "contentHash": "cRsREllwLWFEl83me6iC5LO6sHy/X0tw1X2bXmfGBulrmM5BvoVuUkJegfpEV1R2Q89gdv8ckS5ZaPxdocUVPw==",
+        "requested": "[9.0.9, )",
+        "resolved": "9.0.9",
+        "contentHash": "oa9vMYZO61boiz6gIh61VguskJ5LqpX1LS7YMz7mX9sulNu/ihxxOwDiRzk9N8/u7WVktiEH0KTgyvVLQWwgzA==",
         "dependencies": {
           "Microsoft.IdentityModel.Protocols.OpenIdConnect": "8.0.1"
         }
@@ -84,14 +84,14 @@
         "type": "Project",
         "dependencies": {
           "Kritikos.AspNetCore.MinimalApiExtensions": "[1.0.0, )",
-          "Microsoft.AspNetCore.OpenApi": "[9.0.6, )"
+          "Microsoft.AspNetCore.OpenApi": "[9.0.9, )"
         }
       },
       "Microsoft.AspNetCore.OpenApi": {
         "type": "CentralTransitive",
-        "requested": "[9.0.6, )",
-        "resolved": "9.0.6",
-        "contentHash": "MOJ4DG1xd3NlWMYh+JdGNT9uvBtEk1XQU/FQlpNZFlAzM8t0oB5IimvnGlnK7jmyY4vQagLPB1xw1HjJ8CHrZg==",
+        "requested": "[9.0.9, )",
+        "resolved": "9.0.9",
+        "contentHash": "3Sina0gS/CTYt9XG6DUFPdXOmJui7e551U0kO2bIiDk3vZ2sctxxenN+cE1a5CrUpjIVZfZr32neWYYRO+Piaw==",
         "dependencies": {
           "Microsoft.OpenApi": "1.6.17"
         }

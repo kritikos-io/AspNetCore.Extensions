@@ -10,9 +10,9 @@
       },
       "Scalar.AspNetCore": {
         "type": "Direct",
-        "requested": "[2.4.17, )",
-        "resolved": "2.4.17",
-        "contentHash": "MMWMy3Z4C7bu0BhfJIbF8mtTeN41W4oeE2fOZLPQ6lhPkNtT4iPIFUrZ6kkT8iSzTdevh0cqJX9CRA5mSvgv0g=="
+        "requested": "[2.8.3, )",
+        "resolved": "2.8.3",
+        "contentHash": "5O6bNUqg0vIYwajaza0OCLu6p0ibEUNx9lqxwGXMWAn/ZhisAo1phwSNRA+OTi1XhRzkz+FvfzFkM5lVzx11vQ=="
       },
       "Asp.Versioning.Abstractions": {
         "type": "Transitive",
@@ -42,8 +42,8 @@
       },
       "Microsoft.FeatureManagement": {
         "type": "Transitive",
-        "resolved": "4.1.0",
-        "contentHash": "b0IpwPFjAqGj1x9pcr0CG0l2eS1WBkJeV3hgmL1WjrKFxTVL6CCf67qoNaCWw1GNidoqAJVZQPPFiWz6xU5dPg==",
+        "resolved": "4.3.0",
+        "contentHash": "6FJz8K6xzjuUBG5DZ55gttMU2/MxObqPDTRMXC950EjljJqZPrigMm1EMsPK+HbPR84+T4PCXgjmdlkw+8Piow==",
         "dependencies": {
           "Microsoft.Bcl.TimeProvider": "8.0.1"
         }
@@ -111,7 +111,7 @@
       "Kritikos.AspNetCore.FeatureManagementOptions": {
         "type": "Project",
         "dependencies": {
-          "Microsoft.FeatureManagement.AspNetCore": "[4.1.0, )"
+          "Microsoft.FeatureManagement.AspNetCore": "[4.3.0, )"
         }
       },
       "Kritikos.AspNetCore.MinimalApiExtensions": {
@@ -121,7 +121,7 @@
         "type": "Project",
         "dependencies": {
           "Kritikos.AspNetCore.MinimalApiExtensions": "[1.0.0, )",
-          "Microsoft.AspNetCore.OpenApi": "[9.0.6, )"
+          "Microsoft.AspNetCore.OpenApi": "[9.0.9, )"
         }
       },
       "Kritikos.AspNetCore.OpenApiFeatureManagementOptions": {
@@ -135,7 +135,7 @@
         "type": "Project",
         "dependencies": {
           "Kritikos.AspNetCore.OpenApiExtensions": "[1.0.0, )",
-          "Microsoft.AspNetCore.Authentication.OpenIdConnect": "[9.0.6, )"
+          "Microsoft.AspNetCore.Authentication.OpenIdConnect": "[9.0.9, )"
         }
       },
       "Kritikos.AspNetCore.OpenApiVersioningOptions": {
@@ -163,29 +163,29 @@
       },
       "Microsoft.AspNetCore.Authentication.OpenIdConnect": {
         "type": "CentralTransitive",
-        "requested": "[9.0.6, )",
-        "resolved": "9.0.6",
-        "contentHash": "cRsREllwLWFEl83me6iC5LO6sHy/X0tw1X2bXmfGBulrmM5BvoVuUkJegfpEV1R2Q89gdv8ckS5ZaPxdocUVPw==",
+        "requested": "[9.0.9, )",
+        "resolved": "9.0.9",
+        "contentHash": "oa9vMYZO61boiz6gIh61VguskJ5LqpX1LS7YMz7mX9sulNu/ihxxOwDiRzk9N8/u7WVktiEH0KTgyvVLQWwgzA==",
         "dependencies": {
           "Microsoft.IdentityModel.Protocols.OpenIdConnect": "8.0.1"
         }
       },
       "Microsoft.AspNetCore.OpenApi": {
         "type": "CentralTransitive",
-        "requested": "[9.0.6, )",
-        "resolved": "9.0.6",
-        "contentHash": "MOJ4DG1xd3NlWMYh+JdGNT9uvBtEk1XQU/FQlpNZFlAzM8t0oB5IimvnGlnK7jmyY4vQagLPB1xw1HjJ8CHrZg==",
+        "requested": "[9.0.9, )",
+        "resolved": "9.0.9",
+        "contentHash": "3Sina0gS/CTYt9XG6DUFPdXOmJui7e551U0kO2bIiDk3vZ2sctxxenN+cE1a5CrUpjIVZfZr32neWYYRO+Piaw==",
         "dependencies": {
           "Microsoft.OpenApi": "1.6.17"
         }
       },
       "Microsoft.FeatureManagement.AspNetCore": {
         "type": "CentralTransitive",
-        "requested": "[4.1.0, )",
-        "resolved": "4.1.0",
-        "contentHash": "k2XdVC9LA9UJqLgVOrm3sYmBKEVuDUJHl9FqLEbUUQ8x6xDeWqucXMa/MurYF4oAeVy4B1LTRWFbb93MVR5rMQ==",
+        "requested": "[4.3.0, )",
+        "resolved": "4.3.0",
+        "contentHash": "QUTCPSMDutLPw8s5z8H2DJ/CIjeXkKpXVi377EmGcLuoUhiAIHZIw+cqcEWWOYbgd09eyxKfFPSM7RCGedb/UQ==",
         "dependencies": {
-          "Microsoft.FeatureManagement": "4.1.0"
+          "Microsoft.FeatureManagement": "4.3.0"
         }
       }
     }
