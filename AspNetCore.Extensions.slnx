@@ -28,6 +28,7 @@
     <Project Path="src\AspNetCore.OpenApiOidcExtensions\AspNetCore.OpenApiOidcExtensions.csproj" Type="Classic C#" />
     <Project Path="src\AspNetCore.OpenApiVersioningOptions\AspNetCore.OpenApiVersioningOptions.csproj" Type="Classic C#" />
     <Project Path="src\AspNetCore.VersioningOptions\AspNetCore.VersioningOptions.csproj" Type="Classic C#" />
+    <Project Path="src\HttpClient.AuthenticationHandlers\HttpClient.AuthenticationHandlers.csproj" Type="Classic C#" />
     <Project Path="src\HttpClient.Handlers\HttpClient.Handlers.csproj" Type="Classic C#" />
     <Project Path="src\PagedResults\PagedResults.csproj" Type="Classic C#" />
     <Project Path="src\SemanticVersioning.DependencyInjection\SemanticVersioning.DependencyInjection.csproj" Type="Classic C#" />
