@@ -27,18 +27,20 @@ public abstract class PeriodicBackgroundService<TService, TOptions>(
   private readonly string serviceName = typeof(TService).Name;
   private readonly PeriodicTimer timer = new(options.Value.Interval);
 
+  private bool disposed;
   private CancellationTokenSource? cancellationTokenSource;
 
   protected TOptions Options { get; } = options.Value;
 
   protected ILogger Logger { get; } = logger;
-  /// <inheritdoc />
+
+
   public override void Dispose()
   {
     base.Dispose();
-    cancellationTokenSource?.Cancel();
     cancellationTokenSource?.Dispose();
     timer.Dispose();
+
     GC.SuppressFinalize(this);
   }
 
@@ -80,9 +82,9 @@ public abstract class PeriodicBackgroundService<TService, TOptions>(
 
         Logger.LogPeriodicBackgroundServiceTriggered(serviceName);
         await DoWork(
-                Options.TriggerStopsCurrentExecution
-                    ? cancellationTokenSource!.Token
-                    : stoppingToken);
+          Options.TriggerStopsCurrentExecution
+            ? cancellationTokenSource!.Token
+            : stoppingToken);
       }
       catch (OperationCanceledException)
       {
