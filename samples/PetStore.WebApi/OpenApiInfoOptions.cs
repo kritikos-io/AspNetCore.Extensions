@@ -2,6 +2,7 @@
 
 using Kritikos.AspNetCore.MinimalApiExtensions.Contracts;
 using Kritikos.AspNetCore.OpenApiVersioningOptions.Options;
+using Kritikos.Extensions.Options.Contracts;
 
 public class MyOpenApiInfoOptions : OpenApiInfoOptions, IOptionsDefinition
 {

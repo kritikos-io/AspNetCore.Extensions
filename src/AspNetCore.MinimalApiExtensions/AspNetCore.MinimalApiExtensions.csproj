@@ -10,4 +10,8 @@
     <FrameworkReference Include="Microsoft.AspNetCore.App"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Extensions.Options.DependencyInjection\Extensions.Options.DependencyInjection.csproj" />
+  </ItemGroup>
+
 </Project>

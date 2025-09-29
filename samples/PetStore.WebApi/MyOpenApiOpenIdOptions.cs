@@ -2,6 +2,7 @@
 
 using Kritikos.AspNetCore.MinimalApiExtensions.Contracts;
 using Kritikos.AspNetCore.OpenApiOidcExtensions.Options;
+using Kritikos.Extensions.Options.Contracts;
 
 public class MyOpenApiOpenIdOptions : OpenApiOpenIdOptions, IOptionsDefinition
 {

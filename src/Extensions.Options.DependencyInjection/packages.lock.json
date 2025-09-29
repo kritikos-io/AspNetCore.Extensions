@@ -8,13 +8,27 @@
         "resolved": "6.4.0",
         "contentHash": "U3GowPObvH43MBoB+N9HmaP7R9DGOrrGwbuTZIfia6RSFi/7bApoT7RQFMA9QWpZ9pJF6TKysCaxcv7Qwzucqw=="
       },
-      "Microsoft.AspNetCore.OpenApi": {
+      "Microsoft.Extensions.Options.ConfigurationExtensions": {
         "type": "Direct",
         "requested": "[9.0.9, )",
         "resolved": "9.0.9",
-        "contentHash": "3Sina0gS/CTYt9XG6DUFPdXOmJui7e551U0kO2bIiDk3vZ2sctxxenN+cE1a5CrUpjIVZfZr32neWYYRO+Piaw==",
+        "contentHash": "n4DCdnn2qs6V5U06Sx62FySEAZsJiJJgOzrPHDh9hPK7c2W8hEabC76F3Re3tGPjpiKa02RvB6FxZyxo8iICzg==",
         "dependencies": {
-          "Microsoft.OpenApi": "1.6.17"
+          "Microsoft.Extensions.Configuration.Abstractions": "9.0.9",
+          "Microsoft.Extensions.Configuration.Binder": "9.0.9",
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.9",
+          "Microsoft.Extensions.Options": "9.0.9",
+          "Microsoft.Extensions.Primitives": "9.0.9"
+        }
+      },
+      "Microsoft.Extensions.Options.DataAnnotations": {
+        "type": "Direct",
+        "requested": "[9.0.9, )",
+        "resolved": "9.0.9",
+        "contentHash": "Al+1FXnKKFygTXz0Zsa1+jYEPvsx5dKavlJxMXjRbrL6lmBhQZsVMhjuNB5lWvdRhdoxt5y/Q3v5kbLZLsXWdA==",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.9",
+          "Microsoft.Extensions.Options": "9.0.9"
         }
       },
       "Microsoft.Extensions.Configuration.Abstractions": {
@@ -47,56 +61,14 @@
         "resolved": "9.0.9",
         "contentHash": "z4pyMePOrl733ltTowbN565PxBw1oAr8IHmIXNDiDqd22nFpYltX9KhrNC/qBWAG1/Zx5MHX+cOYhWJQYCO/iw=="
       },
-      "Microsoft.OpenApi": {
-        "type": "Transitive",
-        "resolved": "1.6.17",
-        "contentHash": "Le+kehlmrlQfuDFUt1zZ2dVwrhFQtKREdKBo+rexOwaCoYP0/qpgT9tLxCsZjsgR5Itk1UKPcbgO+FyaNid/bA=="
-      },
-      "Kritikos.AspNetCore.MinimalApiExtensions": {
-        "type": "Project",
-        "dependencies": {
-          "Kritikos.Extensions.Options.DependencyInjection": "[1.0.0, )"
-        }
-      },
       "Kritikos.Extensions.Options": {
         "type": "Project"
-      },
-      "Kritikos.Extensions.Options.DependencyInjection": {
-        "type": "Project",
-        "dependencies": {
-          "Kritikos.Extensions.Options": "[1.0.0, )",
-          "Microsoft.Extensions.Options.ConfigurationExtensions": "[9.0.9, )",
-          "Microsoft.Extensions.Options.DataAnnotations": "[9.0.9, )"
-        }
       },
       "Microsoft.Extensions.DependencyInjection.Abstractions": {
         "type": "CentralTransitive",
         "requested": "[9.0.9, )",
         "resolved": "9.0.9",
         "contentHash": "/hymojfWbE9AlDOa0mczR44m00Jj+T3+HZO0ZnVTI032fVycI0ZbNOVFP6kqZMcXiLSYXzR2ilcwaRi6dzeGyA=="
-      },
-      "Microsoft.Extensions.Options.ConfigurationExtensions": {
-        "type": "CentralTransitive",
-        "requested": "[9.0.9, )",
-        "resolved": "9.0.9",
-        "contentHash": "n4DCdnn2qs6V5U06Sx62FySEAZsJiJJgOzrPHDh9hPK7c2W8hEabC76F3Re3tGPjpiKa02RvB6FxZyxo8iICzg==",
-        "dependencies": {
-          "Microsoft.Extensions.Configuration.Abstractions": "9.0.9",
-          "Microsoft.Extensions.Configuration.Binder": "9.0.9",
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.9",
-          "Microsoft.Extensions.Options": "9.0.9",
-          "Microsoft.Extensions.Primitives": "9.0.9"
-        }
-      },
-      "Microsoft.Extensions.Options.DataAnnotations": {
-        "type": "CentralTransitive",
-        "requested": "[9.0.9, )",
-        "resolved": "9.0.9",
-        "contentHash": "Al+1FXnKKFygTXz0Zsa1+jYEPvsx5dKavlJxMXjRbrL6lmBhQZsVMhjuNB5lWvdRhdoxt5y/Q3v5kbLZLsXWdA==",
-        "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "9.0.9",
-          "Microsoft.Extensions.Options": "9.0.9"
-        }
       }
     }
   }

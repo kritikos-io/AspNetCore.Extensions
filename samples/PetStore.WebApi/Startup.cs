@@ -11,6 +11,7 @@ using Kritikos.AspNetCore.OpenApiOidcExtensions.DocumentTransformers;
 using Kritikos.AspNetCore.OpenApiVersioningOptions;
 using Kritikos.AspNetCore.OpenApiVersioningOptions.DocumentTransformers;
 using Kritikos.AspNetCore.VersioningOptions;
+using Kritikos.Extensions.Options.DependencyInjection;
 
 using Microsoft.Extensions.Options;
 using Microsoft.FeatureManagement;
