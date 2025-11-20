@@ -30,11 +30,13 @@ public class FeatureGateEndpointFilter
       throw new ArgumentException("The provided features must be enums.", nameof(features));
     }
 
-    List<string> featureStrings = [];
-    featureStrings.AddRange([.. features
-      .Select(static feature => Enum.GetName(feature.GetType(), feature))
-      .OfType<string>()
-      .Where(static x => !string.IsNullOrWhiteSpace(x))]);
+    List<string> featureStrings =
+    [
+      .. features
+        .Select(static feature => Enum.GetName(feature.GetType(), feature))
+        .OfType<string>()
+        .Where(static x => !string.IsNullOrWhiteSpace(x)),
+    ];
 
     Features = featureStrings;
     RequirementType = requirementType;
@@ -52,12 +54,12 @@ public class FeatureGateEndpointFilter
   }
 
   /// <summary>
-  /// The name of the features that the feature attribute will activate for.
+  /// Gets the name of the features that the feature attribute will activate for.
   /// </summary>
   public IEnumerable<string> Features { get; }
 
   /// <summary>
-  /// Controls whether any or all features in <see cref="Microsoft.FeatureManagement.Mvc.FeatureGateAttribute.Features" /> should be enabled to pass.
+  /// Gets the requirement type for <see cref="Microsoft.FeatureManagement.Mvc.FeatureGateAttribute.Features" /> that should be enabled to pass.
   /// </summary>
   public RequirementType RequirementType { get; }
 

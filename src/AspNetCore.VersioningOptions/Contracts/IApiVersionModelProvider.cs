@@ -1,4 +1,5 @@
 namespace Kritikos.AspNetCore.VersioningOptions.Contracts;
+#pragma warning disable SA1402
 
 using Asp.Versioning;
 using Asp.Versioning.Builder;

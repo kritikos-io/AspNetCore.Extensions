@@ -16,19 +16,6 @@ public static class KritikosExtensionsNamedOptionsDependencyInjection
     typeof(KritikosExtensionsNamedOptionsDependencyInjection)
       .GetMethod(nameof(AddOptionsDefinition), BindingFlags.Static | BindingFlags.Public);
 
-  private static Action<IServiceCollection>? BuildOptionsDefinitionInvoker(Type optionsType)
-  {
-    var closedMethod = AddOptionsDefinitionMethodInfo?.MakeGenericMethod(optionsType);
-    if (closedMethod is null)
-    {
-      return null;
-    }
-
-    var servicesParameter = Expression.Parameter(typeof(IServiceCollection), "services");
-    var call = Expression.Call(closedMethod, servicesParameter);
-    return Expression.Lambda<Action<IServiceCollection>>(call, servicesParameter).Compile();
-  }
-
   public static IServiceCollection AddOptionsDefinition<TOptions>(this IServiceCollection services)
     where TOptions : class, INamedOptionsDefinition
   {
@@ -60,5 +47,18 @@ public static class KritikosExtensionsNamedOptionsDependencyInjection
     }
 
     return services;
+  }
+
+  private static Action<IServiceCollection>? BuildOptionsDefinitionInvoker(Type optionsType)
+  {
+    var closedMethod = AddOptionsDefinitionMethodInfo?.MakeGenericMethod(optionsType);
+    if (closedMethod is null)
+    {
+      return null;
+    }
+
+    var servicesParameter = Expression.Parameter(typeof(IServiceCollection), "services");
+    var call = Expression.Call(closedMethod, servicesParameter);
+    return Expression.Lambda<Action<IServiceCollection>>(call, servicesParameter).Compile();
   }
 }

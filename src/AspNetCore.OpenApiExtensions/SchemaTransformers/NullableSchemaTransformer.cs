@@ -6,7 +6,9 @@ using Microsoft.OpenApi.Models;
 public class NullableSchemaTransformer : IOpenApiSchemaTransformer
 {
   /// <inheritdoc />
-  public Task TransformAsync(OpenApiSchema schema, OpenApiSchemaTransformerContext context,
+  public Task TransformAsync(
+    OpenApiSchema schema,
+    OpenApiSchemaTransformerContext context,
     CancellationToken cancellationToken)
   {
     ArgumentNullException.ThrowIfNull(schema);

@@ -17,7 +17,9 @@ public class FeatureFilterDocumentTransformer(IFeatureManager featureManager)
   private readonly IFeatureManager featureManager = featureManager;
 
   /// <inheritdoc />
-  public async Task TransformAsync(OpenApiDocument document, OpenApiDocumentTransformerContext context,
+  public async Task TransformAsync(
+    OpenApiDocument document,
+    OpenApiDocumentTransformerContext context,
     CancellationToken cancellationToken)
   {
     ArgumentNullException.ThrowIfNull(document);

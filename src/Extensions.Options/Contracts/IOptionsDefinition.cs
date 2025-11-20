@@ -1,9 +1,10 @@
 ﻿namespace Kritikos.Extensions.Options.Contracts;
+#pragma warning disable SA1402
 
 public interface IOptionsDefinition
 {
   /// <summary>
-  /// The location of the options in the configuration.
+  /// Gets the name of the section containing the options in the configuration.
   /// </summary>
   static abstract string Location { get; }
 }

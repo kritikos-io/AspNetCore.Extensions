@@ -32,7 +32,6 @@ public class SimpleVersionTests
     Assert.Null(semanticVersion.BuildMetadata);
   }
 
-
   [Fact]
   public void Version_with_prerelease_only_is_parsed()
   {

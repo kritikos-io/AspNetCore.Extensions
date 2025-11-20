@@ -9,7 +9,8 @@ public class OpenIdConnectClientCredentialsHandler(OpenIdConnectTokenProvider to
   private readonly OpenIdConnectTokenProvider tokenProvider = tokenProvider;
 
   /// <inheritdoc />
-  protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
+  protected override async Task<HttpResponseMessage> SendAsync(
+    HttpRequestMessage request,
     CancellationToken cancellationToken)
   {
     ArgumentNullException.ThrowIfNull(request);

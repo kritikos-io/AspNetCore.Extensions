@@ -1,6 +1,5 @@
 ﻿namespace Kritikos.PetStore.WebApi;
 
-using Kritikos.AspNetCore.MinimalApiExtensions.Contracts;
 using Kritikos.AspNetCore.OpenApiOidcExtensions.Options;
 using Kritikos.Extensions.Options.Contracts;
 

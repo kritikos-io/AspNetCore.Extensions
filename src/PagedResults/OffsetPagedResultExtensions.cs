@@ -84,7 +84,6 @@ public static class OffsetPagedResultExtensions
       CancellationToken cancellationToken = default)
       where TSource : class
       where TDestination : class
-
   {
     if (!source.TryGetNonEnumeratedCount(out var count))
     {

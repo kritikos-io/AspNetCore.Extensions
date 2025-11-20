@@ -59,6 +59,8 @@ public class Startup : IWebApplicationStartup
   /// <inheritdoc />
   public void Configure(WebApplication app)
   {
+    ArgumentNullException.ThrowIfNull(app);
+
     app.AddApiVersionSet<Program>(static options => options
       .ReportApiVersions());
 
@@ -91,7 +93,8 @@ public class Startup : IWebApplicationStartup
       .IsApiVersionNeutral()
       .MapGet("versions", static (ApiVersionModel versions) =>
       {
-        var result = new VersionDto([.. versions.SupportedApiVersions.Select(static x => $"v{x}")],
+        var result = new VersionDto(
+          [.. versions.SupportedApiVersions.Select(static x => $"v{x}")],
           [.. versions.DeprecatedApiVersions.Select(static x => $"v{x}")]);
         return TypedResults.Ok(result);
       });
@@ -100,5 +103,3 @@ public class Startup : IWebApplicationStartup
     app.MapEndpoints();
   }
 }
-
-public record VersionDto(ICollection<string> SupportedVersions, ICollection<string> DeprecatedVersions);

@@ -16,14 +16,17 @@ public sealed class OidcSecuritySchemeTransformer<TOpenIdOptions>(
   private readonly IHttpClientFactory clientFactory = clientFactory;
   private readonly TOpenIdOptions options = options.Value;
 
-  public async Task TransformAsync(OpenApiDocument document, OpenApiDocumentTransformerContext context,
+  public async Task TransformAsync(
+    OpenApiDocument document,
+    OpenApiDocumentTransformerContext context,
     CancellationToken cancellationToken)
   {
     ArgumentNullException.ThrowIfNull(document);
 
     document.Components ??= new OpenApiComponents();
     using var client = clientFactory.CreateClient();
-    var response = await client.GetStringAsync(new Uri($"{options.Authority}/.well-known/openid-configuration"),
+    var response = await client.GetStringAsync(
+      new Uri($"{options.Authority}/.well-known/openid-configuration"),
       cancellationToken);
     var oidc = OpenIdConnectConfiguration.Create(response);
 
@@ -54,7 +57,7 @@ public sealed class OidcSecuritySchemeTransformer<TOpenIdOptions>(
     document.SecurityRequirements.Add(new OpenApiSecurityRequirement()
     {
       [new OpenApiSecurityScheme { Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "openid" } }] =
-        ["openid", "profile", "email"]
+        ["openid", "profile", "email"],
     });
   }
 }

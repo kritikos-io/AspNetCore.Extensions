@@ -20,31 +20,74 @@ public record SemanticVersionDescriptor : IComparable<SemanticVersionDescriptor>
   }
 
   /// <summary>
-  /// Changes denote backward-incompatible API changes.
+  /// Gets the Major version number.
   /// </summary>
+  /// <remarks>
+  /// Changes denote backward-incompatible API changes.
+  /// </remarks>
   public int Major { get; internal init; }
 
   /// <summary>
-  /// Changes denote backward-compatible functionality.
+  /// Gets the Minor version number.
   /// </summary>
+  /// <remarks>
+  /// Changes denote backward-compatible functionality.
+  /// </remarks>
   public int Minor { get; internal init; }
 
   /// <summary>
-  /// Changes denote backward-compatible bug fixes.
+  /// Gets the Patch version number.
   /// </summary>
+  /// <remarks>
+  /// Changes denote backward-compatible bug fixes.
+  /// </remarks>
   public int Patch { get; internal init; }
 
   public PreReleaseMetadataDescriptor? PreReleaseMetadata { get; init; }
 
   public BuildMetadataDescriptor? BuildMetadata { get; init; }
 
+  public static bool operator >=(SemanticVersionDescriptor left, SemanticVersionDescriptor right)
+  {
+    ArgumentNullException.ThrowIfNull(left);
+    ArgumentNullException.ThrowIfNull(right);
+
+    return left.CompareTo(right) >= 0;
+  }
+
+  public static bool operator <=(SemanticVersionDescriptor left, SemanticVersionDescriptor right)
+  {
+    ArgumentNullException.ThrowIfNull(left);
+    ArgumentNullException.ThrowIfNull(right);
+
+    return left.CompareTo(right) <= 0;
+  }
+
+  public static bool operator <(SemanticVersionDescriptor left, SemanticVersionDescriptor right)
+  {
+    ArgumentNullException.ThrowIfNull(left);
+    ArgumentNullException.ThrowIfNull(right);
+
+    return left.CompareTo(right) < 0;
+  }
+
+  public static bool operator >(SemanticVersionDescriptor left, SemanticVersionDescriptor right)
+  {
+    ArgumentNullException.ThrowIfNull(left);
+    ArgumentNullException.ThrowIfNull(right);
+
+    return left.CompareTo(right) > 0;
+  }
+
   [ExcludeFromCodeCoverage]
-  public static SemanticVersionDescriptor FromType(Type type) => FromAssembly(type.Assembly);
+  public static SemanticVersionDescriptor FromType(Type? type) =>
+    FromAssembly(type?.Assembly ?? throw new ArgumentNullException(nameof(type)));
 
   [ExcludeFromCodeCoverage]
   public static SemanticVersionDescriptor FromAssembly(Assembly assembly)
   {
-    var informationalVersion = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? string.Empty;
+    var informationalVersion =
+      assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion ?? string.Empty;
     return FromInformationalVersion(informationalVersion);
   }
 
@@ -54,7 +97,9 @@ public record SemanticVersionDescriptor : IComparable<SemanticVersionDescriptor>
 
     if (!match.Success)
     {
-      throw new ArgumentException("The provided version string is not in a valid format.", nameof(informationalVersion));
+      throw new ArgumentException(
+        "The provided version string is not in a valid format.",
+        nameof(informationalVersion));
     }
 
     var major = int.Parse(match.Groups["Major"].Value, CultureInfo.InvariantCulture);
@@ -62,19 +107,24 @@ public record SemanticVersionDescriptor : IComparable<SemanticVersionDescriptor>
     var patch = int.Parse(match.Groups["Patch"].Value, CultureInfo.InvariantCulture);
 
     var prerelease = string.IsNullOrEmpty(match.Groups["PreRelease"].Value)
-        ? null
-        : new PreReleaseMetadataDescriptor()
-        {
-          Tag = match.Groups["Tag"].Value,
-          CommitCounter = match.Groups["Counter"].Success
-              ? int.Parse(match.Groups["Counter"].Value, CultureInfo.InvariantCulture)
-              : null,
-          OriginalContent = match.Groups["PreRelease"].Value,
-        };
+      ? null
+      : new PreReleaseMetadataDescriptor()
+      {
+        Tag = match.Groups["Tag"].Value,
+        CommitCounter = match.Groups["Counter"].Success
+          ? int.Parse(match.Groups["Counter"].Value, CultureInfo.InvariantCulture)
+          : null,
+        OriginalContent = match.Groups["PreRelease"].Value,
+      };
 
     var buildMetadata = string.IsNullOrEmpty(match.Groups["BuildMetadata"].Value)
-        ? null
-        : new BuildMetadataDescriptor { Branch = match.Groups["Branch"].Value, Sha1 = match.Groups["Sha"].Value, OriginalContent = match.Groups["BuildMetadata"].Value };
+      ? null
+      : new BuildMetadataDescriptor
+      {
+        Branch = match.Groups["Branch"].Value,
+        Sha1 = match.Groups["Sha"].Value,
+        OriginalContent = match.Groups["BuildMetadata"].Value,
+      };
 
     return new SemanticVersionDescriptor
     {
@@ -110,32 +160,20 @@ public record SemanticVersionDescriptor : IComparable<SemanticVersionDescriptor>
     return saneVersion;
   }
 
-  public static bool operator >=(SemanticVersionDescriptor left, SemanticVersionDescriptor right)
-    => left.CompareTo(right) >= 0;
-
-  public static bool operator <=(SemanticVersionDescriptor left, SemanticVersionDescriptor right)
-    => left.CompareTo(right) <= 0;
-
-  public static bool operator <(SemanticVersionDescriptor left, SemanticVersionDescriptor right)
-    => left.CompareTo(right) < 0;
-
-  public static bool operator >(SemanticVersionDescriptor left, SemanticVersionDescriptor right)
-    => left.CompareTo(right) > 0;
-
   /// <inheritdoc />
   public int CompareTo(SemanticVersionDescriptor? other)
   {
     int result;
 
     return ReferenceEquals(this, other)
-        ? 0
-        : other is null
-            ? -1
-            : (result = Major.CompareTo(other.Major)) != 0
-              || (result = Minor.CompareTo(other.Minor)) != 0
-              || (result = Patch.CompareTo(other.Patch)) != 0
-                ? result
-                : PreReleaseMetadata?.CompareTo(other.PreReleaseMetadata) ?? 1;
+      ? 0
+      : other is null
+        ? -1
+        : (result = Major.CompareTo(other.Major)) != 0
+          || (result = Minor.CompareTo(other.Minor)) != 0
+          || (result = Patch.CompareTo(other.Patch)) != 0
+          ? result
+          : PreReleaseMetadata?.CompareTo(other.PreReleaseMetadata) ?? 1;
   }
 
   /// <inheritdoc />

@@ -11,57 +11,62 @@ using Microsoft.Extensions.DependencyInjection;
 
 public static class KritikosApiVersioningDependencyInjectionExtensions
 {
-  /// <summary>
-  /// Adds opinionated default options for api versioning.
-  /// </summary>
   /// <param name="services"><see cref="IServiceCollection"/> to configure.</param>
-  /// <exception cref="ArgumentNullException"><paramref name="services"/> are null.</exception>
-  /// <returns>The configured <see cref="IServiceCollection"/>.</returns>
-  public static IServiceCollection AddApiVersioningDefaults(this IServiceCollection services)
+  extension(IServiceCollection services)
   {
-    ArgumentNullException.ThrowIfNull(services);
+    /// <summary>
+    /// Adds opinionated default options for api versioning.
+    /// </summary>
+    /// <exception cref="ArgumentNullException"><paramref name="services"/> are null.</exception>
+    /// <returns>The configured <see cref="IServiceCollection"/>.</returns>
+    public IServiceCollection AddApiVersioningDefaults()
+    {
+      ArgumentNullException.ThrowIfNull(services);
 
-    services
-      .AddApiVersioning()
-      .AddApiExplorer()
-      .EnableApiVersionBinding();
+      services
+        .AddApiVersioning()
+        .AddApiExplorer()
+        .EnableApiVersionBinding();
 
-    services.ConfigureOptions<ApiVersioningDefaultOptions>();
+      services.ConfigureOptions<ApiVersioningDefaultOptions>();
 
-    return services;
+      return services;
+    }
+
+    public IServiceCollection AddApiVersionModelProvider<TVersionModelProvider>()
+      where TVersionModelProvider : IApiVersionModelProvider
+    {
+      ArgumentNullException.ThrowIfNull(services);
+      services.AddSingleton(TVersionModelProvider.VersionModel);
+      return services;
+    }
+
+    public IServiceCollection AddApiVersionSetProvider<TVersionSetProvider>()
+      where TVersionSetProvider : IApiVersionSetProvider
+    {
+      ArgumentNullException.ThrowIfNull(services);
+      services.AddSingleton<ApiVersionSet>(static _ => TVersionSetProvider.VersionSet);
+      return services;
+    }
   }
 
-  public static IServiceCollection AddApiVersionModelProvider<TVersionModelProvider>(this IServiceCollection services)
-    where TVersionModelProvider : IApiVersionModelProvider
+  extension(WebApplication app)
   {
-    ArgumentNullException.ThrowIfNull(services);
-    services.AddSingleton(TVersionModelProvider.VersionModel);
-    return services;
-  }
+    public WebApplication AddApiVersionSet<TVersionSetProvider>(
+      Action<ApiVersionSetBuilder>? setupAction = null)
+      where TVersionSetProvider : IApiVersionSetProvider
+    {
+      ArgumentNullException.ThrowIfNull(app);
+      var versionModel = app.Services.GetRequiredService<ApiVersionModel>();
 
-  public static IServiceCollection AddApiVersionSetProvider<TVersionSetProvider>(
-    this IServiceCollection services)
-    where TVersionSetProvider : IApiVersionSetProvider
-  {
-    ArgumentNullException.ThrowIfNull(services);
-    services.AddSingleton<ApiVersionSet>(static _ => TVersionSetProvider.VersionSet);
-    return services;
-  }
+      var set = app.NewApiVersionSet()
+        .HasApiVersions(versionModel.SupportedApiVersions)
+        .HasDeprecatedApiVersions(versionModel.DeprecatedApiVersions);
 
-  public static WebApplication AddApiVersionSet<TVersionSetProvider>(this WebApplication app,
-    Action<ApiVersionSetBuilder>? setupAction = null)
-    where TVersionSetProvider : IApiVersionSetProvider
-  {
-    ArgumentNullException.ThrowIfNull(app);
-    var versionModel = app.Services.GetRequiredService<ApiVersionModel>();
+      setupAction?.Invoke(set);
+      TVersionSetProvider.VersionSet = set.Build();
 
-    var set = app.NewApiVersionSet()
-      .HasApiVersions(versionModel.SupportedApiVersions)
-      .HasDeprecatedApiVersions(versionModel.DeprecatedApiVersions);
-
-    setupAction?.Invoke(set);
-    TVersionSetProvider.VersionSet = set.Build();
-
-    return app;
+      return app;
+    }
   }
 }

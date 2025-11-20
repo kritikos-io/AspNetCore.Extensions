@@ -12,21 +12,24 @@ using Microsoft.Extensions.Primitives;
 using Microsoft.OpenApi.Models;
 
 public class ApiVersionDocumentTransformer<TApiInfoOptions>(
-    IOptions<TApiInfoOptions> options,
-    IApiVersionDescriptionProvider versionProvider)
-    : IOpenApiDocumentTransformer
-    where TApiInfoOptions : OpenApiInfoOptions
+  IOptions<TApiInfoOptions> options,
+  IApiVersionDescriptionProvider versionProvider)
+  : IOpenApiDocumentTransformer
+  where TApiInfoOptions : OpenApiInfoOptions
 {
   private readonly IApiVersionDescriptionProvider versionProvider = versionProvider;
   private readonly TApiInfoOptions options = options.Value;
 
   /// <inheritdoc />
-  public Task TransformAsync(OpenApiDocument document, OpenApiDocumentTransformerContext context, CancellationToken cancellationToken)
+  public Task TransformAsync(
+    OpenApiDocument document,
+    OpenApiDocumentTransformerContext context,
+    CancellationToken cancellationToken)
   {
     ArgumentNullException.ThrowIfNull(document);
 
     var apiDescription = versionProvider.ApiVersionDescriptions
-        .SingleOrDefault(x => x.GroupName == context.DocumentName);
+      .SingleOrDefault(x => x.GroupName == context.DocumentName);
     if (apiDescription == null)
     {
       return Task.CompletedTask;
@@ -70,12 +73,11 @@ public class ApiVersionDocumentTransformer<TApiInfoOptions>(
       if (text.Length > 0)
       {
         text.Append(' ');
-
       }
 
       text.Append("This API version will be sunset on ")
-          .Append(when.Date.ToShortDateString())
-          .Append('.');
+        .Append(when.Date.ToShortDateString())
+        .Append('.');
     }
 
     if (policy.HasLinks)
@@ -95,9 +97,9 @@ public class ApiVersionDocumentTransformer<TApiInfoOptions>(
         text.Append(link.LinkTarget.OriginalString);
         text.Append("\">");
         text.Append(
-            StringSegment.IsNullOrEmpty(link.Title)
-                ? link.LinkTarget.OriginalString
-                : link.Title.ToString());
+          StringSegment.IsNullOrEmpty(link.Title)
+            ? link.LinkTarget.OriginalString
+            : link.Title.ToString());
         text.Append("</a></li>");
       }
 

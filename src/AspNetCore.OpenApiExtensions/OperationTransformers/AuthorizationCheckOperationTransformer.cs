@@ -9,7 +9,9 @@ using Microsoft.OpenApi.Models;
 public class AuthorizationCheckOperationTransformer : IOpenApiOperationTransformer
 {
   /// <inheritdoc />
-  public Task TransformAsync(OpenApiOperation operation, OpenApiOperationTransformerContext context,
+  public Task TransformAsync(
+    OpenApiOperation operation,
+    OpenApiOperationTransformerContext context,
     CancellationToken cancellationToken)
   {
     ArgumentNullException.ThrowIfNull(operation);
@@ -27,7 +29,7 @@ public class AuthorizationCheckOperationTransformer : IOpenApiOperationTransform
 
     var oAuthScheme = new OpenApiSecurityScheme
     {
-      Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "openid" }
+      Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "openid" },
     };
 
     operation.Security = [new() { [oAuthScheme] = ["openid"] }];

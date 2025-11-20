@@ -19,6 +19,5 @@ public abstract class OpenApiInfoOptions
 
   public string LicenseName { get; set; } = "Apache License, Version 2.0";
 
-  //[Url]
   public Uri LicenseUrl { get; set; } = new Uri("https://opensource.org/license/apache-2-0");
 }

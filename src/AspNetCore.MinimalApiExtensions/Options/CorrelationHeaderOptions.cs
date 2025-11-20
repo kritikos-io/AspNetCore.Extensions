@@ -1,6 +1,5 @@
 ﻿namespace Kritikos.AspNetCore.MinimalApiExtensions.Options;
 
-using Kritikos.AspNetCore.MinimalApiExtensions.Contracts;
 using Kritikos.Extensions.Options.Contracts;
 
 public class CorrelationHeaderOptions : IOptionsDefinition

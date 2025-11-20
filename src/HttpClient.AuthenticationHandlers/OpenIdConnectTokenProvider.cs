@@ -1,7 +1,6 @@
 namespace Kritikos.HttpClient.AuthenticationHandlers;
 
 using System.Net.Http.Json;
-using System.Text.Json;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
@@ -19,7 +18,7 @@ public partial class OpenIdConnectTokenProvider(
     new("grant_type", "client_credentials"),
     new("client_id", options.ClientId),
     new("client_secret", options.ClientSecret),
-    new("scope", "offline_access")
+    new("scope", "offline_access"),
   ];
 
   private OpenIdConnectConfiguration? discoveryDocument;

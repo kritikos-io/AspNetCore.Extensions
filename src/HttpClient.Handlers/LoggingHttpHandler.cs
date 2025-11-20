@@ -9,7 +9,8 @@ public partial class LoggingHttpHandler(ILogger<LoggingHttpHandler> logger) : De
   private ILogger logger = logger;
 
   /// <inheritdoc />
-  protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
+  protected override async Task<HttpResponseMessage> SendAsync(
+    HttpRequestMessage request,
     CancellationToken cancellationToken)
   {
     ArgumentNullException.ThrowIfNull(request);

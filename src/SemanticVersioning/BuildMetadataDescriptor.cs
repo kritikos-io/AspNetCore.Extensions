@@ -12,8 +12,9 @@ public record BuildMetadataDescriptor
   {
   }
 
-  internal string OriginalContent { get; set; } = string.Empty;
-
   public string Branch { get; init; } = string.Empty;
+
   public string Sha1 { get; init; } = string.Empty;
+
+  internal string OriginalContent { get; set; } = string.Empty;
 }

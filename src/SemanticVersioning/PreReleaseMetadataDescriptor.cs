@@ -12,11 +12,11 @@ public record PreReleaseMetadataDescriptor : IComparable<PreReleaseMetadataDescr
   {
   }
 
-  internal string OriginalContent { get; set; } = string.Empty;
-
   public string Tag { get; internal init; } = string.Empty;
 
   public int? CommitCounter { get; internal init; }
+
+  internal string OriginalContent { get; set; } = string.Empty;
 
   public static bool operator >=(PreReleaseMetadataDescriptor? left, PreReleaseMetadataDescriptor? right)
     => left?.CompareTo(right) >= 0;
