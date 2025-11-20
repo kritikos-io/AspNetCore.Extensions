@@ -26,6 +26,7 @@ public class Startup : IWebApplicationStartup
     ArgumentNullException.ThrowIfNull(builder);
 
     builder.Services.AddEndpoints(typeof(Startup));
+    builder.Services.AddValidation();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddMvcCore();
 
