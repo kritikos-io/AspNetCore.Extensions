@@ -187,6 +187,7 @@ public record SemanticVersionDescriptor : IComparable<SemanticVersionDescriptor>
                && PreReleaseMetadata == other.PreReleaseMetadata);
   }
 
+  /// <inheritdoc />
   public override int GetHashCode()
     => HashCode.Combine(Major, Minor, Patch, PreReleaseMetadata);
 }

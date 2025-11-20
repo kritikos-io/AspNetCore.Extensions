@@ -3,22 +3,37 @@
 using System.Reflection;
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 public static class DependencyInjectionExtensions
 {
-  public static IServiceCollection AddSemanticVersionDescriptor(this IServiceCollection services, Assembly assembly)
+  /// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>
+  extension(IServiceCollection services)
   {
-    ArgumentNullException.ThrowIfNull(services);
-    services.AddSingleton(SemanticVersionDescriptor.FromAssembly(assembly));
+    /// <summary>
+    /// Registers a <see cref="SemanticVersionDescriptor"/> that is created from the <see cref="AssemblyInformationalVersionAttribute"/> of the provided assembly.
+    /// </summary>
+    /// <param name="assembly">The assembly that will provide the version number.</param>
+    /// <returns>The configured <see cref="IServiceCollection"/>.</returns>
+    public IServiceCollection AddSemanticVersionDescriptor(Assembly assembly)
+    {
+      ArgumentNullException.ThrowIfNull(services);
+      services.TryAddSingleton(SemanticVersionDescriptor.FromAssembly(assembly));
 
-    return services;
-  }
+      return services;
+    }
 
-  public static IServiceCollection AddSemanticVersionDescriptor(this IServiceCollection services, Type type)
-  {
-    ArgumentNullException.ThrowIfNull(services);
-    services.AddSingleton(SemanticVersionDescriptor.FromType(type));
+    /// <summary>
+    /// Registers a <see cref="SemanticVersionDescriptor"/> that is created from the <see cref="AssemblyInformationalVersionAttribute"/> of the assembly containing the provided type.
+    /// </summary>
+    /// <param name="type">A type contained in the assembly that should provide the version number.</param>
+    /// <returns>The configured <see cref="IServiceCollection"/>.</returns>
+    public IServiceCollection AddSemanticVersionDescriptor(Type type)
+    {
+      ArgumentNullException.ThrowIfNull(services);
+      services.TryAddSingleton(SemanticVersionDescriptor.FromType(type));
 
-    return services;
+      return services;
+    }
   }
 }

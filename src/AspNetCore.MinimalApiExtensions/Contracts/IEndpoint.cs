@@ -2,6 +2,9 @@
 
 using Microsoft.AspNetCore.Routing;
 
+/// <summary>
+/// Describes Minimal API endpoint classes.
+/// </summary>
 public interface IEndpoint
 {
   /// <summary>
