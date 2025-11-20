@@ -18,7 +18,7 @@ public class SessionFeatureManager(IHttpContextAccessor accessor)
       [
         enabled
           ? (byte)1
-          : (byte)0
+          : (byte)0,
       ]);
 
     return Task.CompletedTask;

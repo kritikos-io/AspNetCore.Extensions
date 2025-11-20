@@ -55,7 +55,7 @@ public static class KritikosAspNetCoreDependencyInjectionsExtensions
     /// Registers all implementations of <see cref="IEndpoint"/> in the provided assembly.
     /// </summary>
     /// <param name="assemblyType">A type in the assembly to scan for <see cref="IEndpoint"/> implementations.</param>
-    /// <exception cref="ArgumentNullException"><paramref name="services"/> or <paramref name="assemblyType"/> are null.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="assemblyType"/> is null.</exception>
     /// <returns>The configured <see cref="IServiceCollection"/>.</returns>
     public IServiceCollection AddEndpoints(Type assemblyType)
     {
@@ -69,7 +69,7 @@ public static class KritikosAspNetCoreDependencyInjectionsExtensions
     /// Registers all implementations of <see cref="IEndpoint"/> in the provided assembly.
     /// </summary>
     /// <param name="assembly">The assembly to scan for <see cref="IEndpoint"/> implementations.</param>
-    /// <exception cref="ArgumentNullException"><paramref name="services"/> or <paramref name="assembly"/> are null.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="assembly"/> is null.</exception>
     /// <returns>The configured <see cref="IServiceCollection"/>.</returns>
     public IServiceCollection AddEndpoints(Assembly assembly)
     {

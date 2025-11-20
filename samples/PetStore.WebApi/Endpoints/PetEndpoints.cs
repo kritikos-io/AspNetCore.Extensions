@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 
 using Kritikos.AspNetCore.MinimalApiExtensions.Contracts;
 using Kritikos.AspNetCore.MinimalApiExtensions.Filters;
-using Kritikos.PetStore.WebApi.Controllers;
 using Kritikos.PetStore.WebApi.Models.V1;
 using Kritikos.PetStore.WebApi.Models.V2;
 
