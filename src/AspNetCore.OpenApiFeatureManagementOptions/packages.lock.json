@@ -4,9 +4,9 @@
     "net10.0": {
       "GitVersion.MsBuild": {
         "type": "Direct",
-        "requested": "[6.6.2, )",
-        "resolved": "6.6.2",
-        "contentHash": "AnfiVvvmXStZdGr11XcD8aesZiKKxGOr6iq+RJ5Sv5vTZGjSyL8F/BvPEvduXqO1pTsEcwtA63oN6tKQpeGa0A=="
+        "requested": "[6.7.0, )",
+        "resolved": "6.7.0",
+        "contentHash": "0W5NHnfnogX0pfidRcJfqzfb8Yc/avBfq1qVuaHiHIjbtsjKHt9IFtt18p/ttCCeJlJe9fQliQ3pSkZQcibXlw=="
       },
       "Microsoft.Sbom.Targets": {
         "type": "Direct",

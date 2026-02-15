@@ -4,9 +4,9 @@
     "net10.0": {
       "GitVersion.MsBuild": {
         "type": "Direct",
-        "requested": "[6.6.2, )",
-        "resolved": "6.6.2",
-        "contentHash": "AnfiVvvmXStZdGr11XcD8aesZiKKxGOr6iq+RJ5Sv5vTZGjSyL8F/BvPEvduXqO1pTsEcwtA63oN6tKQpeGa0A=="
+        "requested": "[6.7.0, )",
+        "resolved": "6.7.0",
+        "contentHash": "0W5NHnfnogX0pfidRcJfqzfb8Yc/avBfq1qVuaHiHIjbtsjKHt9IFtt18p/ttCCeJlJe9fQliQ3pSkZQcibXlw=="
       },
       "Microsoft.AspNetCore.OpenApi": {
         "type": "Direct",
@@ -16,12 +16,6 @@
         "dependencies": {
           "Microsoft.OpenApi": "1.6.17"
         }
-      },
-      "Microsoft.Extensions.ApiDescription.Server": {
-        "type": "Direct",
-        "requested": "[10.0.5, )",
-        "resolved": "10.0.5",
-        "contentHash": "Lx8zu/RWUAuPuDfM4S3AeXGNu50G/oDMw2MIWRsZPm+giT0iChOGln6ezM5CEuI7SS2IKOPmAp+ry4pMBv/r/w=="
       },
       "Microsoft.Sbom.Targets": {
         "type": "Direct",
