@@ -12,6 +12,8 @@ using Kritikos.PetStore.WebApi.Models.V2;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 
+using Xunit;
+
 public class EndpointVersioningTests
     : IClassFixture<WebApplicationFactory<Program>>
 {

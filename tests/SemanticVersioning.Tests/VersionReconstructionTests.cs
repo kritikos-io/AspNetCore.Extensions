@@ -1,5 +1,7 @@
 namespace Kritikos.SemanticVersioning.Tests;
 
+using Xunit;
+
 public class VersionReconstructionTests
 {
   private const int Major = 1;
