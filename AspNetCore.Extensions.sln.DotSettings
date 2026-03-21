@@ -30,7 +30,7 @@
 	<s:String x:Key="/Default/CodeInspection/XmlDocInspections/TypeAccessibility/@EntryValue">None</s:String>
 	<s:String x:Key="/Default/CodeInspection/XmlDocInspections/TypeMemberAccessibility/@EntryValue">None</s:String>
   <s:Boolean x:Key="/Default/CodeStyle/CodeFormatting/CommonFormatter/AUTODETECT_INDENT_SETTINGS/@EntryValue">True</s:Boolean>
-  <s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/ALIGNMENT_TAB_FILL_STYLE/@EntryValue">USE_TABS_ONLY</s:String>
+  <s:String x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/ALIGNMENT_TAB_FILL_STYLE/@EntryValue">USE_SPACES</s:String>
   <s:Int64 x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/BLANK_LINES_AROUND_REGION/@EntryValue">0</s:Int64>
   <s:Int64 x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/BLANK_LINES_BEFORE_SINGLE_LINE_COMMENT/@EntryValue">1</s:Int64>
   <s:Int64 x:Key="/Default/CodeStyle/CodeFormatting/CSharpFormat/BLANK_LINES_BETWEEN_USING_GROUPS/@EntryValue">1</s:Int64>
@@ -111,5 +111,10 @@
   <s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002ECSharpUseContinuousIndentInsideBracesMigration/@EntryIndexedValue">True</s:Boolean>
   <s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002ESettingsUpgrade_002EMigrateBlankLinesAroundFieldToBlankLinesAroundProperty/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EPsi_002ECSharp_002ECodeStyle_002ESettingsUpgrade_002EPredefinedNamingRulesToUserRulesUpgrade/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/SettingsMigration/IsMigratorApplied/=JetBrains_002EReSharper_002EUnitTestFramework_002EMigrations_002EEnableDisabledProvidersMigration/@EntryIndexedValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/UnitTesting/DisabledProviders/=Testing_0020Platform/@EntryIndexedValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/UnitTesting/DisabledProviders/=VsTest/@EntryIndexedValue">False</s:Boolean>
+	<s:Boolean x:Key="/Default/Environment/UnitTesting/TestingPlatformTestProvider/IgnoreProjectsSupportedByOtherProviders/@EntryValue">False</s:Boolean>
+
   <s:Boolean x:Key="/Default/ReSpeller/ReSpellerEnabled/@EntryValue">False</s:Boolean>
 </wpf:ResourceDictionary>

@@ -4,9 +4,9 @@
     "net10.0": {
       "GitVersion.MsBuild": {
         "type": "Direct",
-        "requested": "[6.5.0, )",
-        "resolved": "6.5.0",
-        "contentHash": "OYBNhjZd8GcUusZWkoVCSFNujzG9fINpWi59YCax+6DXLJciu1RNC+TXSspgrACR6FMUdVDNqKNMHzB7B+X+jQ=="
+        "requested": "[6.6.2, )",
+        "resolved": "6.6.2",
+        "contentHash": "AnfiVvvmXStZdGr11XcD8aesZiKKxGOr6iq+RJ5Sv5vTZGjSyL8F/BvPEvduXqO1pTsEcwtA63oN6tKQpeGa0A=="
       },
       "Microsoft.AspNetCore.Authentication.OpenIdConnect": {
         "type": "Direct",
@@ -19,15 +19,15 @@
       },
       "Microsoft.Sbom.Targets": {
         "type": "Direct",
-        "requested": "[4.1.3, )",
-        "resolved": "4.1.3",
-        "contentHash": "ItQp7LZ5irnDYoyYkxOxuik9mULFviFQOgGJ1j5A7a2EAJK9bidT1aT65xg48Opcjao/BKJWOtJUnik2g3grLg=="
+        "requested": "[4.1.5, )",
+        "resolved": "4.1.5",
+        "contentHash": "i5z+cNu/cOcdO0AgFB8aXk8w6In2H+haaDfSgd9ImvQIK+rSHavHZIogVoAZLL8jLwYx4bAcs5b7EyuMMG4mQQ=="
       },
       "NewStyleCop.Analyzers": {
         "type": "Direct",
-        "requested": "[1.2.0, )",
-        "resolved": "1.2.0",
-        "contentHash": "zLM0XCv+fdibf0QivRJaFyLAt3SmmxDGrGlLhgqlMq1IPbgnfVFH4KzFLjh1/27pRnWuhwDjELe/mZDwbes0nA=="
+        "requested": "[1.2.1, )",
+        "resolved": "1.2.1",
+        "contentHash": "20cG97DtMBpl6bPZ8Ito8JBidTusgP71x3SUcEMSQ08XIdX1ArVixtY2UK7aUi/GN3qCP2Ryp0U9AbtrYqBCzQ=="
       },
       "Microsoft.Extensions.Configuration": {
         "type": "Transitive",
@@ -71,39 +71,40 @@
       },
       "Microsoft.IdentityModel.Abstractions": {
         "type": "Transitive",
-        "resolved": "8.0.1",
-        "contentHash": "OtlIWcyX01olfdevPKZdIPfBEvbcioDyBiE/Z2lHsopsMD7twcKtlN9kMevHmI5IIPhFpfwCIiR6qHQz1WHUIw=="
+        "resolved": "8.15.0",
+        "contentHash": "e/DApa1GfxUqHSBHcpiQg8yaghKAvFVBQFcWh25jNoRobDZbduTUACY8bZ54eeGWXvimGmEDdF0zkS5Dq16XPQ=="
       },
       "Microsoft.IdentityModel.JsonWebTokens": {
         "type": "Transitive",
-        "resolved": "8.0.1",
-        "contentHash": "s6++gF9x0rQApQzOBbSyp4jUaAlwm+DroKfL8gdOHxs83k8SJfUXhuc46rDB3rNXBQ1MVRxqKUrqFhO/M0E97g==",
+        "resolved": "8.15.0",
+        "contentHash": "3513f5VzvOZy3ELd42wGnh1Q3e83tlGAuXFSNbENpgWYoAhLLzgFtd5PiaOPGAU0gqKhYGVzKavghLUGfX3HQg==",
         "dependencies": {
-          "Microsoft.IdentityModel.Tokens": "8.0.1"
+          "Microsoft.IdentityModel.Tokens": "8.15.0"
         }
       },
       "Microsoft.IdentityModel.Logging": {
         "type": "Transitive",
-        "resolved": "8.0.1",
-        "contentHash": "UCPF2exZqBXe7v/6sGNiM6zCQOUXXQ9+v5VTb9gPB8ZSUPnX53BxlN78v2jsbIvK9Dq4GovQxo23x8JgWvm/Qg==",
+        "resolved": "8.15.0",
+        "contentHash": "1gJLjhy0LV2RQMJ9NGzi5Tnb2l+c37o8D8Lrk2mrvmb6OQHZ7XJstd/XxvncXgBpad4x9CGXdipbZzJJCXKyAg==",
         "dependencies": {
-          "Microsoft.IdentityModel.Abstractions": "8.0.1"
+          "Microsoft.IdentityModel.Abstractions": "8.15.0"
         }
       },
       "Microsoft.IdentityModel.Protocols": {
         "type": "Transitive",
-        "resolved": "8.0.1",
-        "contentHash": "uA2vpKqU3I2mBBEaeJAWPTjT9v1TZrGWKdgK6G5qJd03CLx83kdiqO9cmiK8/n1erkHzFBwU/RphP83aAe3i3g==",
+        "resolved": "8.15.0",
+        "contentHash": "n4t/m/zpd8rx/nqMqnKmbDqDjqy404JQ+3TYrSXEn7Otw5Vfg6Hmk3tK8SyeAlTzLGC1gVrjt9awPFVBE1tUGQ==",
         "dependencies": {
-          "Microsoft.IdentityModel.Tokens": "8.0.1"
+          "Microsoft.IdentityModel.Tokens": "8.15.0"
         }
       },
       "Microsoft.IdentityModel.Tokens": {
         "type": "Transitive",
-        "resolved": "8.0.1",
-        "contentHash": "kDimB6Dkd3nkW2oZPDkMkVHfQt3IDqO5gL0oa8WVy3OP4uE8Ij+8TXnqg9TOd9ufjsY3IDiGz7pCUbnfL18tjg==",
+        "resolved": "8.15.0",
+        "contentHash": "zUE9ysJXBtXlHHRtcRK3Sp8NzdCI1z/BRDTXJQ2TvBoI0ENRtnufYIep0O5TSCJRJGDwwuLTUx+l/bEYZUxpCA==",
         "dependencies": {
-          "Microsoft.IdentityModel.Logging": "8.0.1"
+          "Microsoft.Extensions.Logging.Abstractions": "10.0.0",
+          "Microsoft.IdentityModel.Logging": "8.15.0"
         }
       },
       "Microsoft.OpenApi": {
@@ -113,11 +114,11 @@
       },
       "System.IdentityModel.Tokens.Jwt": {
         "type": "Transitive",
-        "resolved": "8.0.1",
-        "contentHash": "GJw3bYkWpOgvN3tJo5X4lYUeIFA2HD293FPUhKmp7qxS+g5ywAb34Dnd3cDAFLkcMohy5XTpoaZ4uAHuw0uSPQ==",
+        "resolved": "8.15.0",
+        "contentHash": "dpodi7ixz6hxK8YCBYAWzm0IA8JYXoKcz0hbCbNifo519//rjUI0fBD8rfNr+IGqq+2gm4oQoXwHk09LX5SqqQ==",
         "dependencies": {
-          "Microsoft.IdentityModel.JsonWebTokens": "8.0.1",
-          "Microsoft.IdentityModel.Tokens": "8.0.1"
+          "Microsoft.IdentityModel.JsonWebTokens": "8.15.0",
+          "Microsoft.IdentityModel.Tokens": "8.15.0"
         }
       },
       "Kritikos.AspNetCore.MinimalApiExtensions": {
@@ -159,6 +160,15 @@
         "resolved": "10.0.0",
         "contentHash": "L3AdmZ1WOK4XXT5YFPEwyt0ep6l8lGIPs7F5OOBZc77Zqeo01Of7XXICy47628sdVl0v/owxYJTe86DTgFwKCA=="
       },
+      "Microsoft.Extensions.Logging.Abstractions": {
+        "type": "CentralTransitive",
+        "requested": "[10.0.0, )",
+        "resolved": "10.0.0",
+        "contentHash": "FU/IfjDfwaMuKr414SSQNTIti/69bHEMb+QKrskRb26oVqpx3lNFXMjs/RC9ZUuhBhcwDM2BwOgoMw+PZ+beqQ==",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.0"
+        }
+      },
       "Microsoft.Extensions.Options.ConfigurationExtensions": {
         "type": "CentralTransitive",
         "requested": "[10.0.0, )",
@@ -185,11 +195,11 @@
       "Microsoft.IdentityModel.Protocols.OpenIdConnect": {
         "type": "CentralTransitive",
         "requested": "[8.15.0, )",
-        "resolved": "8.0.1",
-        "contentHash": "AQDbfpL+yzuuGhO/mQhKNsp44pm5Jv8/BI4KiFXR7beVGZoSH35zMV3PrmcfvSTsyI6qrcR898NzUauD6SRigg==",
+        "resolved": "8.15.0",
+        "contentHash": "uJ5cHsTHRqx/1W68Gz/7hqUgudai1CXnokIXTQw+ZI1o3hWuhQa1vgSzXX9+IAkOJ/gP+M590Fg3WTwqglJghg==",
         "dependencies": {
-          "Microsoft.IdentityModel.Protocols": "8.0.1",
-          "System.IdentityModel.Tokens.Jwt": "8.0.1"
+          "Microsoft.IdentityModel.Protocols": "8.15.0",
+          "System.IdentityModel.Tokens.Jwt": "8.15.0"
         }
       }
     }
