@@ -8,6 +8,9 @@
 /// </remarks>
 public record PreReleaseMetadataDescriptor : IComparable<PreReleaseMetadataDescriptor>
 {
+  /// <summary>
+  /// Initializes a new instance of the <see cref="PreReleaseMetadataDescriptor"/> class.
+  /// </summary>
   internal PreReleaseMetadataDescriptor()
   {
   }
@@ -22,6 +25,9 @@ public record PreReleaseMetadataDescriptor : IComparable<PreReleaseMetadataDescr
   /// </summary>
   public int? CommitCounter { get; internal init; }
 
+  /// <summary>
+  /// Gets or sets the original pre-release metadata string as it appeared in the version.
+  /// </summary>
   internal string OriginalContent { get; set; } = string.Empty;
 
   /// <summary>Determines whether the left operand is greater than or equal to the right operand.</summary>

@@ -8,6 +8,9 @@
 /// </remarks>
 public record BuildMetadataDescriptor
 {
+  /// <summary>
+  /// Initializes a new instance of the <see cref="BuildMetadataDescriptor"/> class.
+  /// </summary>
   internal BuildMetadataDescriptor()
   {
   }
@@ -22,5 +25,8 @@ public record BuildMetadataDescriptor
   /// </summary>
   public string Sha1 { get; init; } = string.Empty;
 
+  /// <summary>
+  /// Gets or sets the original build metadata string as it appeared in the version.
+  /// </summary>
   internal string OriginalContent { get; set; } = string.Empty;
 }
