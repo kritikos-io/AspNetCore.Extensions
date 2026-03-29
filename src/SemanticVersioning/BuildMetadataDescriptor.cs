@@ -12,8 +12,14 @@ public record BuildMetadataDescriptor
   {
   }
 
+  /// <summary>
+  /// Gets the branch name from the build metadata.
+  /// </summary>
   public string Branch { get; init; } = string.Empty;
 
+  /// <summary>
+  /// Gets the SHA-1 commit hash from the build metadata.
+  /// </summary>
   public string Sha1 { get; init; } = string.Empty;
 
   internal string OriginalContent { get; set; } = string.Empty;

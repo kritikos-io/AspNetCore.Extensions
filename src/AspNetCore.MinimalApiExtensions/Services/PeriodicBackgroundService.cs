@@ -29,10 +29,17 @@ public abstract class PeriodicBackgroundService<TService, TOptions>(
 
   private CancellationTokenSource? cancellationTokenSource;
 
+  /// <summary>
+  /// Gets the options for this background service.
+  /// </summary>
   protected TOptions Options { get; } = options.Value;
 
+  /// <summary>
+  /// Gets the logger instance.
+  /// </summary>
   protected ILogger Logger { get; } = logger;
 
+  /// <inheritdoc />
   public override void Dispose()
   {
     base.Dispose();

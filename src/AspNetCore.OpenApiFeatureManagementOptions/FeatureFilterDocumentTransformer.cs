@@ -11,6 +11,10 @@ using Microsoft.FeatureManagement;
 using Microsoft.FeatureManagement.Mvc;
 using Microsoft.OpenApi.Models;
 
+/// <summary>
+/// An OpenAPI document transformer that removes operations gated behind disabled feature flags.
+/// </summary>
+/// <param name="featureManager">The feature manager used to evaluate feature flag state.</param>
 public class FeatureFilterDocumentTransformer(IFeatureManager featureManager)
   : IOpenApiDocumentTransformer
 {

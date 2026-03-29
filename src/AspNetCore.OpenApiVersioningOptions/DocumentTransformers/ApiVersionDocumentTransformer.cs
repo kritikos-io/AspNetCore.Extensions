@@ -11,6 +11,12 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
 using Microsoft.OpenApi.Models;
 
+/// <summary>
+/// An OpenAPI document transformer that populates document info (title, description, contact, license) from versioned API metadata.
+/// </summary>
+/// <typeparam name="TApiInfoOptions">The options type containing API info metadata.</typeparam>
+/// <param name="options">The API info options providing title, description, contact, and license data.</param>
+/// <param name="versionProvider">The API version description provider.</param>
 public class ApiVersionDocumentTransformer<TApiInfoOptions>(
   IOptions<TApiInfoOptions> options,
   IApiVersionDescriptionProvider versionProvider)

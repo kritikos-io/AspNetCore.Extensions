@@ -5,6 +5,9 @@ using Kritikos.AspNetCore.MinimalApiExtensions.StartupBuilder;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 
+/// <summary>
+/// Extension methods for <see cref="WebApplicationBuilder"/> and <see cref="HostApplicationBuilder"/> to support startup class patterns.
+/// </summary>
 public static class KritikosAspNetCoreWebApplicationBuilderExtensions
 {
   /// <summary>

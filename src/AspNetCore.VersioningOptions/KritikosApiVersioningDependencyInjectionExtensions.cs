@@ -9,6 +9,9 @@ using Kritikos.AspNetCore.VersioningOptions.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
+/// <summary>
+/// Dependency injection extensions for configuring API versioning with opinionated defaults.
+/// </summary>
 public static class KritikosApiVersioningDependencyInjectionExtensions
 {
   /// <param name="services"><see cref="IServiceCollection"/> to configure.</param>
@@ -33,6 +36,11 @@ public static class KritikosApiVersioningDependencyInjectionExtensions
       return services;
     }
 
+    /// <summary>
+    /// Registers an <see cref="IApiVersionModelProvider"/> and adds its <see cref="ApiVersionModel"/> as a singleton.
+    /// </summary>
+    /// <typeparam name="TVersionModelProvider">The type implementing <see cref="IApiVersionModelProvider"/>.</typeparam>
+    /// <returns>The configured <see cref="IServiceCollection"/>.</returns>
     public IServiceCollection AddApiVersionModelProvider<TVersionModelProvider>()
       where TVersionModelProvider : IApiVersionModelProvider
     {
@@ -41,6 +49,11 @@ public static class KritikosApiVersioningDependencyInjectionExtensions
       return services;
     }
 
+    /// <summary>
+    /// Registers an <see cref="IApiVersionSetProvider"/> and adds its <see cref="ApiVersionSet"/> as a singleton.
+    /// </summary>
+    /// <typeparam name="TVersionSetProvider">The type implementing <see cref="IApiVersionSetProvider"/>.</typeparam>
+    /// <returns>The configured <see cref="IServiceCollection"/>.</returns>
     public IServiceCollection AddApiVersionSetProvider<TVersionSetProvider>()
       where TVersionSetProvider : IApiVersionSetProvider
     {
@@ -52,6 +65,12 @@ public static class KritikosApiVersioningDependencyInjectionExtensions
 
   extension(WebApplication app)
   {
+    /// <summary>
+    /// Builds and assigns the <see cref="ApiVersionSet"/> from the registered version model, applying optional configuration.
+    /// </summary>
+    /// <typeparam name="TVersionSetProvider">The type implementing <see cref="IApiVersionSetProvider"/>.</typeparam>
+    /// <param name="setupAction">An optional action to further configure the <see cref="ApiVersionSetBuilder"/>.</param>
+    /// <returns>The configured <see cref="WebApplication"/>.</returns>
     public WebApplication AddApiVersionSet<TVersionSetProvider>(
       Action<ApiVersionSetBuilder>? setupAction = null)
       where TVersionSetProvider : IApiVersionSetProvider

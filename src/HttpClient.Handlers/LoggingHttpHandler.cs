@@ -4,6 +4,10 @@ using System.Net;
 
 using Microsoft.Extensions.Logging;
 
+/// <summary>
+/// A delegating handler that logs HTTP request start and completion details at the debug level.
+/// </summary>
+/// <param name="logger">The logger instance used for structured logging.</param>
 public partial class LoggingHttpHandler(ILogger<LoggingHttpHandler> logger) : DelegatingHandler
 {
   private ILogger logger = logger;

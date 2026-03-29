@@ -5,19 +5,35 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.FeatureManagement;
 
+/// <summary>
+/// An endpoint filter that gates access based on the state of one or more feature flags.
+/// </summary>
 public class FeatureGateEndpointFilter
   : IEndpointFilter
 {
+  /// <summary>
+  /// Initializes a new instance of the <see cref="FeatureGateEndpointFilter"/> class requiring all specified string features.
+  /// </summary>
+  /// <param name="features">The feature names to evaluate.</param>
   public FeatureGateEndpointFilter(params string[] features)
     : this(RequirementType.All, features)
   {
   }
 
+  /// <summary>
+  /// Initializes a new instance of the <see cref="FeatureGateEndpointFilter"/> class requiring all specified enum features.
+  /// </summary>
+  /// <param name="features">The enum feature values to evaluate.</param>
   public FeatureGateEndpointFilter(params object[] features)
     : this(RequirementType.All, features)
   {
   }
 
+  /// <summary>
+  /// Initializes a new instance of the <see cref="FeatureGateEndpointFilter"/> class with enum features and a specified requirement type.
+  /// </summary>
+  /// <param name="requirementType">Whether all or any of the specified features must be enabled.</param>
+  /// <param name="features">The enum feature values to evaluate.</param>
   public FeatureGateEndpointFilter(RequirementType requirementType, params object[] features)
   {
     if (features == null || features.Length == 0)
@@ -42,6 +58,11 @@ public class FeatureGateEndpointFilter
     RequirementType = requirementType;
   }
 
+  /// <summary>
+  /// Initializes a new instance of the <see cref="FeatureGateEndpointFilter"/> class with string features and a specified requirement type.
+  /// </summary>
+  /// <param name="requirementType">Whether all or any of the specified features must be enabled.</param>
+  /// <param name="features">The feature names to evaluate.</param>
   public FeatureGateEndpointFilter(RequirementType requirementType, params string[] features)
   {
     if (features == null || features.Length == 0 || features.Any(string.IsNullOrWhiteSpace))

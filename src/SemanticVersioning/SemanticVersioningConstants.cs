@@ -3,6 +3,9 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
+/// <summary>
+/// Provides constants and compiled regular expressions for semantic version string parsing.
+/// </summary>
 public static partial class SemanticVersioningConstants
 {
   private const RegexOptions Options = RegexOptions.CultureInvariant | RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled;

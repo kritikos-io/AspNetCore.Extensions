@@ -43,10 +43,20 @@ public record SemanticVersionDescriptor : IComparable<SemanticVersionDescriptor>
   /// </remarks>
   public int Patch { get; internal init; }
 
+  /// <summary>
+  /// Gets the optional pre-release metadata.
+  /// </summary>
   public PreReleaseMetadataDescriptor? PreReleaseMetadata { get; init; }
 
+  /// <summary>
+  /// Gets the optional build metadata.
+  /// </summary>
   public BuildMetadataDescriptor? BuildMetadata { get; init; }
 
+  /// <summary>Determines whether the left operand is greater than or equal to the right operand.</summary>
+  /// <param name="left">The left operand.</param>
+  /// <param name="right">The right operand.</param>
+  /// <returns><see langword="true"/> if <paramref name="left"/> is greater than or equal to <paramref name="right"/>; otherwise, <see langword="false"/>.</returns>
   public static bool operator >=(SemanticVersionDescriptor left, SemanticVersionDescriptor right)
   {
     ArgumentNullException.ThrowIfNull(left);
@@ -55,6 +65,10 @@ public record SemanticVersionDescriptor : IComparable<SemanticVersionDescriptor>
     return left.CompareTo(right) >= 0;
   }
 
+  /// <summary>Determines whether the left operand is less than or equal to the right operand.</summary>
+  /// <param name="left">The left operand.</param>
+  /// <param name="right">The right operand.</param>
+  /// <returns><see langword="true"/> if <paramref name="left"/> is less than or equal to <paramref name="right"/>; otherwise, <see langword="false"/>.</returns>
   public static bool operator <=(SemanticVersionDescriptor left, SemanticVersionDescriptor right)
   {
     ArgumentNullException.ThrowIfNull(left);
@@ -63,6 +77,10 @@ public record SemanticVersionDescriptor : IComparable<SemanticVersionDescriptor>
     return left.CompareTo(right) <= 0;
   }
 
+  /// <summary>Determines whether the left operand is less than the right operand.</summary>
+  /// <param name="left">The left operand.</param>
+  /// <param name="right">The right operand.</param>
+  /// <returns><see langword="true"/> if <paramref name="left"/> is less than <paramref name="right"/>; otherwise, <see langword="false"/>.</returns>
   public static bool operator <(SemanticVersionDescriptor left, SemanticVersionDescriptor right)
   {
     ArgumentNullException.ThrowIfNull(left);
@@ -71,6 +89,10 @@ public record SemanticVersionDescriptor : IComparable<SemanticVersionDescriptor>
     return left.CompareTo(right) < 0;
   }
 
+  /// <summary>Determines whether the left operand is greater than the right operand.</summary>
+  /// <param name="left">The left operand.</param>
+  /// <param name="right">The right operand.</param>
+  /// <returns><see langword="true"/> if <paramref name="left"/> is greater than <paramref name="right"/>; otherwise, <see langword="false"/>.</returns>
   public static bool operator >(SemanticVersionDescriptor left, SemanticVersionDescriptor right)
   {
     ArgumentNullException.ThrowIfNull(left);
@@ -79,10 +101,20 @@ public record SemanticVersionDescriptor : IComparable<SemanticVersionDescriptor>
     return left.CompareTo(right) > 0;
   }
 
+  /// <summary>
+  /// Creates a <see cref="SemanticVersionDescriptor"/> from the assembly containing the specified type.
+  /// </summary>
+  /// <param name="type">The type whose assembly provides the version information.</param>
+  /// <returns>A <see cref="SemanticVersionDescriptor"/> parsed from the assembly's informational version.</returns>
   [ExcludeFromCodeCoverage]
   public static SemanticVersionDescriptor FromType(Type? type) =>
     FromAssembly(type?.Assembly ?? throw new ArgumentNullException(nameof(type)));
 
+  /// <summary>
+  /// Creates a <see cref="SemanticVersionDescriptor"/> from the specified assembly.
+  /// </summary>
+  /// <param name="assembly">The assembly providing the version information.</param>
+  /// <returns>A <see cref="SemanticVersionDescriptor"/> parsed from the assembly's informational version.</returns>
   [ExcludeFromCodeCoverage]
   public static SemanticVersionDescriptor FromAssembly(Assembly assembly)
   {
@@ -91,6 +123,12 @@ public record SemanticVersionDescriptor : IComparable<SemanticVersionDescriptor>
     return FromInformationalVersion(informationalVersion);
   }
 
+  /// <summary>
+  /// Parses an informational version string into a <see cref="SemanticVersionDescriptor"/>.
+  /// </summary>
+  /// <param name="informationalVersion">The informational version string to parse.</param>
+  /// <returns>A <see cref="SemanticVersionDescriptor"/> representing the parsed version.</returns>
+  /// <exception cref="ArgumentException">The version string is not in a valid semantic versioning format.</exception>
   public static SemanticVersionDescriptor FromInformationalVersion(string informationalVersion)
   {
     var match = SemanticVersioningConstants.SemanticVersionMatcher().Match(informationalVersion);

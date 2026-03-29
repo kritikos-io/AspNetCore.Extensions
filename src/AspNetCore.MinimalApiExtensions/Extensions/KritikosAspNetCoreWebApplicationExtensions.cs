@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 
+/// <summary>
+/// Extension methods for <see cref="WebApplication"/> to map endpoints.
+/// </summary>
 public static class KritikosAspNetCoreWebApplicationExtensions
 {
   /// <summary>

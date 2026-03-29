@@ -4,6 +4,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.FeatureManagement;
 
+/// <summary>
+/// Dependency injection extensions for feature management integration.
+/// </summary>
 public static class KritikosFeatureManagementDependencyInjectionExtensions
 {
   /// <summary>

@@ -8,6 +8,9 @@ using Kritikos.Extensions.Options.Contracts;
 
 using Microsoft.Extensions.DependencyInjection;
 
+/// <summary>
+/// Dependency injection extensions for registering <see cref="IOptionsDefinition"/> implementations.
+/// </summary>
 public static class KritikosExtensionsOptionsDependencyInjection
 {
   private static readonly ConcurrentDictionary<Type, Action<IServiceCollection>?> CachedInvokers = new();

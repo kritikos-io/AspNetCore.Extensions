@@ -3,6 +3,10 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.FeatureManagement;
 
+/// <summary>
+/// An <see cref="ISessionManager"/> implementation that stores feature flag state in the ASP.NET Core session.
+/// </summary>
+/// <param name="accessor">The HTTP context accessor used to access session state.</param>
 public class SessionFeatureManager(IHttpContextAccessor accessor)
   : ISessionManager
 {

@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.OpenApi;
 using Microsoft.OpenApi.Models;
 
+/// <summary>
+/// An OpenAPI operation transformer that adds 401/403 responses and an OAuth security requirement to authorized endpoints.
+/// </summary>
 public class AuthorizationCheckOperationTransformer : IOpenApiOperationTransformer
 {
   /// <inheritdoc />

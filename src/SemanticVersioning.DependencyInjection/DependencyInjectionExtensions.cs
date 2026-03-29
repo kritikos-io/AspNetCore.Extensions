@@ -5,6 +5,9 @@ using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
+/// <summary>
+/// Dependency injection extensions for registering <see cref="SemanticVersionDescriptor"/> instances.
+/// </summary>
 public static class DependencyInjectionExtensions
 {
   /// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>

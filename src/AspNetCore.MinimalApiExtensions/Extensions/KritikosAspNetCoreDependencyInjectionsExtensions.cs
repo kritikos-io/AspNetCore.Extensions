@@ -12,6 +12,9 @@ using Kritikos.Extensions.Options.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
+/// <summary>
+/// Dependency injection extensions for registering ASP.NET Core services such as correlation headers, background services, and endpoints.
+/// </summary>
 public static class KritikosAspNetCoreDependencyInjectionsExtensions
 {
   /// <param name="services">The <see cref="IServiceCollection"/> to register the service to.</param>

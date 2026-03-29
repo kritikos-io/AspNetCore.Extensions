@@ -7,5 +7,8 @@ namespace Kritikos.PagedResults;
 public class PagedResult<T>
     where T : class
 {
+  /// <summary>
+  /// Gets the items contained in this page.
+  /// </summary>
   public IReadOnlyList<T> Items { get; init; } = [];
 }

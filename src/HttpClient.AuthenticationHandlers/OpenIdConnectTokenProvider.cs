@@ -5,6 +5,12 @@ using System.Net.Http.Json;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
+/// <summary>
+/// Provides access tokens using the OAuth 2.0 client credentials flow via an OpenID Connect provider.
+/// </summary>
+/// <param name="clientFactory">The HTTP client factory used to create clients for token requests.</param>
+/// <param name="options">The OpenID Connect handler options containing endpoint and credential information.</param>
+/// <param name="logger">The logger instance used for error logging.</param>
 public partial class OpenIdConnectTokenProvider(
   IHttpClientFactory clientFactory,
   OpenIdConnectHandlerOptions options,
@@ -23,6 +29,11 @@ public partial class OpenIdConnectTokenProvider(
 
   private OpenIdConnectConfiguration? discoveryDocument;
 
+  /// <summary>
+  /// Retrieves an access token from the OpenID Connect token endpoint using client credentials.
+  /// </summary>
+  /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
+  /// <returns>The access token string, or <see cref="string.Empty"/> if the token could not be obtained.</returns>
   public async Task<string> GetAccessToken(CancellationToken cancellationToken = default)
   {
     var discovery = await GetDiscoveryDocument(cancellationToken);

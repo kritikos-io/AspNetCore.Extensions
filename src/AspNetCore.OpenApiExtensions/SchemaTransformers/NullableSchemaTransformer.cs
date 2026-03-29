@@ -3,6 +3,9 @@
 using Microsoft.AspNetCore.OpenApi;
 using Microsoft.OpenApi.Models;
 
+/// <summary>
+/// An OpenAPI schema transformer that sets non-required properties as non-nullable.
+/// </summary>
 public class NullableSchemaTransformer : IOpenApiSchemaTransformer
 {
   /// <inheritdoc />

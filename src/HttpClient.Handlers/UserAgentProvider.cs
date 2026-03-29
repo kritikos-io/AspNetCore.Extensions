@@ -4,6 +4,10 @@ namespace Kritikos.HttpClient.Handlers;
 
 using Kritikos.HttpClient.Handlers.Contracts;
 
+/// <summary>
+/// Provides random user agent strings with weighted browser selection.
+/// </summary>
+/// <param name="random">The random number generator used for weighted selection.</param>
 public class UserAgentProvider(Random random)
     : IUserAgentProvider
 {
@@ -29,11 +33,18 @@ public class UserAgentProvider(Random random)
     { "Other", 5 },
   };
 
+  /// <summary>
+  /// Initializes a new instance of the <see cref="UserAgentProvider"/> class using <see cref="Random.Shared"/>.
+  /// </summary>
   public UserAgentProvider()
     : this(Random.Shared)
   {
   }
 
+  /// <summary>
+  /// Initializes a new instance of the <see cref="UserAgentProvider"/> class with a specific seed for reproducible results.
+  /// </summary>
+  /// <param name="seed">The seed for the random number generator.</param>
   public UserAgentProvider(int seed)
     : this(new Random(seed))
   {

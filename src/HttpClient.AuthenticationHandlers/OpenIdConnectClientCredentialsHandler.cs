@@ -4,6 +4,10 @@ using System.Net.Http.Headers;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 
+/// <summary>
+/// A delegating handler that attaches an OAuth 2.0 client credentials access token to outgoing HTTP requests.
+/// </summary>
+/// <param name="tokenProvider">The provider used to obtain access tokens.</param>
 public class OpenIdConnectClientCredentialsHandler(OpenIdConnectTokenProvider tokenProvider) : DelegatingHandler
 {
   private readonly OpenIdConnectTokenProvider tokenProvider = tokenProvider;

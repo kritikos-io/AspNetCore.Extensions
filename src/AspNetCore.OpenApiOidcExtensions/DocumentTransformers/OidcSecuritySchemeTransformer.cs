@@ -7,6 +7,12 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Microsoft.OpenApi.Models;
 
+/// <summary>
+/// An OpenAPI document transformer that adds an OpenID Connect OAuth2 security scheme by fetching the OIDC discovery document.
+/// </summary>
+/// <typeparam name="TOpenIdOptions">The options type containing the OIDC authority configuration.</typeparam>
+/// <param name="options">The OpenID Connect options providing the authority URL.</param>
+/// <param name="clientFactory">The HTTP client factory used to fetch the OIDC discovery document.</param>
 public sealed class OidcSecuritySchemeTransformer<TOpenIdOptions>(
   IOptions<TOpenIdOptions> options,
   IHttpClientFactory clientFactory)
@@ -16,6 +22,7 @@ public sealed class OidcSecuritySchemeTransformer<TOpenIdOptions>(
   private readonly IHttpClientFactory clientFactory = clientFactory;
   private readonly TOpenIdOptions options = options.Value;
 
+  /// <inheritdoc />
   public async Task TransformAsync(
     OpenApiDocument document,
     OpenApiDocumentTransformerContext context,

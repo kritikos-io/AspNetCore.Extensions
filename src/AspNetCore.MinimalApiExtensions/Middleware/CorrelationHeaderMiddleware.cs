@@ -6,11 +6,19 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
+/// <summary>
+/// Middleware that ensures each HTTP request has a correlation identifier header for distributed tracing.
+/// </summary>
 public class CorrelationHeaderMiddleware : IMiddleware
 {
   private readonly CorrelationHeaderOptions options;
   private readonly ILogger logger;
 
+  /// <summary>
+  /// Initializes a new instance of the <see cref="CorrelationHeaderMiddleware"/> class.
+  /// </summary>
+  /// <param name="options">The correlation header options.</param>
+  /// <param name="logger">The logger instance.</param>
   public CorrelationHeaderMiddleware(IOptions<CorrelationHeaderOptions> options, ILogger<CorrelationHeaderMiddleware> logger)
   {
     ArgumentNullException.ThrowIfNull(options);
