@@ -9,7 +9,7 @@ using Kritikos.AspNetCore.OpenApiVersioningOptions.Options;
 using Microsoft.AspNetCore.OpenApi;
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Primitives;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 /// <summary>
 /// An OpenAPI document transformer that populates document info (title, description, contact, license) from versioned API metadata.

@@ -1,7 +1,7 @@
 ﻿namespace Kritikos.AspNetCore.OpenApiExtensions.SchemaTransformers;
 
 using Microsoft.AspNetCore.OpenApi;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 /// <summary>
 /// An OpenAPI schema transformer that sets non-required properties as non-nullable.
@@ -23,9 +23,10 @@ public class NullableSchemaTransformer : IOpenApiSchemaTransformer
 
     foreach (var property in schema.Properties)
     {
-      if (schema.Required?.Contains(property.Key) != true)
+      if (schema.Required?.Contains(property.Key) != true
+          && property.Value is OpenApiSchema { Type: not null } propSchema)
       {
-        property.Value.Nullable = false;
+        propSchema.Type &= ~JsonSchemaType.Null;
       }
     }
 

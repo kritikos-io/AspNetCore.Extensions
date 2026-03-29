@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.OpenApi;
 using Microsoft.FeatureManagement;
 using Microsoft.FeatureManagement.Mvc;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 /// <summary>
 /// An OpenAPI document transformer that removes operations gated behind disabled feature flags.
@@ -46,15 +46,17 @@ public class FeatureFilterDocumentTransformer(IFeatureManager featureManager)
       }
 
       var key = $"/{apiDescription.RelativePath}";
-      if (document.Paths.TryGetValue(key, out var path)
-          && Enum.TryParse<OperationType>(apiDescription.HttpMethod, true, out var operation))
+      if (document.Paths is not null
+          && document.Paths.TryGetValue(key, out var path)
+          && apiDescription.HttpMethod is not null
+          && path.Operations is not null)
       {
-        path.Operations.Remove(operation);
-      }
+        path.Operations.Remove(new HttpMethod(apiDescription.HttpMethod));
 
-      if (path != null && !path.Operations.Any())
-      {
-        document.Paths.Remove(key);
+        if (path.Operations.Count == 0)
+        {
+          document.Paths.Remove(key);
+        }
       }
     }
   }

@@ -10,11 +10,11 @@
       },
       "Microsoft.FeatureManagement.AspNetCore": {
         "type": "Direct",
-        "requested": "[4.3.0, )",
-        "resolved": "4.3.0",
-        "contentHash": "QUTCPSMDutLPw8s5z8H2DJ/CIjeXkKpXVi377EmGcLuoUhiAIHZIw+cqcEWWOYbgd09eyxKfFPSM7RCGedb/UQ==",
+        "requested": "[4.4.0, )",
+        "resolved": "4.4.0",
+        "contentHash": "jE5KxeEDUnUsx1w9uOFV5cOfM4E2mg7kf07328xO1x4JdoS0jwkD55nMjTlUPu90ynYX1oCBGC+FHK6ZoqRpxA==",
         "dependencies": {
-          "Microsoft.FeatureManagement": "4.3.0"
+          "Microsoft.FeatureManagement": "4.4.0"
         }
       },
       "Microsoft.Sbom.Targets": {
@@ -113,8 +113,8 @@
       },
       "Microsoft.FeatureManagement": {
         "type": "Transitive",
-        "resolved": "4.3.0",
-        "contentHash": "6FJz8K6xzjuUBG5DZ55gttMU2/MxObqPDTRMXC950EjljJqZPrigMm1EMsPK+HbPR84+T4PCXgjmdlkw+8Piow==",
+        "resolved": "4.4.0",
+        "contentHash": "qxvGAv9WJHYfOpixWywJTa1WNTPy5MbQiv+O+UlE6E/LVofiM1+YRR6m41zsHIbAGm1S0PQ0QFuAsOw9DkoKsg==",
         "dependencies": {
           "Microsoft.Bcl.TimeProvider": "8.0.1",
           "Microsoft.Extensions.Caching.Memory": "8.0.1",
@@ -125,17 +125,17 @@
       },
       "Microsoft.Extensions.DependencyInjection.Abstractions": {
         "type": "CentralTransitive",
-        "requested": "[10.0.0, )",
-        "resolved": "10.0.0",
-        "contentHash": "L3AdmZ1WOK4XXT5YFPEwyt0ep6l8lGIPs7F5OOBZc77Zqeo01Of7XXICy47628sdVl0v/owxYJTe86DTgFwKCA=="
+        "requested": "[10.0.5, )",
+        "resolved": "10.0.5",
+        "contentHash": "iVMtq9eRvzyhx8949EGT0OCYJfXi737SbRVzWXE5GrOgGj5AaZ9eUuxA/BSUfmOMALKn/g8KfFaNQw0eiB3lyA=="
       },
       "Microsoft.Extensions.Logging.Abstractions": {
         "type": "CentralTransitive",
-        "requested": "[10.0.0, )",
-        "resolved": "10.0.0",
-        "contentHash": "FU/IfjDfwaMuKr414SSQNTIti/69bHEMb+QKrskRb26oVqpx3lNFXMjs/RC9ZUuhBhcwDM2BwOgoMw+PZ+beqQ==",
+        "requested": "[10.0.5, )",
+        "resolved": "10.0.5",
+        "contentHash": "9HOdqlDtPptVcmKAjsQ/Nr5Rxfq6FMYLdhvZh1lVmeKR738qeYecQD7+ldooXf+u2KzzR1kafSphWngIM3C6ug==",
         "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.0"
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.5"
         }
       }
     }

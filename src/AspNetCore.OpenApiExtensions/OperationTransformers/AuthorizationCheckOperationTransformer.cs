@@ -4,7 +4,7 @@ using System.Reflection;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.OpenApi;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 /// <summary>
 /// An OpenAPI operation transformer that adds 401/403 responses and an OAuth security requirement to authorized endpoints.
@@ -27,13 +27,11 @@ public class AuthorizationCheckOperationTransformer : IOpenApiOperationTransform
       return Task.CompletedTask;
     }
 
+    operation.Responses ??= [];
     operation.Responses.TryAdd("401", new OpenApiResponse { Description = "Unauthorized" });
     operation.Responses.TryAdd("403", new OpenApiResponse { Description = "Forbidden" });
 
-    var oAuthScheme = new OpenApiSecurityScheme
-    {
-      Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "openid" },
-    };
+    var oAuthScheme = new OpenApiSecuritySchemeReference("openid", null, null);
 
     operation.Security = [new() { [oAuthScheme] = ["openid"] }];
 

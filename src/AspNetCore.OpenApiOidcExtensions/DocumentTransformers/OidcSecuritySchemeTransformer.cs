@@ -5,7 +5,7 @@ using Kritikos.AspNetCore.OpenApiOidcExtensions.Options;
 using Microsoft.AspNetCore.OpenApi;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
 
 /// <summary>
 /// An OpenAPI document transformer that adds an OpenID Connect OAuth2 security scheme by fetching the OIDC discovery document.
@@ -47,7 +47,7 @@ public sealed class OidcSecuritySchemeTransformer<TOpenIdOptions>(
       {
         AuthorizationCode = new OpenApiOAuthFlow
         {
-          Scopes =
+          Scopes = new Dictionary<string, string>
           {
             { "openid", "Basic authentication" },
             { "profile", "Access your profile" },
@@ -59,11 +59,11 @@ public sealed class OidcSecuritySchemeTransformer<TOpenIdOptions>(
       },
     };
 
-    document.Components.SecuritySchemes.TryAdd("openid", oidcScheme);
+    document.Components.SecuritySchemes?.TryAdd("openid", oidcScheme);
 
-    document.SecurityRequirements.Add(new OpenApiSecurityRequirement()
+    document.Security?.Add(new OpenApiSecurityRequirement()
     {
-      [new OpenApiSecurityScheme { Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "openid" } }] =
+      [new OpenApiSecuritySchemeReference("openid", document, null)] =
         ["openid", "profile", "email"],
     });
   }
