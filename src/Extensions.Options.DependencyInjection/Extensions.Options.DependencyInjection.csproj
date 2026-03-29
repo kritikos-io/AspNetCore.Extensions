@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
+    <!-- SYSLIB1104: Configuration binding source generator does not support generic BindConfiguration calls -->
+    <NoWarn>$(NoWarn);SYSLIB1104</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

@@ -9,6 +9,9 @@ using Kritikos.AspNetCore.VersioningOptions.Contracts;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
+#pragma warning disable CA1034 // Do not nest type - false positive from C# 14 extension blocks
+#pragma warning disable CA1708 // Identifiers should differ by more than case - false positive from C# 14 extension blocks
+
 /// <summary>
 /// Dependency injection extensions for configuring API versioning with opinionated defaults.
 /// </summary>

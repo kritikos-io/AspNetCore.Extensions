@@ -52,6 +52,12 @@ public partial class OpenIdConnectTokenProvider(
     return token.ToString() ?? string.Empty;
   }
 
+  [LoggerMessage(LogLevel.Error, "Error fetching discovery document from {Url}: {Error}")]
+  private static partial void ErrorFetchingDiscoveryDocument(ILogger logger, Uri url, string? error);
+
+  [LoggerMessage(LogLevel.Error, "Error fetching discovery document from {Url}: {Error}")]
+  private static partial void ErrorCreatingAccessToken(ILogger logger, Uri? url, string? error);
+
   private async ValueTask<OpenIdConnectConfiguration> GetDiscoveryDocument(
     CancellationToken cancellationToken = default)
   {
@@ -71,10 +77,4 @@ public partial class OpenIdConnectTokenProvider(
     discoveryDocument = OpenIdConnectConfiguration.Create(content);
     return discoveryDocument;
   }
-
-  [LoggerMessage(LogLevel.Error, "Error fetching discovery document from {Url}: {Error}")]
-  private static partial void ErrorFetchingDiscoveryDocument(ILogger logger, Uri url, string? error);
-
-  [LoggerMessage(LogLevel.Error, "Error fetching discovery document from {Url}: {Error}")]
-  private static partial void ErrorCreatingAccessToken(ILogger logger, Uri? url, string? error);
 }

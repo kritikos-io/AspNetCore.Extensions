@@ -8,6 +8,10 @@ using Kritikos.Extensions.Options.Contracts;
 
 using Microsoft.Extensions.DependencyInjection;
 
+#pragma warning disable CA1034 // Do not nest type - false positive from C# 14 extension blocks
+#pragma warning disable IDE0051 // Remove unused private member - false positive; used inside extension block
+#pragma warning disable IDE0052 // Remove unread private member - false positive; used inside extension block
+
 /// <summary>
 /// Dependency injection extensions for registering <see cref="IOptionsDefinition"/> implementations.
 /// </summary>

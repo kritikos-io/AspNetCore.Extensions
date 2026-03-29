@@ -4,6 +4,8 @@ using System.Linq.Expressions;
 
 using Microsoft.EntityFrameworkCore;
 
+#pragma warning disable CA1034 // Do not nest type - false positive from C# 14 extension blocks
+
 /// <summary>
 /// Extension methods for creating <see cref="OffsetPagedResult{T}"/> from ordered queryable sources.
 /// </summary>
