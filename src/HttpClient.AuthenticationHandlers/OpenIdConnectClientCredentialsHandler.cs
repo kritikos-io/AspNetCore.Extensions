@@ -2,8 +2,6 @@
 
 using System.Net.Http.Headers;
 
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-
 /// <summary>
 /// A delegating handler that attaches an OAuth 2.0 client credentials access token to outgoing HTTP requests.
 /// </summary>
@@ -20,7 +18,7 @@ public class OpenIdConnectClientCredentialsHandler(OpenIdConnectTokenProvider to
     ArgumentNullException.ThrowIfNull(request);
 
     var authToken = await tokenProvider.GetAccessToken(cancellationToken);
-    request.Headers.Authorization = new AuthenticationHeaderValue(JwtBearerDefaults.AuthenticationScheme, authToken);
+    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
 
     return await base.SendAsync(request, cancellationToken);
   }

@@ -1,7 +1,5 @@
 namespace Kritikos.SemanticVersioning.Tests;
 
-using Xunit;
-
 public class VersionReconstructionTests
 {
   private const int Major = 1;
@@ -12,65 +10,65 @@ public class VersionReconstructionTests
   private const string Metadata = "main";
   private const string Sha1 = "1234567890abcdef";
 
-  [Fact]
-  public void Stable_version_only_is_reconstructed()
+  [Test]
+  public async Task Stable_version_only_is_reconstructed()
   {
     var version = SemanticVersionDescriptor.FromInformationalVersion($"{Major}.{Minor}.{Patch}");
 
-    Assert.Equal(Major, version.Major);
-    Assert.Equal(Minor, version.Minor);
-    Assert.Equal(Patch, version.Patch);
-    Assert.Null(version.PreReleaseMetadata);
-    Assert.Null(version.BuildMetadata);
+    await Assert.That(version.Major).IsEqualTo(Major);
+    await Assert.That(version.Minor).IsEqualTo(Minor);
+    await Assert.That(version.Patch).IsEqualTo(Patch);
+    await Assert.That(version.PreReleaseMetadata).IsNull();
+    await Assert.That(version.BuildMetadata).IsNull();
 
-    Assert.Equal($"{Major}.{Minor}.{Patch}", version.ToString());
+    await Assert.That(version.ToString()).IsEqualTo($"{Major}.{Minor}.{Patch}");
   }
 
-  [Fact]
-  public void Stable_version_is_reconstructed_without_build_metadata()
+  [Test]
+  public async Task Stable_version_is_reconstructed_without_build_metadata()
   {
     var version = SemanticVersionDescriptor.FromInformationalVersion($"{Major}.{Minor}.{Patch}+Branch.{Metadata}.Sha.{Sha1}");
 
-    Assert.Equal(Major, version.Major);
-    Assert.Equal(Minor, version.Minor);
-    Assert.Equal(Patch, version.Patch);
-    Assert.Null(version.PreReleaseMetadata);
-    Assert.NotNull(version.BuildMetadata);
+    await Assert.That(version.Major).IsEqualTo(Major);
+    await Assert.That(version.Minor).IsEqualTo(Minor);
+    await Assert.That(version.Patch).IsEqualTo(Patch);
+    await Assert.That(version.PreReleaseMetadata).IsNull();
+    await Assert.That(version.BuildMetadata).IsNotNull();
 
-    Assert.Equal($"{Major}.{Minor}.{Patch}", version.ToString());
+    await Assert.That(version.ToString()).IsEqualTo($"{Major}.{Minor}.{Patch}");
   }
 
-  [Fact]
-  public void Prerelease_version_is_reconstructed()
+  [Test]
+  public async Task Prerelease_version_is_reconstructed()
   {
     var version = SemanticVersionDescriptor.FromInformationalVersion(
         $"{Major}.{Minor}.{Patch}-{PrereleaseTag}.{Counter}");
 
-    Assert.Equal(Major, version.Major);
-    Assert.Equal(Minor, version.Minor);
-    Assert.Equal(Patch, version.Patch);
-    Assert.NotNull(version.PreReleaseMetadata);
-    Assert.Null(version.BuildMetadata);
+    await Assert.That(version.Major).IsEqualTo(Major);
+    await Assert.That(version.Minor).IsEqualTo(Minor);
+    await Assert.That(version.Patch).IsEqualTo(Patch);
+    await Assert.That(version.PreReleaseMetadata).IsNotNull();
+    await Assert.That(version.BuildMetadata).IsNull();
 
-    Assert.Equal($"{Major}.{Minor}.{Patch}-{PrereleaseTag}.{Counter}", version.ToString());
+    await Assert.That(version.ToString()).IsEqualTo($"{Major}.{Minor}.{Patch}-{PrereleaseTag}.{Counter}");
   }
 
-  [Fact]
-  public void Full_version_is_reconstructed_without_build_metadata()
+  [Test]
+  public async Task Full_version_is_reconstructed_without_build_metadata()
   {
     var version = SemanticVersionDescriptor.FromInformationalVersion(
         $"{Major}.{Minor}.{Patch}-{PrereleaseTag}.{Counter}+Branch.{Metadata}.Sha.{Sha1}");
 
-    Assert.Equal(Major, version.Major);
-    Assert.Equal(Minor, version.Minor);
-    Assert.Equal(Patch, version.Patch);
-    Assert.NotNull(version.PreReleaseMetadata);
-    Assert.Equal(PrereleaseTag, version.PreReleaseMetadata.Tag);
-    Assert.Equal(Counter, version.PreReleaseMetadata.CommitCounter);
-    Assert.NotNull(version.BuildMetadata);
-    Assert.Equal(Metadata, version.BuildMetadata.Branch);
-    Assert.Equal(Sha1, version.BuildMetadata.Sha1);
+    await Assert.That(version.Major).IsEqualTo(Major);
+    await Assert.That(version.Minor).IsEqualTo(Minor);
+    await Assert.That(version.Patch).IsEqualTo(Patch);
+    await Assert.That(version.PreReleaseMetadata).IsNotNull();
+    await Assert.That(version.PreReleaseMetadata!.Tag).IsEqualTo(PrereleaseTag);
+    await Assert.That(version.PreReleaseMetadata.CommitCounter).IsEqualTo(Counter);
+    await Assert.That(version.BuildMetadata).IsNotNull();
+    await Assert.That(version.BuildMetadata!.Branch).IsEqualTo(Metadata);
+    await Assert.That(version.BuildMetadata.Sha1).IsEqualTo(Sha1);
 
-    Assert.Equal($"{Major}.{Minor}.{Patch}-{PrereleaseTag}.{Counter}", version.ToString());
+    await Assert.That(version.ToString()).IsEqualTo($"{Major}.{Minor}.{Patch}-{PrereleaseTag}.{Counter}");
   }
 }
