@@ -14,7 +14,6 @@ public sealed class FeatureGatedEndpoints : IEndpoint
   public void MapEndpoint(IEndpointRouteBuilder app)
   {
     var group = app.MapGroup("/api/v{version:apiVersion}/feature")
-        .WithOpenApi()
         .WithApiVersionSet(Program.VersionSet)
         .MapToApiVersion(2)
         .WithTags("Features");

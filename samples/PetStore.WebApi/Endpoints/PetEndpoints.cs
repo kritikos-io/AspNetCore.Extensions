@@ -18,8 +18,7 @@ public sealed class PetEndpoints : IEndpoint
     var v1 = group.MapGroup("pet")
       .WithApiVersionSet(Program.VersionSet)
       .MapToApiVersion(1)
-      .WithTags("Pet")
-      .WithOpenApi();
+      .WithTags("Pet");
 
     v1.MapGet("{id:long}", GetPetsV1);
     v1.MapPost("{id:long}", static ([Required] long id, CreateFooDto dto) => TypedResults.Ok(dto));
@@ -27,8 +26,7 @@ public sealed class PetEndpoints : IEndpoint
     var v2 = group.MapGroup("pet")
       .WithApiVersionSet(Program.VersionSet)
       .MapToApiVersion(2)
-      .WithTags("Pet")
-      .WithOpenApi();
+      .WithTags("Pet");
 
     v2.MapGet("{id:long}", GetPetsV2);
     v2.MapPost(string.Empty, CreatePetV2);
