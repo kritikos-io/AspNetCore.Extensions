@@ -54,6 +54,6 @@ public class VersionComparisonTests
     var version2 = SemanticVersionDescriptor.FromInformationalVersion("1.0.0+Branch.main.Sha.abcdef1234567890");
 
     await Assert.That(version1 == version2).IsTrue();
-    await Assert.That(version1.BuildMetadata).IsNotEqualTo(version2.BuildMetadata);
+    await Assert.That(version1.BuildMetadata!.Equals(version2.BuildMetadata)).IsFalse();
   }
 }

@@ -31,7 +31,7 @@ public class AuthorizationCheckOperationTransformer : IOpenApiOperationTransform
     operation.Responses.TryAdd("401", new OpenApiResponse { Description = "Unauthorized" });
     operation.Responses.TryAdd("403", new OpenApiResponse { Description = "Forbidden" });
 
-    var oAuthScheme = new OpenApiSecuritySchemeReference("openid", null, null);
+    var oAuthScheme = new OpenApiSecuritySchemeReference("openid");
 
     operation.Security = [new() { [oAuthScheme] = ["openid"] }];
 

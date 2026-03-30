@@ -63,7 +63,7 @@ public sealed class OidcSecuritySchemeTransformer<TOpenIdOptions>(
 
     document.Security?.Add(new OpenApiSecurityRequirement()
     {
-      [new OpenApiSecuritySchemeReference("openid", document, null)] =
+      [new OpenApiSecuritySchemeReference("openid", document)] =
         ["openid", "profile", "email"],
     });
   }
