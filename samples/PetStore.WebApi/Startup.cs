@@ -5,7 +5,6 @@ using Asp.Versioning;
 using Kritikos.AspNetCore.MinimalApiExtensions.Extensions;
 using Kritikos.AspNetCore.MinimalApiExtensions.StartupBuilder;
 using Kritikos.AspNetCore.OpenApiExtensions.OperationTransformers;
-using Kritikos.AspNetCore.OpenApiExtensions.SchemaTransformers;
 using Kritikos.AspNetCore.OpenApiFeatureManagementOptions;
 using Kritikos.AspNetCore.OpenApiOidcExtensions.DocumentTransformers;
 using Kritikos.AspNetCore.OpenApiVersioningOptions;
@@ -42,7 +41,6 @@ public class Startup : IWebApplicationStartup
 
     builder.Services.AddVersionedOpenApi<Program>(static options =>
     {
-      options.AddSchemaTransformer<NullableSchemaTransformer>();
       options.AddOperationTransformer<AuthorizationCheckOperationTransformer>();
 
       options.AddDocumentTransformer<ApiVersionDocumentTransformer<MyOpenApiInfoOptions>>();
