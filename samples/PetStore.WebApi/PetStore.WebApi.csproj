@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <InternalsVisibleTo Include="AspNetCore.FeatureManagementOptionTests" />
-    <InternalsVisibleTo Include="AspNetCore.MinimalApiTests" />
+    <InternalsVisibleTo Include="AspNetCore.MinimalApiExtensions.Tests" />
     <InternalsVisibleTo Include="AspNetCore.VersioningTests" />
   </ItemGroup>
 
