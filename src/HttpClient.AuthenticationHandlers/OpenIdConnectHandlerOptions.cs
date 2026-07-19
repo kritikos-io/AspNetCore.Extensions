@@ -11,12 +11,12 @@ public class OpenIdConnectHandlerOptions
   public Uri WellKnownEndpoint { get; set; } = new Uri("about:blank");
 
   /// <summary>
-  /// Gets or sets the client identifier for authentication.
+  /// Gets or sets the OAuth 2.0 client identifier used for the client credentials flow.
   /// </summary>
   public string ClientId { get; set; } = string.Empty;
 
   /// <summary>
-  /// Gets or sets the client secret for authentication.
+  /// Gets or sets the OAuth 2.0 client secret used for the client credentials flow.
   /// </summary>
   public string ClientSecret { get; set; } = string.Empty;
 }

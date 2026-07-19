@@ -1,6 +1,6 @@
 ﻿#pragma warning disable CA2234 // Pass system uri objects instead of strings
 
-namespace Kritikos.AspNetCore.MinimalApiTests;
+namespace Kritikos.AspNetCore.MinimalApiExtensions.Tests;
 
 using Kritikos.AspNetCore.MinimalApiExtensions.Options;
 

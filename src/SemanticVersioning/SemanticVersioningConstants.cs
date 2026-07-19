@@ -15,5 +15,5 @@ public static partial class SemanticVersioningConstants
       @"^(?<Major>0|[1-9]\d*)\.(?<Minor>0|[1-9]\d*)\.(?<Patch>0|[1-9]\d*)(?<PreRelease>-(?<Tag>[^+]+?)\.?(?<Counter>0|[1-9]\d*)?)?(?<BuildMetadata>(\+Branch\.(?<Branch>.+?)\.Sha\.(?<Sha>.+?))|(\+.+))?$";
 
   [GeneratedRegex(SemanticVersionPattern, Options)]
-  public static partial Regex SemanticVersionMatcher();
+  internal static partial Regex SemanticVersionMatcher();
 }

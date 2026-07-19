@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Hosting;
 
 /// <summary>
-/// Provides an interface for initializing services and middleware used by an application.
+/// Provides a startup contract for configuring services and middleware on an <see cref="IHostApplicationBuilder"/>-based generic host.
 /// </summary>
 [CLSCompliant(false)]
 public interface IApplicationStartup
@@ -12,7 +12,7 @@ public interface IApplicationStartup
   /// <summary>
   /// Register services into the <see cref="WebApplicationBuilder.Services"/> container.
   /// </summary>
-  /// <param name="builder">The <see cref="WebApplicationBuilder"/> to configure services for.</param>
+  /// <param name="builder">The <see cref="IHostApplicationBuilder"/> to configure services for.</param>
   void ConfigureServices(IHostApplicationBuilder builder);
 
   /// <summary>

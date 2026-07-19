@@ -106,6 +106,8 @@ public record SemanticVersionDescriptor : IComparable<SemanticVersionDescriptor>
   /// </summary>
   /// <param name="type">The type whose assembly provides the version information.</param>
   /// <returns>A <see cref="SemanticVersionDescriptor"/> parsed from the assembly's informational version.</returns>
+  /// <exception cref="ArgumentNullException"><paramref name="type"/> is <see langword="null"/>.</exception>
+  /// <exception cref="ArgumentException">The assembly's informational version is not in a valid semantic versioning format.</exception>
   [ExcludeFromCodeCoverage]
   public static SemanticVersionDescriptor FromType(Type? type) =>
     FromAssembly(type?.Assembly ?? throw new ArgumentNullException(nameof(type)));
@@ -115,6 +117,7 @@ public record SemanticVersionDescriptor : IComparable<SemanticVersionDescriptor>
   /// </summary>
   /// <param name="assembly">The assembly providing the version information.</param>
   /// <returns>A <see cref="SemanticVersionDescriptor"/> parsed from the assembly's informational version.</returns>
+  /// <exception cref="ArgumentException">The assembly has no <see cref="AssemblyInformationalVersionAttribute"/>, or its value is not in a valid semantic versioning format.</exception>
   [ExcludeFromCodeCoverage]
   public static SemanticVersionDescriptor FromAssembly(Assembly assembly)
   {

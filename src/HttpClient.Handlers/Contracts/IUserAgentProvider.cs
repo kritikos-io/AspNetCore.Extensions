@@ -1,7 +1,7 @@
 ﻿namespace Kritikos.HttpClient.Handlers.Contracts;
 
 /// <summary>
-/// A basic contract for user agent providers.
+/// Defines a contract for generating randomized user agent strings.
 /// </summary>
 public interface IUserAgentProvider
 {

@@ -1,7 +1,7 @@
 ﻿namespace Kritikos.SemanticVersioning;
 
 /// <summary>
-/// Describes metadata picked up during build.
+/// Describes the build metadata segment extracted from a semantic version string.
 /// </summary>
 /// <remarks>
 /// This is tailored for use in versions calculated by GitVersion, and should follow the format 'Branch.{branchName}.Sha.{sha1Hash}'.

@@ -31,7 +31,7 @@ public static class KritikosAspNetCoreWebApplicationBuilderExtensions
   }
 
   /// <summary>
-  /// Creates an <see cref="IHost"/> by configuring services and middleware using a <see cref="IWebApplicationStartup"/> class.
+  /// Creates an <see cref="IHost"/> by configuring services and middleware using a <see cref="IApplicationStartup"/> class.
   /// </summary>
   /// <param name="builder">The <see cref="HostApplicationBuilder"/> to use in building the <see cref="WebApplication"/>.</param>
   /// <typeparam name="T">The type containing the startup methods for the application.</typeparam>

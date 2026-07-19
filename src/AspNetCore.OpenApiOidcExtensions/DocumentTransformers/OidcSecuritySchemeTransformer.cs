@@ -23,6 +23,11 @@ public sealed class OidcSecuritySchemeTransformer<TOpenIdOptions>(
   private readonly TOpenIdOptions options = options.Value;
 
   /// <inheritdoc />
+  /// <remarks>
+  /// Each invocation performs a live network request to
+  /// <c>{Authority}/.well-known/openid-configuration</c> to resolve the authorization and token
+  /// endpoints; a failed request throws <see cref="HttpRequestException"/>.
+  /// </remarks>
   public async Task TransformAsync(
     OpenApiDocument document,
     OpenApiDocumentTransformerContext context,

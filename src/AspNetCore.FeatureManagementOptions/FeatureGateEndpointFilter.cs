@@ -75,12 +75,12 @@ public class FeatureGateEndpointFilter
   }
 
   /// <summary>
-  /// Gets the name of the features that the feature attribute will activate for.
+  /// Gets the feature flag names that this filter evaluates.
   /// </summary>
   public IEnumerable<string> Features { get; }
 
   /// <summary>
-  /// Gets the requirement type for <see cref="Microsoft.FeatureManagement.Mvc.FeatureGateAttribute.Features" /> that should be enabled to pass.
+  /// Gets the requirement mode that determines whether all or any of the <see cref="Features"/> must be enabled to pass.
   /// </summary>
   public RequirementType RequirementType { get; }
 

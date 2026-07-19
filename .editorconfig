@@ -15,3 +15,6 @@ max_line_length = 1000
 
 [{*.Generated.*.cs,**/Migrations/*.cs}]
 generated_code = true
+
+[{tests,samples}/**/*.cs]
+dotnet_diagnostic.CS1591.severity = none

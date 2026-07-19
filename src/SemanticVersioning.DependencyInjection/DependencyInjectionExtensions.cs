@@ -20,6 +20,8 @@ public static class DependencyInjectionExtensions
     /// </summary>
     /// <param name="assembly">The assembly that will provide the version number.</param>
     /// <returns>The configured <see cref="IServiceCollection"/>.</returns>
+    /// <exception cref="ArgumentException">The assembly has no <see cref="AssemblyInformationalVersionAttribute"/>, or its value is not in a valid semantic versioning format.</exception>
+    /// <remarks>Registered via <c>TryAddSingleton</c>, so an existing registration is left untouched.</remarks>
     public IServiceCollection AddSemanticVersionDescriptor(Assembly assembly)
     {
       ArgumentNullException.ThrowIfNull(services);
@@ -33,6 +35,9 @@ public static class DependencyInjectionExtensions
     /// </summary>
     /// <param name="type">A type contained in the assembly that should provide the version number.</param>
     /// <returns>The configured <see cref="IServiceCollection"/>.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="type"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentException">The assembly has no <see cref="AssemblyInformationalVersionAttribute"/>, or its value is not in a valid semantic versioning format.</exception>
+    /// <remarks>Registered via <c>TryAddSingleton</c>, so an existing registration is left untouched.</remarks>
     public IServiceCollection AddSemanticVersionDescriptor(Type type)
     {
       ArgumentNullException.ThrowIfNull(services);

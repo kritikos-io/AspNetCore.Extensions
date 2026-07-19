@@ -15,8 +15,8 @@ public static class KritikosAspNetCoreWebApplicationExtensions
   /// Maps all endpoints defined in implementations of <see cref="IEndpoint"/>.
   /// </summary>
   /// <param name="app">The <see cref="WebApplication"/> to configure.</param>
-  /// <param name="route">An <see cref="IEndpointRouteBuilder"/> to handle common conventions for all endpoints.</param>
-  /// <returns>The configured <see cref="IServiceCollection"/>.</returns>
+  /// <param name="route">An optional <see cref="IEndpointRouteBuilder"/> to map the endpoints onto; defaults to <paramref name="app"/> when not supplied.</param>
+  /// <returns>The configured <see cref="WebApplication"/>.</returns>
   public static WebApplication MapEndpoints(this WebApplication app, IEndpointRouteBuilder? route = null)
   {
     ArgumentNullException.ThrowIfNull(app);

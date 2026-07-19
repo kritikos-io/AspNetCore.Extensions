@@ -17,6 +17,11 @@ public static class OpenApiVersioningExtensions
   /// <param name="services">The <see cref="IServiceCollection"/> to configure.</param>
   /// <param name="configure">An optional action to further configure <see cref="OpenApiOptions"/>.</param>
   /// <returns>The configured <see cref="IServiceCollection"/>.</returns>
+  /// <remarks>
+  /// Registers one OpenAPI document per version exposed by the static abstract
+  /// <see cref="IApiVersionModelProvider.VersionModel"/> member of
+  /// <typeparamref name="TVersionModelProvider"/>, naming each document's group <c>v{version}</c>.
+  /// </remarks>
   public static IServiceCollection AddVersionedOpenApi<TVersionModelProvider>(
     this IServiceCollection services,
     Action<OpenApiOptions>? configure = null)

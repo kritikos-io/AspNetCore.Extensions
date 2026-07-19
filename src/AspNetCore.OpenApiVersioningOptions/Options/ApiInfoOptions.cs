@@ -33,12 +33,12 @@ public abstract class OpenApiInfoOptions
   public string ContactEmail { get; set; } = string.Empty;
 
   /// <summary>
-  /// Gets or sets the license name for the API.
+  /// Gets or sets the license name for the API. Defaults to <c>Apache License, Version 2.0</c>.
   /// </summary>
   public string LicenseName { get; set; } = "Apache License, Version 2.0";
 
   /// <summary>
-  /// Gets or sets the license URL for the API.
+  /// Gets or sets the license URL for the API. Defaults to <c>https://opensource.org/license/apache-2-0</c>.
   /// </summary>
   public Uri LicenseUrl { get; set; } = new Uri("https://opensource.org/license/apache-2-0");
 }

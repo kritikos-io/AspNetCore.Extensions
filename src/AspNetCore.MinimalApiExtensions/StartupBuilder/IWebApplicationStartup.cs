@@ -3,7 +3,7 @@
 using Microsoft.AspNetCore.Builder;
 
 /// <summary>
-/// Provides an interface for initializing services and middleware used by an application.
+/// Provides a startup contract for configuring services and middleware on a <see cref="WebApplicationBuilder"/>.
 /// </summary>
 [CLSCompliant(false)]
 public interface IWebApplicationStartup
