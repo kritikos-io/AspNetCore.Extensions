@@ -39,7 +39,7 @@
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests\AspNetCore.FeatureManagementOptionTests\AspNetCore.FeatureManagementOptionTests.csproj" Type="Classic C#" />
-    <Project Path="tests\AspNetCore.MinimalApiTests\AspNetCore.MinimalApiTests.csproj" Type="Classic C#" />
+    <Project Path="tests\AspNetCore.MinimalApiExtensions.Tests\AspNetCore.MinimalApiExtensions.Tests.csproj" Type="Classic C#" />
     <Project Path="tests\AspNetCore.VersioningTests\AspNetCore.VersioningTests.csproj" Type="Classic C#" />
     <Project Path="tests\SemanticVersioning.Tests\SemanticVersioning.Tests.csproj" Type="Classic C#" />
     <File Path="tests\Directory.Build.props" />

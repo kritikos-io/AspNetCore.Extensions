@@ -31,8 +31,7 @@ public static class KritikosApiVersioningDependencyInjectionExtensions
 
       services
         .AddApiVersioning()
-        .AddApiExplorer()
-        .EnableApiVersionBinding();
+        .AddApiExplorer();
 
       services.ConfigureOptions<ApiVersioningDefaultOptions>();
 
