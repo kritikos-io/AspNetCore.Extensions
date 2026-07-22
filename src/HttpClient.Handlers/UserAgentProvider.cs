@@ -7,31 +7,38 @@ using Kritikos.HttpClient.Handlers.Contracts;
 /// <summary>
 /// Provides random user agent strings with weighted browser selection.
 /// </summary>
-/// <param name="random">The random number generator used for weighted selection.</param>
-public class UserAgentProvider(Random random)
-    : IUserAgentProvider
+public sealed class UserAgentProvider : IUserAgentProvider
 {
-  private static readonly List<string> Agents =
-  [
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36",
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Edge/96.0.1054.62 Safari/537.36 Edg/96.0.1054.62",
-    "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:96.0) Gecko/20100101 Firefox/96.0",
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36",
-    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.1 Safari/605.1.15",
-    "Mozilla/5.0 (iPhone; CPU iPhone OS 15_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.0 Mobile/15E148 Safari/604.1",
-    "Mozilla/5.0 (Linux; Android 11; SM-G998U1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Mobile Safari/537.36",
-    "Mozilla/5.0 (Linux; Android 11; Pixel 4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Mobile Safari/537.36",
-  ];
+  private readonly Random random;
+  private readonly (string Agent, int Weight)[] weighted;
+  private readonly int totalWeight;
 
-  private static readonly Dictionary<string, int> BrowserWeights = new()
+  /// <summary>Initializes a new instance of the <see cref="UserAgentProvider"/> class.</summary>
+  /// <param name="random">The random number generator used for weighted selection.</param>
+  /// <param name="options">The agent pool and weights to use, or <see langword="null"/> for the defaults.</param>
+  /// <exception cref="ArgumentException"><paramref name="options"/> configures an empty agent pool.</exception>
+  public UserAgentProvider(Random random, UserAgentProviderOptions? options = null)
   {
-    { "Chrome", 30 },
-    { "Firefox", 20 },
-    { "Safari", 15 },
-    { "Edge", 10 },
-    { "Mobile Safari", 10 },
-    { "Other", 5 },
-  };
+    ArgumentNullException.ThrowIfNull(random);
+    var resolved = options ?? new UserAgentProviderOptions();
+    if (resolved.Agents.Count == 0)
+    {
+      throw new ArgumentException("At least one user agent must be configured.", nameof(options));
+    }
+
+    this.random = random;
+    weighted = [.. resolved.Agents.Select(agent => (Agent: agent, Weight: GetWeight(agent, resolved.BrowserWeights)))];
+    totalWeight = weighted.Sum(static pair => pair.Weight);
+  }
+
+  /// <summary>
+  /// Initializes a new instance of the <see cref="UserAgentProvider"/> class using <see cref="Random.Shared"/>.
+  /// </summary>
+  /// <param name="options">The agent pool and weights to use.</param>
+  public UserAgentProvider(UserAgentProviderOptions options)
+    : this(Random.Shared, options)
+  {
+  }
 
   /// <summary>
   /// Initializes a new instance of the <see cref="UserAgentProvider"/> class using <see cref="Random.Shared"/>.
@@ -53,25 +60,54 @@ public class UserAgentProvider(Random random)
   /// <inheritdoc />
   public string GetRandomUserAgent()
   {
-    var totalWeight = BrowserWeights.Values.Sum();
-    var r = random.Next(totalWeight);
-    var weight = 0;
+    var target = random.Next(totalWeight);
 
-    foreach (var browser in BrowserWeights.Keys)
+    var cumulative = 0;
+    foreach (var (agent, weight) in weighted)
     {
-      foreach (var agent in Agents
-                   .Where(x => x.Contains(browser, StringComparison.InvariantCultureIgnoreCase)))
+      cumulative += weight;
+      if (target < cumulative)
       {
-        weight += BrowserWeights[browser];
-        if (weight > r)
-        {
-          return agent;
-        }
-
-        break;
+        return agent;
       }
     }
 
-    return Agents[^1];
+    return weighted[^1].Agent;
+  }
+
+  private static int GetWeight(string agent, IReadOnlyDictionary<string, int> weights)
+  {
+    var category = GetCategory(agent);
+    return weights.TryGetValue(category, out var weight) ? weight : 1;
+  }
+
+  private static string GetCategory(string agent)
+  {
+    if (agent.Contains("Edg", StringComparison.InvariantCultureIgnoreCase))
+    {
+      return "Edge";
+    }
+
+    if (agent.Contains("Firefox", StringComparison.InvariantCultureIgnoreCase))
+    {
+      return "Firefox";
+    }
+
+    if (agent.Contains("Mobile", StringComparison.InvariantCultureIgnoreCase))
+    {
+      return "Mobile Safari";
+    }
+
+    if (agent.Contains("Chrome", StringComparison.InvariantCultureIgnoreCase))
+    {
+      return "Chrome";
+    }
+
+    if (agent.Contains("Safari", StringComparison.InvariantCultureIgnoreCase))
+    {
+      return "Safari";
+    }
+
+    return "Other";
   }
 }

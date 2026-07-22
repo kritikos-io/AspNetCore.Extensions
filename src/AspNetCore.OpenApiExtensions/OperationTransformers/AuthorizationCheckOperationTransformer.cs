@@ -9,7 +9,7 @@ using Microsoft.OpenApi;
 /// <summary>
 /// An OpenAPI operation transformer that adds 401/403 responses and an OAuth security requirement to authorized endpoints.
 /// </summary>
-public class AuthorizationCheckOperationTransformer : IOpenApiOperationTransformer
+public sealed class AuthorizationCheckOperationTransformer : IOpenApiOperationTransformer
 {
   /// <inheritdoc />
   public Task TransformAsync(

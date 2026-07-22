@@ -55,7 +55,7 @@ public partial class OpenIdConnectTokenProvider(
   [LoggerMessage(LogLevel.Error, "Error fetching discovery document from {Url}: {Error}")]
   private static partial void ErrorFetchingDiscoveryDocument(ILogger logger, Uri url, string? error);
 
-  [LoggerMessage(LogLevel.Error, "Error fetching discovery document from {Url}: {Error}")]
+  [LoggerMessage(LogLevel.Error, "Error creating access token from {Url}: {Error}")]
   private static partial void ErrorCreatingAccessToken(ILogger logger, Uri? url, string? error);
 
   private async ValueTask<OpenIdConnectConfiguration> GetDiscoveryDocument(
@@ -71,6 +71,7 @@ public partial class OpenIdConnectTokenProvider(
     if (!response.IsSuccessStatusCode)
     {
       ErrorFetchingDiscoveryDocument(logger, options.WellKnownEndpoint, response.ReasonPhrase);
+      response.EnsureSuccessStatusCode();
     }
 
     var content = await response.Content.ReadAsStringAsync(cancellationToken);

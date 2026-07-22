@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 /// <summary>
 /// Provides opinionated default configuration for API versioning and API explorer options.
 /// </summary>
-public class ApiVersioningDefaultOptions
+public sealed class ApiVersioningDefaultOptions
   : IConfigureOptions<ApiVersioningOptions>,
     IConfigureOptions<ApiExplorerOptions>
 {

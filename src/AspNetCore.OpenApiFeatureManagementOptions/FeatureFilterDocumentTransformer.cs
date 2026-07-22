@@ -15,7 +15,7 @@ using Microsoft.OpenApi;
 /// An OpenAPI document transformer that removes operations gated behind disabled feature flags.
 /// </summary>
 /// <param name="featureManager">The feature manager used to evaluate feature flag state.</param>
-public class FeatureFilterDocumentTransformer(IFeatureManager featureManager)
+public sealed class FeatureFilterDocumentTransformer(IFeatureManager featureManager)
   : IOpenApiDocumentTransformer
 {
   private readonly IFeatureManager featureManager = featureManager;
@@ -34,7 +34,7 @@ public class FeatureFilterDocumentTransformer(IFeatureManager featureManager)
       var descriptor = apiDescription.ActionDescriptor;
       var shouldRemoveAction = descriptor switch
       {
-        ControllerActionDescriptor controllerActionDescriptor => IsControllerFeatureGateClosed(
+        ControllerActionDescriptor controllerActionDescriptor => await IsControllerFeatureGateClosed(
           controllerActionDescriptor),
         { } actionDescriptor => await IsEndpointFeatureClosed(actionDescriptor),
         _ => throw new ArgumentException(nameof(context.DescriptionGroups)),
@@ -88,7 +88,7 @@ public class FeatureFilterDocumentTransformer(IFeatureManager featureManager)
     return isEnabled;
   }
 
-  private bool IsControllerFeatureGateClosed(ControllerActionDescriptor descriptor)
+  private async Task<bool> IsControllerFeatureGateClosed(ControllerActionDescriptor descriptor)
   {
     var controllerAttributes = descriptor.ControllerTypeInfo
       .GetCustomAttributes<FeatureGateAttribute>()
@@ -102,24 +102,33 @@ public class FeatureFilterDocumentTransformer(IFeatureManager featureManager)
       return false;
     }
 
-    var enabledOnControllerLevel =
-      controllerAttributes.Select(attribute => attribute.RequirementType switch
-        {
-          RequirementType.Any => attribute.Features.Any(feature => featureManager.IsEnabledAsync(feature).Result),
-          RequirementType.All => attribute.Features.All(feature => featureManager.IsEnabledAsync(feature).Result),
-          _ => throw new ArgumentException(nameof(attribute.RequirementType)),
-        })
-        .ToList();
+    var controllerEnabled = await AreAllGatesEnabled(controllerAttributes);
+    var actionEnabled = await AreAllGatesEnabled(actionAttributes);
 
-    var enabledOnActionLevel =
-      actionAttributes.Select(attribute => attribute.RequirementType switch
-        {
-          RequirementType.Any => attribute.Features.Any(feature => featureManager.IsEnabledAsync(feature).Result),
-          RequirementType.All => attribute.Features.All(feature => featureManager.IsEnabledAsync(feature).Result),
-          _ => throw new ArgumentException(nameof(attribute.RequirementType)),
-        })
-        .ToList();
+    return !(controllerEnabled && actionEnabled);
+  }
 
-    return !(enabledOnControllerLevel.All(x => x) && enabledOnActionLevel.All(x => x));
+  private async Task<bool> AreAllGatesEnabled(IEnumerable<FeatureGateAttribute> attributes)
+  {
+    foreach (var attribute in attributes)
+    {
+      var gateEnabled = attribute.RequirementType == RequirementType.All;
+      foreach (var feature in attribute.Features)
+      {
+        gateEnabled = attribute.RequirementType switch
+        {
+          RequirementType.All => gateEnabled && await featureManager.IsEnabledAsync(feature),
+          RequirementType.Any => gateEnabled || await featureManager.IsEnabledAsync(feature),
+          _ => throw new ArgumentException(nameof(attribute.RequirementType)),
+        };
+      }
+
+      if (!gateEnabled)
+      {
+        return false;
+      }
+    }
+
+    return true;
   }
 }

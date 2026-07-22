@@ -35,7 +35,7 @@ public sealed class HeartbeatTelemetryTests
     using var activityListener = new ActivityListener
     {
       ShouldListenTo = source => source.Name == Telemetry.Name,
-      Sample = static (ref ActivityCreationOptions<ActivityContext> _) => ActivitySamplingResult.AllData,
+      Sample = static (ref _) => ActivitySamplingResult.AllData,
       ActivityStopped = spans.Add,
     };
     ActivitySource.AddActivityListener(activityListener);

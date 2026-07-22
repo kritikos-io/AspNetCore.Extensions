@@ -8,7 +8,7 @@ using Microsoft.FeatureManagement;
 /// <summary>
 /// An endpoint filter that gates access based on the state of one or more feature flags.
 /// </summary>
-public class FeatureGateEndpointFilter
+public sealed class FeatureGateEndpointFilter
   : IEndpointFilter
 {
   /// <summary>
@@ -41,7 +41,7 @@ public class FeatureGateEndpointFilter
       throw new ArgumentNullException(nameof(features), "Features can not be null or empty!");
     }
 
-    if (!features.GetType().IsEnum)
+    if (features.Any(static feature => feature is not Enum))
     {
       throw new ArgumentException("The provided features must be enums.", nameof(features));
     }

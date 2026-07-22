@@ -7,7 +7,7 @@ using Kritikos.HttpClient.Handlers.Contracts;
 /// </summary>
 /// <param name="provider">An implementation of <see cref="IUserAgentProvider"/> to handle the generation of user agent strings.</param>
 /// <param name="innerHandler">The inner handler which is responsible for processing the HTTP response messages.</param>
-public class UserAgentHandler(IUserAgentProvider provider, HttpMessageHandler innerHandler)
+public sealed class UserAgentHandler(IUserAgentProvider provider, HttpMessageHandler innerHandler)
     : DelegatingHandler(innerHandler)
 {
   /// <inheritdoc />

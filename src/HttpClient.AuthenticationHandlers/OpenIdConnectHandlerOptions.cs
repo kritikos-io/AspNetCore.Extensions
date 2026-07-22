@@ -3,7 +3,7 @@ namespace Kritikos.HttpClient.AuthenticationHandlers;
 /// <summary>
 /// Configuration options for the OpenID Connect client credentials handler.
 /// </summary>
-public class OpenIdConnectHandlerOptions
+public sealed class OpenIdConnectHandlerOptions
 {
   /// <summary>
   /// Gets or sets the URI of the OpenID Connect well-known discovery endpoint.

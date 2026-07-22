@@ -27,7 +27,7 @@ public static class FeatureEndpointFilterExtensions
   {
     ArgumentNullException.ThrowIfNull(builder);
 
-    var filter = new FeatureGateEndpointFilter(requirementType, features);
+    var filter = new FeatureGateEndpointFilter(requirementType, features.Cast<object>().ToArray());
     builder.AddEndpointFilter(filter);
     builder.WithMetadata(filter);
 

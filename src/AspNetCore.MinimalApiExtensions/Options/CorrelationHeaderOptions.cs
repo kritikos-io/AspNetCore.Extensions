@@ -5,7 +5,7 @@ using Kritikos.Extensions.Options.Contracts;
 /// <summary>
 /// Configuration options for the correlation header middleware.
 /// </summary>
-public class CorrelationHeaderOptions : IOptionsDefinition
+public sealed class CorrelationHeaderOptions : IOptionsDefinition
 {
   /// <summary>
   /// The default correlation header name.

@@ -27,19 +27,9 @@ public static class OffsetPagedResultExtensions
         count = source.Count();
       }
 
-      var pageCount = (int)Math.Ceiling((double)count / pageSize);
       var items = source.Skip((page - 1) * pageSize).Take(pageSize);
 
-      var result = new OffsetPagedResult<T>
-      {
-        Items = [.. items],
-        CurrentPage = page,
-        PageSize = pageSize,
-        TotalPages = pageCount,
-        TotalCount = count,
-      };
-
-      return result;
+      return ToPagedResult(items, page, pageSize, count);
     }
 
     /// <summary>
@@ -59,19 +49,9 @@ public static class OffsetPagedResultExtensions
         count = await source.CountAsync(cancellationToken);
       }
 
-      var pageCount = (int)Math.Ceiling((double)count / pageSize);
       var items = await source.Skip((page - 1) * pageSize).Take(pageSize).ToArrayAsync(cancellationToken);
 
-      var result = new OffsetPagedResult<T>
-      {
-        Items = [.. items],
-        CurrentPage = page,
-        PageSize = pageSize,
-        TotalPages = pageCount,
-        TotalCount = count,
-      };
-
-      return result;
+      return ToPagedResult(items, page, pageSize, count);
     }
 
     /// <summary>
@@ -93,19 +73,9 @@ public static class OffsetPagedResultExtensions
         count = source.Count();
       }
 
-      var pageCount = (int)Math.Ceiling((double)count / pageSize);
       var items = source.Skip((page - 1) * pageSize).Take(pageSize).Select(mapper);
 
-      var result = new OffsetPagedResult<TDestination>
-      {
-        Items = [.. items],
-        CurrentPage = page,
-        PageSize = pageSize,
-        TotalPages = pageCount,
-        TotalCount = count,
-      };
-
-      return result;
+      return ToPagedResult(items, page, pageSize, count);
     }
 
     /// <summary>
@@ -129,22 +99,27 @@ public static class OffsetPagedResultExtensions
         count = await source.CountAsync(cancellationToken);
       }
 
-      var pageCount = (int)Math.Ceiling((double)count / pageSize);
       var items = await source.Skip((page - 1) * pageSize)
         .Take(pageSize)
         .Select(mapper)
         .ToArrayAsync(cancellationToken);
 
-      var result = new OffsetPagedResult<TDestination>
-      {
-        Items = [.. items],
-        CurrentPage = page,
-        PageSize = pageSize,
-        TotalPages = pageCount,
-        TotalCount = count,
-      };
-
-      return result;
+      return ToPagedResult(items, page, pageSize, count);
     }
   }
+
+  private static OffsetPagedResult<TResult> ToPagedResult<TResult>(
+    IEnumerable<TResult> items,
+    int page,
+    int pageSize,
+    int count)
+    where TResult : class
+    => new()
+    {
+      Items = [.. items],
+      CurrentPage = page,
+      PageSize = pageSize,
+      TotalPages = (int)Math.Ceiling((double)count / pageSize),
+      TotalCount = count,
+    };
 }

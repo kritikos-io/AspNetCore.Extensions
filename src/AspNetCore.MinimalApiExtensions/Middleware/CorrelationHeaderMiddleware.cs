@@ -9,7 +9,7 @@ using Microsoft.Extensions.Options;
 /// <summary>
 /// Middleware that ensures each HTTP request has a correlation identifier header for distributed tracing.
 /// </summary>
-public class CorrelationHeaderMiddleware : IMiddleware
+public sealed class CorrelationHeaderMiddleware : IMiddleware
 {
   private readonly CorrelationHeaderOptions options;
   private readonly ILogger logger;

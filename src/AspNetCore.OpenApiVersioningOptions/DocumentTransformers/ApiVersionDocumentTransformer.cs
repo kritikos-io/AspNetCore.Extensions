@@ -17,7 +17,7 @@ using Microsoft.OpenApi;
 /// <typeparam name="TApiInfoOptions">The options type containing API info metadata.</typeparam>
 /// <param name="options">The API info options providing title, description, contact, and license data.</param>
 /// <param name="versionProvider">The API version description provider.</param>
-public class ApiVersionDocumentTransformer<TApiInfoOptions>(
+public sealed class ApiVersionDocumentTransformer<TApiInfoOptions>(
   IOptions<TApiInfoOptions> options,
   IApiVersionDescriptionProvider versionProvider)
   : IOpenApiDocumentTransformer
