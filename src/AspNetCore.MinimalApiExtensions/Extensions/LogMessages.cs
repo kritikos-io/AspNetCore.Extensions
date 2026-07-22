@@ -19,6 +19,12 @@ public static partial class LogMessages
       "Periodic background service {Service} going to sleep";
 
   private const string EntityNotFoundMessage = "Requested entity {Entity} with id {Id} was not found";
+
+  private const string HeartbeatSourceCancelledMessage =
+    "Heartbeat watchdog cancelled stale source {Source}";
+
+  private const string HeartbeatSourceCancelFailedMessage =
+    "Heartbeat watchdog failed to cancel stale source {Source}";
 }
 
 /// <summary>
@@ -66,4 +72,21 @@ public static partial class LogMessages
   /// <param name="id">The entity identifier.</param>
   [LoggerMessage(LogLevel.Error, EntityNotFoundMessage)]
   public static partial void LogEntityNotFound(this ILogger logger, string entity, string id);
+
+  /// <summary>
+  /// Logs that the heartbeat watchdog cancelled a stale source.
+  /// </summary>
+  /// <param name="logger">The logger instance.</param>
+  /// <param name="source">The name of the cancelled heartbeat source.</param>
+  [LoggerMessage(LogLevel.Warning, HeartbeatSourceCancelledMessage)]
+  public static partial void LogHeartbeatSourceCancelled(this ILogger logger, string source);
+
+  /// <summary>
+  /// Logs that the heartbeat watchdog failed to cancel a stale source because its cancellation threw.
+  /// </summary>
+  /// <param name="logger">The logger instance.</param>
+  /// <param name="source">The name of the heartbeat source whose cancellation threw.</param>
+  /// <param name="e">The exception raised while cancelling the source.</param>
+  [LoggerMessage(LogLevel.Error, HeartbeatSourceCancelFailedMessage)]
+  public static partial void LogHeartbeatSourceCancelFailed(this ILogger logger, string source, Exception e);
 }

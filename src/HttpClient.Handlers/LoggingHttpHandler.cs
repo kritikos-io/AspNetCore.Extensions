@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 /// <param name="logger">The logger instance used for structured logging.</param>
 public partial class LoggingHttpHandler(ILogger<LoggingHttpHandler> logger) : DelegatingHandler
 {
-  private ILogger logger = logger;
+  private readonly ILogger logger = logger;
 
   /// <inheritdoc />
   protected override async Task<HttpResponseMessage> SendAsync(
@@ -40,7 +40,7 @@ public partial class LoggingHttpHandler(ILogger<LoggingHttpHandler> logger) : De
     LogHttpRequestStarting(ILogger logger, HttpMethod httpMethod, Uri? requestUri, DateTime now);
 
   [LoggerMessage(LogLevel.Debug,
-    "HttpRequest {HttpMethod} {RequestUri} completed in {Elapsed} with status code {StatusCode}")]
+    "HttpRequest {HttpMethod} {RequestUri} completed in {elapsed} with status code {StatusCode}")]
   private static partial void LogHttpRequestCompleted(ILogger logger, HttpMethod httpMethod, Uri? requestUri,
-    TimeSpan Elapsed, HttpStatusCode statusCode);
+    TimeSpan elapsed, HttpStatusCode statusCode);
 }

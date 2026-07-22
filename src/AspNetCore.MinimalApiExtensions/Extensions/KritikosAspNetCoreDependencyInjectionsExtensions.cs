@@ -6,11 +6,13 @@ using Kritikos.AspNetCore.MinimalApiExtensions.Contracts;
 using Kritikos.AspNetCore.MinimalApiExtensions.Middleware;
 using Kritikos.AspNetCore.MinimalApiExtensions.Options;
 using Kritikos.AspNetCore.MinimalApiExtensions.Services;
+using Kritikos.AspNetCore.MinimalApiExtensions.Services.Heartbeat;
 using Kritikos.Extensions.Options.Contracts;
 using Kritikos.Extensions.Options.DependencyInjection;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 #pragma warning disable CA1034 // Do not nest type - false positive from C# 14 extension blocks
 
@@ -34,6 +36,33 @@ public static class KritikosAspNetCoreDependencyInjectionsExtensions
       services.AddOptionsDefinition<CorrelationHeaderOptions>();
       services.Configure(configure ?? (static _ => { }));
       services.TryAddSingleton<CorrelationHeaderMiddleware>();
+
+      return services;
+    }
+
+    /// <summary>
+    /// Registers the heartbeat registry, its options, and the aggregate liveness health check (tagged
+    /// <c>live</c>). Long-running services resolve the <see cref="HeartbeatRegistry"/> to register and beat
+    /// their sources; the check reports unhealthy once any source's most recent beat goes stale.
+    /// </summary>
+    /// <param name="configure">An <see cref="System.Action{T}" /> to configure the provided <see cref="HeartbeatOptions" />.</param>
+    /// <returns>The configured <see cref="IServiceCollection"/>.</returns>
+    public IServiceCollection AddHeartbeat(Action<HeartbeatOptions>? configure = null)
+    {
+      ArgumentNullException.ThrowIfNull(services);
+
+      services.AddOptionsDefinition<HeartbeatOptions>();
+      services.Configure(configure ?? (static _ => { }));
+      services.TryAddSingleton(TimeProvider.System);
+      services.TryAddSingleton<HeartbeatRegistry>();
+
+      services.AddHealthChecks()
+        .AddCheck<HeartbeatHealthCheck>(
+          HeartbeatHealthCheck.Name,
+          failureStatus: HealthStatus.Unhealthy,
+          tags: ["live"]);
+
+      services.AddHostedService<HeartbeatWatchdog>();
 
       return services;
     }
