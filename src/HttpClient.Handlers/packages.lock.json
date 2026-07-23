@@ -8,15 +8,6 @@
         "resolved": "6.8.2",
         "contentHash": "eTd8jUiogUXpVssFyDWWdMrPr5Cdc57tWaQ3Cv/eMIhnumOHZhDkc/wcy8hYU8aH7NS4VT2w/pHjVITDSTXMGw=="
       },
-      "Microsoft.Extensions.Logging.Abstractions": {
-        "type": "Direct",
-        "requested": "[10.0.10, )",
-        "resolved": "10.0.10",
-        "contentHash": "zkFxGYUvdxAvIKTyXHrmW+Sux53D4SezD9dMyZ6hrwwzPQJNuwCRy1f5W7AvYTqacEGhWF2XderRQG1OvbV8og==",
-        "dependencies": {
-          "Microsoft.Extensions.DependencyInjection.Abstractions": "10.0.10"
-        }
-      },
       "Microsoft.Sbom.Targets": {
         "type": "Direct",
         "requested": "[4.1.5, )",
@@ -28,12 +19,6 @@
         "requested": "[1.2.1, )",
         "resolved": "1.2.1",
         "contentHash": "20cG97DtMBpl6bPZ8Ito8JBidTusgP71x3SUcEMSQ08XIdX1ArVixtY2UK7aUi/GN3qCP2Ryp0U9AbtrYqBCzQ=="
-      },
-      "Microsoft.Extensions.DependencyInjection.Abstractions": {
-        "type": "CentralTransitive",
-        "requested": "[10.0.10, )",
-        "resolved": "10.0.10",
-        "contentHash": "z/2xXlFw2aLGjHyEm6E0tQ+In6VfzQzTrtArbQ2c0TQE16ZbyDCMGPvaUT9I0s8rgy9sRWlU2P9waW37qV04qA=="
       }
     }
   }

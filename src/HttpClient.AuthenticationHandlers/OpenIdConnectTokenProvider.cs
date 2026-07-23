@@ -40,7 +40,7 @@ public partial class OpenIdConnectTokenProvider(
     using var request = new HttpRequestMessage(HttpMethod.Post, discovery.TokenEndpoint);
     request.Content = new FormUrlEncodedContent(parameters);
 
-    var response = await clientFactory.CreateClient(nameof(OpenIdConnectTokenProvider))
+    using var response = await clientFactory.CreateClient(nameof(OpenIdConnectTokenProvider))
       .SendAsync(request, cancellationToken);
     var tokenDictionary = await response.Content.ReadFromJsonAsync<Dictionary<string, object>>(cancellationToken) ?? [];
     if (!tokenDictionary.TryGetValue("access_token", out var token))
@@ -67,7 +67,7 @@ public partial class OpenIdConnectTokenProvider(
     }
 
     var client = clientFactory.CreateClient(nameof(OpenIdConnectTokenProvider));
-    var response = await client.GetAsync(options.WellKnownEndpoint, cancellationToken);
+    using var response = await client.GetAsync(options.WellKnownEndpoint, cancellationToken);
     if (!response.IsSuccessStatusCode)
     {
       ErrorFetchingDiscoveryDocument(logger, options.WellKnownEndpoint, response.ReasonPhrase);

@@ -62,6 +62,24 @@ public class OffsetPagedResultExtensionsTests
     await Assert.That(result.Items[2].Name).IsEqualTo("w3");
   }
 
+  [Test]
+  public async Task ToOffsetPaged_rejects_a_non_positive_page()
+  {
+    using var context = CreateContext(5);
+
+    await Assert.That(() => context.Widgets.OrderBy(static w => w.Id).ToOffsetPaged(page: 0, pageSize: 10))
+      .Throws<ArgumentOutOfRangeException>();
+  }
+
+  [Test]
+  public async Task ToOffsetPaged_rejects_a_non_positive_page_size()
+  {
+    using var context = CreateContext(5);
+
+    await Assert.That(() => context.Widgets.OrderBy(static w => w.Id).ToOffsetPaged(page: 1, pageSize: 0))
+      .Throws<ArgumentOutOfRangeException>();
+  }
+
   private static PagingDbContext CreateContext(int itemCount)
   {
     var context = new PagingDbContext();

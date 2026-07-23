@@ -36,9 +36,10 @@ public sealed class FeatureGateEndpointFilter
   /// <param name="features">The enum feature values to evaluate.</param>
   public FeatureGateEndpointFilter(RequirementType requirementType, params object[] features)
   {
-    if (features == null || features.Length == 0)
+    ArgumentNullException.ThrowIfNull(features);
+    if (features.Length == 0)
     {
-      throw new ArgumentNullException(nameof(features), "Features can not be null or empty!");
+      throw new ArgumentException("Features can not be empty.", nameof(features));
     }
 
     if (features.Any(static feature => feature is not Enum))
@@ -65,9 +66,10 @@ public sealed class FeatureGateEndpointFilter
   /// <param name="features">The feature names to evaluate.</param>
   public FeatureGateEndpointFilter(RequirementType requirementType, params string[] features)
   {
-    if (features == null || features.Length == 0 || features.Any(string.IsNullOrWhiteSpace))
+    ArgumentNullException.ThrowIfNull(features);
+    if (features.Length == 0 || features.Any(string.IsNullOrWhiteSpace))
     {
-      throw new ArgumentNullException(nameof(features), "Features can not be null or whitespace!");
+      throw new ArgumentException("Features can not be empty or whitespace.", nameof(features));
     }
 
     Features = [.. features];
@@ -90,10 +92,8 @@ public sealed class FeatureGateEndpointFilter
     ArgumentNullException.ThrowIfNull(context);
     ArgumentNullException.ThrowIfNull(next);
 
-    var featureManager = context.HttpContext.RequestServices.GetRequiredService<IFeatureManagerSnapshot>()
-                         ?? throw new ArgumentException(nameof(IFeatureManagerSnapshot));
-    var problemDetailsFactory = context.HttpContext.RequestServices.GetRequiredService<ProblemDetailsFactory>()
-                                ?? throw new ArgumentException(nameof(ProblemDetailsFactory));
+    var featureManager = context.HttpContext.RequestServices.GetRequiredService<IFeatureManagerSnapshot>();
+    var problemDetailsFactory = context.HttpContext.RequestServices.GetRequiredService<ProblemDetailsFactory>();
 
     var isEnabled = RequirementType == RequirementType.All;
     foreach (var feature in Features)

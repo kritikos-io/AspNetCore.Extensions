@@ -22,7 +22,7 @@ public static class KritikosAspNetCoreWebApplicationExtensions
     ArgumentNullException.ThrowIfNull(app);
 
     var mapping = route ?? app;
-    var endpoints = app.Services.GetService<IEnumerable<IEndpoint>>() ?? [];
+    var endpoints = app.Services.GetServices<IEndpoint>();
     foreach (var endpoint in endpoints)
     {
       endpoint.MapEndpoint(mapping);

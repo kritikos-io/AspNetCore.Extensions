@@ -22,6 +22,7 @@ public static class OffsetPagedResultExtensions
     /// <returns>An <see cref="OffsetPagedResult{T}"/> containing the requested page of results.</returns>
     public OffsetPagedResult<T> ToOffsetPaged(int page, int pageSize)
     {
+      ValidatePaging(page, pageSize);
       if (!source.TryGetNonEnumeratedCount(out var count))
       {
         count = source.Count();
@@ -44,6 +45,7 @@ public static class OffsetPagedResultExtensions
       int pageSize,
       CancellationToken cancellationToken = default)
     {
+      ValidatePaging(page, pageSize);
       if (!source.TryGetNonEnumeratedCount(out var count))
       {
         count = await source.CountAsync(cancellationToken);
@@ -68,6 +70,8 @@ public static class OffsetPagedResultExtensions
       int pageSize)
       where TDestination : class
     {
+      ArgumentNullException.ThrowIfNull(mapper);
+      ValidatePaging(page, pageSize);
       if (!source.TryGetNonEnumeratedCount(out var count))
       {
         count = source.Count();
@@ -94,6 +98,8 @@ public static class OffsetPagedResultExtensions
       CancellationToken cancellationToken = default)
       where TDestination : class
     {
+      ArgumentNullException.ThrowIfNull(mapper);
+      ValidatePaging(page, pageSize);
       if (!source.TryGetNonEnumeratedCount(out var count))
       {
         count = await source.CountAsync(cancellationToken);
@@ -106,6 +112,12 @@ public static class OffsetPagedResultExtensions
 
       return ToPagedResult(items, page, pageSize, count);
     }
+  }
+
+  private static void ValidatePaging(int page, int pageSize)
+  {
+    ArgumentOutOfRangeException.ThrowIfNegativeOrZero(page);
+    ArgumentOutOfRangeException.ThrowIfNegativeOrZero(pageSize);
   }
 
   private static OffsetPagedResult<TResult> ToPagedResult<TResult>(
