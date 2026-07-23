@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\samples\PetStore.WebApi\PetStore.WebApi.csproj"/>
+    <ProjectReference Include="..\..\src\AspNetCore.VersioningOptions\AspNetCore.VersioningOptions.csproj"/>
   </ItemGroup>
 
 </Project>

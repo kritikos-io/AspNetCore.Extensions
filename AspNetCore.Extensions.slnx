@@ -40,11 +40,16 @@
   <Folder Name="/tests/">
     <Project Path="tests\AspNetCore.FeatureManagementOptionTests\AspNetCore.FeatureManagementOptionTests.csproj" Type="Classic C#" />
     <Project Path="tests\AspNetCore.MinimalApiExtensions.Tests\AspNetCore.MinimalApiExtensions.Tests.csproj" Type="Classic C#" />
+    <Project Path="tests\AspNetCore.OpenApiExtensions.Tests\AspNetCore.OpenApiExtensions.Tests.csproj" Type="Classic C#" />
+    <Project Path="tests\AspNetCore.OpenApiFeatureManagementOptions.Tests\AspNetCore.OpenApiFeatureManagementOptions.Tests.csproj" Type="Classic C#" />
+    <Project Path="tests\AspNetCore.OpenApiOidcExtensions.Tests\AspNetCore.OpenApiOidcExtensions.Tests.csproj" Type="Classic C#" />
+    <Project Path="tests\AspNetCore.OpenApiVersioningOptions.Tests\AspNetCore.OpenApiVersioningOptions.Tests.csproj" Type="Classic C#" />
     <Project Path="tests\AspNetCore.VersioningTests\AspNetCore.VersioningTests.csproj" Type="Classic C#" />
     <Project Path="tests\Extensions.Options.DependencyInjection.Tests\Extensions.Options.DependencyInjection.Tests.csproj" Type="Classic C#" />
     <Project Path="tests\HttpClient.AuthenticationHandlers.Tests\HttpClient.AuthenticationHandlers.Tests.csproj" Type="Classic C#" />
     <Project Path="tests\HttpClient.Handlers.Tests\HttpClient.Handlers.Tests.csproj" Type="Classic C#" />
     <Project Path="tests\PagedResults.Tests\PagedResults.Tests.csproj" Type="Classic C#" />
+    <Project Path="tests\SemanticVersioning.DependencyInjection.Tests\SemanticVersioning.DependencyInjection.Tests.csproj" Type="Classic C#" />
     <Project Path="tests\SemanticVersioning.Tests\SemanticVersioning.Tests.csproj" Type="Classic C#" />
     <File Path="tests\Directory.Build.props" />
   </Folder>

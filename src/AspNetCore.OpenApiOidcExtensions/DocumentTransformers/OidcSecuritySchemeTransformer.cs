@@ -64,9 +64,11 @@ public sealed class OidcSecuritySchemeTransformer<TOpenIdOptions>(
       },
     };
 
-    document.Components.SecuritySchemes?.TryAdd("openid", oidcScheme);
+    document.Components.SecuritySchemes ??= new Dictionary<string, IOpenApiSecurityScheme>(StringComparer.Ordinal);
+    document.Components.SecuritySchemes.TryAdd("openid", oidcScheme);
 
-    document.Security?.Add(new OpenApiSecurityRequirement()
+    document.Security ??= [];
+    document.Security.Add(new OpenApiSecurityRequirement()
     {
       [new OpenApiSecuritySchemeReference("openid", document)] =
         ["openid", "profile", "email"],

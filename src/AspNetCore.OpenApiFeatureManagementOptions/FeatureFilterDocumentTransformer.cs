@@ -65,8 +65,8 @@ public sealed class FeatureFilterDocumentTransformer(IFeatureManager featureMana
   {
     var metadata = descriptor.EndpointMetadata.ToList();
     var gates = metadata.OfType<FeatureGateEndpointFilter>().ToList();
-    var isEnabled = gates.Count > 0;
 
+    var shouldRemove = false;
     foreach (var gate in gates)
     {
       var features = gate.Features.ToList();
@@ -82,10 +82,10 @@ public sealed class FeatureFilterDocumentTransformer(IFeatureManager featureMana
         };
       }
 
-      isEnabled &= !gateEnabled;
+      shouldRemove |= !gateEnabled;
     }
 
-    return isEnabled;
+    return shouldRemove;
   }
 
   private async Task<bool> IsControllerFeatureGateClosed(ControllerActionDescriptor descriptor)
