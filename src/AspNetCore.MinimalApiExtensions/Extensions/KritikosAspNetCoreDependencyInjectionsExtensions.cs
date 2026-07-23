@@ -29,6 +29,7 @@ public static class KritikosAspNetCoreDependencyInjectionsExtensions
     /// </summary>
     /// <param name="configure">An <see cref="System.Action{T}" /> to configure the provided <see cref="CorrelationHeaderOptions" />.</param>
     /// <returns>The configured <see cref="IServiceCollection"/>.</returns>
+    /// <exception cref="ArgumentNullException">The <see cref="IServiceCollection"/> is <see langword="null"/>.</exception>
     public IServiceCollection AddCorrelationHeader(Action<CorrelationHeaderOptions>? configure = null)
     {
       ArgumentNullException.ThrowIfNull(services);
@@ -47,6 +48,7 @@ public static class KritikosAspNetCoreDependencyInjectionsExtensions
     /// </summary>
     /// <param name="configure">An <see cref="System.Action{T}" /> to configure the provided <see cref="HeartbeatOptions" />.</param>
     /// <returns>The configured <see cref="IServiceCollection"/>.</returns>
+    /// <exception cref="ArgumentNullException">The <see cref="IServiceCollection"/> is <see langword="null"/>.</exception>
     public IServiceCollection AddHeartbeat(Action<HeartbeatOptions>? configure = null)
     {
       ArgumentNullException.ThrowIfNull(services);
@@ -74,6 +76,7 @@ public static class KritikosAspNetCoreDependencyInjectionsExtensions
     /// <typeparam name="TService">The type of <see cref="PeriodicBackgroundService{TService,TOptions}"/> to register.</typeparam>
     /// <typeparam name="TOptions">The type of <see cref="PeriodicBackgroundServiceOptions"/> to use in configuring the <see cref="PeriodicBackgroundService{TService,TOptions}"/>.</typeparam>
     /// <returns>A <see cref="IServiceCollection"/> containing <see cref="PeriodicBackgroundService{TService,TOptions}"/>.</returns>
+    /// <exception cref="ArgumentNullException">The <see cref="IServiceCollection"/> is <see langword="null"/>.</exception>
     public IServiceCollection AddPeriodicBackgroundService<TService, TOptions>(Action<TOptions>? configure = null)
       where TService : PeriodicBackgroundService<TService, TOptions>
       where TOptions : PeriodicBackgroundServiceOptions, IOptionsDefinition, new()
@@ -89,7 +92,7 @@ public static class KritikosAspNetCoreDependencyInjectionsExtensions
     /// Registers all implementations of <see cref="IEndpoint"/> in the provided assembly.
     /// </summary>
     /// <param name="assemblyType">A type in the assembly to scan for <see cref="IEndpoint"/> implementations.</param>
-    /// <exception cref="ArgumentNullException"><paramref name="assemblyType"/> is null.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="assemblyType"/>, or the <see cref="IServiceCollection"/>, is <see langword="null"/>.</exception>
     /// <returns>The configured <see cref="IServiceCollection"/>.</returns>
     public IServiceCollection AddEndpoints(Type assemblyType)
     {
@@ -103,7 +106,7 @@ public static class KritikosAspNetCoreDependencyInjectionsExtensions
     /// Registers all implementations of <see cref="IEndpoint"/> in the provided assembly.
     /// </summary>
     /// <param name="assembly">The assembly to scan for <see cref="IEndpoint"/> implementations.</param>
-    /// <exception cref="ArgumentNullException"><paramref name="assembly"/> is null.</exception>
+    /// <exception cref="ArgumentNullException"><paramref name="assembly"/>, or the <see cref="IServiceCollection"/>, is <see langword="null"/>.</exception>
     /// <returns>The configured <see cref="IServiceCollection"/>.</returns>
     public IServiceCollection AddEndpoints(Assembly assembly)
     {

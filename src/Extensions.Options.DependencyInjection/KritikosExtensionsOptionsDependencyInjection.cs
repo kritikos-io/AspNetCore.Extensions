@@ -34,6 +34,7 @@ public static class KritikosExtensionsOptionsDependencyInjection
     /// </remarks>
     /// <typeparam name="TOptions">The options type to be configured.</typeparam>
     /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
+    /// <exception cref="ArgumentNullException">The <see cref="IServiceCollection"/> is <see langword="null"/>.</exception>
     public IServiceCollection AddOptionsDefinition<TOptions>()
       where TOptions : class, IOptionsDefinition
     {
@@ -54,6 +55,7 @@ public static class KritikosExtensionsOptionsDependencyInjection
     /// </remarks>
     /// <param name="type">The type used to discover the assembly containing <seealso cref="IOptionsDefinition"/> implementations.</param>
     /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="type"/>, or the <see cref="IServiceCollection"/>, is <see langword="null"/>.</exception>
     public IServiceCollection AddOptionsDefinitions(Type type)
     {
       ArgumentNullException.ThrowIfNull(type);
@@ -70,6 +72,7 @@ public static class KritikosExtensionsOptionsDependencyInjection
     /// </remarks>
     /// <param name="assembly">The assembly to scan for <seealso cref="IOptionsDefinition"/> implementations.</param>
     /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="assembly"/> is <see langword="null"/>.</exception>
     public IServiceCollection AddOptionsDefinitions(Assembly assembly)
     {
       ArgumentNullException.ThrowIfNull(assembly);

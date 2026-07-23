@@ -20,6 +20,7 @@ public static class OffsetPagedResultExtensions
     /// <param name="page">The 1-based page number to retrieve.</param>
     /// <param name="pageSize">The number of items per page.</param>
     /// <returns>An <see cref="OffsetPagedResult{T}"/> containing the requested page of results.</returns>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="page"/> or <paramref name="pageSize"/> is less than or equal to zero.</exception>
     public OffsetPagedResult<T> ToOffsetPaged(int page, int pageSize)
     {
       ValidatePaging(page, pageSize);
@@ -40,6 +41,7 @@ public static class OffsetPagedResultExtensions
     /// <param name="pageSize">The number of items per page.</param>
     /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
     /// <returns>A task representing the asynchronous operation, containing the requested page of results.</returns>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="page"/> or <paramref name="pageSize"/> is less than or equal to zero.</exception>
     public async Task<OffsetPagedResult<T>> ToOffsetPagedAsync(
       int page,
       int pageSize,
@@ -64,6 +66,8 @@ public static class OffsetPagedResultExtensions
     /// <param name="page">The 1-based page number to retrieve.</param>
     /// <param name="pageSize">The number of items per page.</param>
     /// <returns>An <see cref="OffsetPagedResult{TDestination}"/> containing the projected page of results.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="mapper"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="page"/> or <paramref name="pageSize"/> is less than or equal to zero.</exception>
     public OffsetPagedResult<TDestination> ToOffsetPaged<TDestination>(
       Expression<Func<T, TDestination>> mapper,
       int page,
@@ -91,6 +95,8 @@ public static class OffsetPagedResultExtensions
     /// <param name="pageSize">The number of items per page.</param>
     /// <param name="cancellationToken">A token to cancel the asynchronous operation.</param>
     /// <returns>A task representing the asynchronous operation, containing the projected page of results.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="mapper"/> is <see langword="null"/>.</exception>
+    /// <exception cref="ArgumentOutOfRangeException"><paramref name="page"/> or <paramref name="pageSize"/> is less than or equal to zero.</exception>
     public async Task<OffsetPagedResult<TDestination>> ToOffsetPagedAsync<TDestination>(
       Expression<Func<T, TDestination>> mapper,
       int page,

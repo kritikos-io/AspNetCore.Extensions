@@ -43,6 +43,7 @@ public static class KritikosApiVersioningDependencyInjectionExtensions
     /// </summary>
     /// <typeparam name="TVersionModelProvider">The type implementing <see cref="IApiVersionModelProvider"/>.</typeparam>
     /// <returns>The configured <see cref="IServiceCollection"/>.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="services"/> is <see langword="null"/>.</exception>
     public IServiceCollection AddApiVersionModelProvider<TVersionModelProvider>()
       where TVersionModelProvider : IApiVersionModelProvider
     {
@@ -56,6 +57,7 @@ public static class KritikosApiVersioningDependencyInjectionExtensions
     /// </summary>
     /// <typeparam name="TVersionSetProvider">The type implementing <see cref="IApiVersionSetProvider"/>.</typeparam>
     /// <returns>The configured <see cref="IServiceCollection"/>.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="services"/> is <see langword="null"/>.</exception>
     public IServiceCollection AddApiVersionSetProvider<TVersionSetProvider>()
       where TVersionSetProvider : IApiVersionSetProvider
     {
@@ -73,6 +75,7 @@ public static class KritikosApiVersioningDependencyInjectionExtensions
     /// <typeparam name="TVersionSetProvider">The type implementing <see cref="IApiVersionSetProvider"/>.</typeparam>
     /// <param name="setupAction">An optional action to further configure the <see cref="ApiVersionSetBuilder"/>.</param>
     /// <returns>The configured <see cref="WebApplication"/>.</returns>
+    /// <exception cref="ArgumentNullException">The <see cref="WebApplication"/> is <see langword="null"/>.</exception>
     public WebApplication AddApiVersionSet<TVersionSetProvider>(
       Action<ApiVersionSetBuilder>? setupAction = null)
       where TVersionSetProvider : IApiVersionSetProvider

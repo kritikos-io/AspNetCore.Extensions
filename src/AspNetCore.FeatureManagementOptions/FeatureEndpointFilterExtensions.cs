@@ -18,6 +18,7 @@ public static class FeatureEndpointFilterExtensions
   /// <param name="requirementType">Whether all or any of the specified features must be enabled.</param>
   /// <param name="features">The feature flags to evaluate.</param>
   /// <returns>The configured <typeparamref name="TBuilder"/>.</returns>
+  /// <exception cref="ArgumentNullException"><paramref name="builder"/> is <see langword="null"/>.</exception>
   public static TBuilder WithFeatureFlags<TBuilder, TEnum>(
     this TBuilder builder,
     RequirementType requirementType,
@@ -42,6 +43,7 @@ public static class FeatureEndpointFilterExtensions
   /// <param name="requirementType">Whether all or any of the specified features must be enabled.</param>
   /// <param name="features">The feature flag names to evaluate.</param>
   /// <returns>The configured <typeparamref name="TBuilder"/>.</returns>
+  /// <exception cref="ArgumentNullException"><paramref name="builder"/> is <see langword="null"/>.</exception>
   public static TBuilder WithFeatureFlags<TBuilder>(
     this TBuilder builder,
     RequirementType requirementType,
@@ -65,6 +67,7 @@ public static class FeatureEndpointFilterExtensions
   /// <param name="builder">The endpoint convention builder.</param>
   /// <param name="features">The feature flags to evaluate.</param>
   /// <returns>The configured <typeparamref name="TBuilder"/>.</returns>
+  /// <exception cref="ArgumentNullException"><paramref name="builder"/> is <see langword="null"/>.</exception>
   public static TBuilder WithFeatureFlags<TBuilder, TEnum>(
     this TBuilder builder,
     params TEnum[] features)
@@ -79,6 +82,7 @@ public static class FeatureEndpointFilterExtensions
   /// <param name="builder">The endpoint convention builder.</param>
   /// <param name="features">The feature flag names to evaluate.</param>
   /// <returns>The configured <typeparamref name="TBuilder"/>.</returns>
+  /// <exception cref="ArgumentNullException"><paramref name="builder"/> is <see langword="null"/>.</exception>
   public static TBuilder WithFeatureFlags<TBuilder>(
     this TBuilder builder,
     params string[] features)

@@ -16,6 +16,7 @@ public sealed class UserAgentProvider : IUserAgentProvider
   /// <summary>Initializes a new instance of the <see cref="UserAgentProvider"/> class.</summary>
   /// <param name="random">The random number generator used for weighted selection.</param>
   /// <param name="options">The agent pool and weights to use, or <see langword="null"/> for the defaults.</param>
+  /// <exception cref="ArgumentNullException"><paramref name="random"/> is <see langword="null"/>.</exception>
   /// <exception cref="ArgumentException"><paramref name="options"/> configures an empty agent pool.</exception>
   public UserAgentProvider(Random random, UserAgentProviderOptions? options = null)
   {

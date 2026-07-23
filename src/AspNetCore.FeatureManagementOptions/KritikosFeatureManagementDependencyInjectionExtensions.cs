@@ -14,6 +14,7 @@ public static class KritikosFeatureManagementDependencyInjectionExtensions
   /// </summary>
   /// <param name="services"><see cref="IServiceCollection"/> to configure.</param>
   /// <returns>The configured <see cref="IServiceCollection"/>.</returns>
+  /// <exception cref="ArgumentNullException"><paramref name="services"/> is <see langword="null"/>.</exception>
   /// <exception cref="InvalidOperationException">When Session state has not been configured correctly (at runtime).</exception>
   /// <remarks>
   /// <![CDATA[https://learn.microsoft.com/en-us/aspnet/core/fundamentals/app-state]]>

@@ -17,6 +17,7 @@ public static class KritikosAspNetCoreWebApplicationExtensions
   /// <param name="app">The <see cref="WebApplication"/> to configure.</param>
   /// <param name="route">An optional <see cref="IEndpointRouteBuilder"/> to map the endpoints onto; defaults to <paramref name="app"/> when not supplied.</param>
   /// <returns>The configured <see cref="WebApplication"/>.</returns>
+  /// <exception cref="ArgumentNullException"><paramref name="app"/> is <see langword="null"/>.</exception>
   public static WebApplication MapEndpoints(this WebApplication app, IEndpointRouteBuilder? route = null)
   {
     ArgumentNullException.ThrowIfNull(app);

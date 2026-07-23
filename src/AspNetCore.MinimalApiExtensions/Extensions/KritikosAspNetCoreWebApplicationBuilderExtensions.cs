@@ -16,6 +16,7 @@ public static class KritikosAspNetCoreWebApplicationBuilderExtensions
   /// <param name="builder">The <see cref="WebApplicationBuilder"/> to use in building the <see cref="WebApplication"/>.</param>
   /// <typeparam name="T">The type containing the startup methods for the application.</typeparam>
   /// <returns>The <see cref="WebApplication"/>.</returns>
+  /// <exception cref="ArgumentNullException"><paramref name="builder"/> is <see langword="null"/>.</exception>
   public static WebApplication UseStartup<T>(this WebApplicationBuilder builder)
       where T : class, IWebApplicationStartup, new()
   {
@@ -36,6 +37,7 @@ public static class KritikosAspNetCoreWebApplicationBuilderExtensions
   /// <param name="builder">The <see cref="HostApplicationBuilder"/> to use in building the <see cref="WebApplication"/>.</param>
   /// <typeparam name="T">The type containing the startup methods for the application.</typeparam>
   /// <returns>The <see cref="IHost"/>.</returns>
+  /// <exception cref="ArgumentNullException"><paramref name="builder"/> is <see langword="null"/>.</exception>
   public static IHost UseStartup<T>(this HostApplicationBuilder builder)
       where T : class, IApplicationStartup, new()
   {

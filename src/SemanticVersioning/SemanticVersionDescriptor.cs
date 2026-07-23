@@ -57,6 +57,7 @@ public record SemanticVersionDescriptor : IComparable<SemanticVersionDescriptor>
   /// <param name="left">The left operand.</param>
   /// <param name="right">The right operand.</param>
   /// <returns><see langword="true"/> if <paramref name="left"/> is greater than or equal to <paramref name="right"/>; otherwise, <see langword="false"/>.</returns>
+  /// <exception cref="ArgumentNullException"><paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
   public static bool operator >=(SemanticVersionDescriptor left, SemanticVersionDescriptor right)
   {
     ArgumentNullException.ThrowIfNull(left);
@@ -69,6 +70,7 @@ public record SemanticVersionDescriptor : IComparable<SemanticVersionDescriptor>
   /// <param name="left">The left operand.</param>
   /// <param name="right">The right operand.</param>
   /// <returns><see langword="true"/> if <paramref name="left"/> is less than or equal to <paramref name="right"/>; otherwise, <see langword="false"/>.</returns>
+  /// <exception cref="ArgumentNullException"><paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
   public static bool operator <=(SemanticVersionDescriptor left, SemanticVersionDescriptor right)
   {
     ArgumentNullException.ThrowIfNull(left);
@@ -81,6 +83,7 @@ public record SemanticVersionDescriptor : IComparable<SemanticVersionDescriptor>
   /// <param name="left">The left operand.</param>
   /// <param name="right">The right operand.</param>
   /// <returns><see langword="true"/> if <paramref name="left"/> is less than <paramref name="right"/>; otherwise, <see langword="false"/>.</returns>
+  /// <exception cref="ArgumentNullException"><paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
   public static bool operator <(SemanticVersionDescriptor left, SemanticVersionDescriptor right)
   {
     ArgumentNullException.ThrowIfNull(left);
@@ -93,6 +96,7 @@ public record SemanticVersionDescriptor : IComparable<SemanticVersionDescriptor>
   /// <param name="left">The left operand.</param>
   /// <param name="right">The right operand.</param>
   /// <returns><see langword="true"/> if <paramref name="left"/> is greater than <paramref name="right"/>; otherwise, <see langword="false"/>.</returns>
+  /// <exception cref="ArgumentNullException"><paramref name="left"/> or <paramref name="right"/> is <see langword="null"/>.</exception>
   public static bool operator >(SemanticVersionDescriptor left, SemanticVersionDescriptor right)
   {
     ArgumentNullException.ThrowIfNull(left);

@@ -19,6 +19,7 @@ public sealed class CorrelationHeaderMiddleware : IMiddleware
   /// </summary>
   /// <param name="options">The correlation header options.</param>
   /// <param name="logger">The logger instance.</param>
+  /// <exception cref="ArgumentNullException"><paramref name="options"/> is <see langword="null"/>.</exception>
   public CorrelationHeaderMiddleware(IOptions<CorrelationHeaderOptions> options, ILogger<CorrelationHeaderMiddleware> logger)
   {
     ArgumentNullException.ThrowIfNull(options);

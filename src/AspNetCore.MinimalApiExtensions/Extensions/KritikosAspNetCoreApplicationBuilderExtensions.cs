@@ -14,6 +14,7 @@ public static class KritikosAspNetCoreApplicationBuilderExtensions
   /// </summary>
   /// <param name="app">The <see cref="IApplicationBuilder"/> to configure.</param>
   /// <returns>The configured <see cref="IApplicationBuilder"/>.</returns>
+  /// <exception cref="ArgumentNullException"><paramref name="app"/> is <see langword="null"/>.</exception>
   public static IApplicationBuilder UseCorrelationHeader(this IApplicationBuilder app)
   {
     ArgumentNullException.ThrowIfNull(app);

@@ -25,6 +25,7 @@ public sealed class HeartbeatRegistry
   /// <param name="name">Unique source name; re-registering disposes and replaces the existing source.</param>
   /// <param name="timeout">Per-source staleness window, or <see langword="null"/> to use the configured default.</param>
   /// <returns>A disposable handle the caller ticks to record progress and disposes to unregister.</returns>
+  /// <exception cref="ArgumentException"><paramref name="name"/> is <see langword="null"/>, empty, or consists only of white-space characters.</exception>
   public Heartbeat Register(string name, TimeSpan? timeout = null)
   {
     ArgumentException.ThrowIfNullOrWhiteSpace(name);

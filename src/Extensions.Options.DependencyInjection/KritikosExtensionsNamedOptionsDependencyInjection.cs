@@ -25,6 +25,7 @@ public static class KritikosExtensionsNamedOptionsDependencyInjection
   /// <typeparam name="TOptions">The named options type to be configured.</typeparam>
   /// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>
   /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
+  /// <exception cref="ArgumentNullException"><paramref name="services"/> is <see langword="null"/>.</exception>
   public static IServiceCollection AddOptionsDefinition<TOptions>(this IServiceCollection services)
     where TOptions : class, INamedOptionsDefinition
   {
@@ -46,6 +47,7 @@ public static class KritikosExtensionsNamedOptionsDependencyInjection
   /// <param name="services">The <see cref="IServiceCollection"/> to add the services to.</param>
   /// <param name="assembly">The assembly to scan for <see cref="INamedOptionsDefinition"/> implementations.</param>
   /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
+  /// <exception cref="ArgumentNullException"><paramref name="assembly"/> is <see langword="null"/>.</exception>
   public static IServiceCollection AddNamedOptionsDefinitions(this IServiceCollection services, Assembly assembly)
   {
     ArgumentNullException.ThrowIfNull(assembly);

@@ -15,6 +15,8 @@ public sealed class FeatureGateEndpointFilter
   /// Initializes a new instance of the <see cref="FeatureGateEndpointFilter"/> class requiring all specified string features.
   /// </summary>
   /// <param name="features">The feature names to evaluate.</param>
+  /// <exception cref="ArgumentNullException"><paramref name="features"/> is <see langword="null"/>.</exception>
+  /// <exception cref="ArgumentException"><paramref name="features"/> is empty or contains whitespace-only entries.</exception>
   public FeatureGateEndpointFilter(params string[] features)
     : this(RequirementType.All, features)
   {
@@ -24,6 +26,8 @@ public sealed class FeatureGateEndpointFilter
   /// Initializes a new instance of the <see cref="FeatureGateEndpointFilter"/> class requiring all specified enum features.
   /// </summary>
   /// <param name="features">The enum feature values to evaluate.</param>
+  /// <exception cref="ArgumentNullException"><paramref name="features"/> is <see langword="null"/>.</exception>
+  /// <exception cref="ArgumentException"><paramref name="features"/> is empty or contains values that are not enums.</exception>
   public FeatureGateEndpointFilter(params object[] features)
     : this(RequirementType.All, features)
   {
@@ -34,6 +38,8 @@ public sealed class FeatureGateEndpointFilter
   /// </summary>
   /// <param name="requirementType">Whether all or any of the specified features must be enabled.</param>
   /// <param name="features">The enum feature values to evaluate.</param>
+  /// <exception cref="ArgumentNullException"><paramref name="features"/> is <see langword="null"/>.</exception>
+  /// <exception cref="ArgumentException"><paramref name="features"/> is empty or contains values that are not enums.</exception>
   public FeatureGateEndpointFilter(RequirementType requirementType, params object[] features)
   {
     ArgumentNullException.ThrowIfNull(features);
@@ -64,6 +70,8 @@ public sealed class FeatureGateEndpointFilter
   /// </summary>
   /// <param name="requirementType">Whether all or any of the specified features must be enabled.</param>
   /// <param name="features">The feature names to evaluate.</param>
+  /// <exception cref="ArgumentNullException"><paramref name="features"/> is <see langword="null"/>.</exception>
+  /// <exception cref="ArgumentException"><paramref name="features"/> is empty or contains whitespace-only entries.</exception>
   public FeatureGateEndpointFilter(RequirementType requirementType, params string[] features)
   {
     ArgumentNullException.ThrowIfNull(features);
