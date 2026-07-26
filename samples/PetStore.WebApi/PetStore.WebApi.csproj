@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Asp.Versioning.OpenApi" />
     <PackageReference Include="Scalar.AspNetCore" />
   </ItemGroup>
 
@@ -22,7 +23,7 @@
     <ProjectReference Include="..\..\src\AspNetCore.OpenApiExtensions\AspNetCore.OpenApiExtensions.csproj" />
     <ProjectReference Include="..\..\src\AspNetCore.OpenApiFeatureManagementOptions\AspNetCore.OpenApiFeatureManagementOptions.csproj" />
     <ProjectReference Include="..\..\src\AspNetCore.OpenApiOidcExtensions\AspNetCore.OpenApiOidcExtensions.csproj" />
-    <ProjectReference Include="..\..\src\AspNetCore.OpenApiVersioningOptions\AspNetCore.OpenApiVersioningOptions.csproj" />
+    <ProjectReference Include="..\..\src\AspNetCore.VersioningOptions\AspNetCore.VersioningOptions.csproj" />
   </ItemGroup>
 
 </Project>

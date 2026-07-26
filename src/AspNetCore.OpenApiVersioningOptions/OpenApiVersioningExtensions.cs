@@ -23,6 +23,9 @@ public static class OpenApiVersioningExtensions
   /// <see cref="IApiVersionModelProvider.VersionModel"/> member of
   /// <typeparamref name="TVersionModelProvider"/>, naming each document's group <c>v{version}</c>.
   /// </remarks>
+  [Obsolete(
+    "Superseded by the Asp.Versioning.OpenApi package: chain .AddApiExplorer().AddOpenApi(...) and call "
+    + "app.MapOpenApi().WithDocumentPerVersion(). This API will be removed in a future release.")]
   public static IServiceCollection AddVersionedOpenApi<TVersionModelProvider>(
     this IServiceCollection services,
     Action<OpenApiOptions>? configure = null)

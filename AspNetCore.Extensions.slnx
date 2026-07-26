@@ -26,7 +26,6 @@
     <Project Path="src\AspNetCore.OpenApiExtensions\AspNetCore.OpenApiExtensions.csproj" Type="Classic C#" />
     <Project Path="src\AspNetCore.OpenApiFeatureManagementOptions\AspNetCore.OpenApiFeatureManagementOptions.csproj" Type="Classic C#" />
     <Project Path="src\AspNetCore.OpenApiOidcExtensions\AspNetCore.OpenApiOidcExtensions.csproj" Type="Classic C#" />
-    <Project Path="src\AspNetCore.OpenApiVersioningOptions\AspNetCore.OpenApiVersioningOptions.csproj" Type="Classic C#" />
     <Project Path="src\AspNetCore.VersioningOptions\AspNetCore.VersioningOptions.csproj" Type="Classic C#" />
     <Project Path="src\Extensions.Options.DependencyInjection\Extensions.Options.DependencyInjection.csproj" Type="Classic C#" />
     <Project Path="src\Extensions.Options\Extensions.Options.csproj" Type="Classic C#" />
@@ -43,7 +42,6 @@
     <Project Path="tests\AspNetCore.OpenApiExtensions.Tests\AspNetCore.OpenApiExtensions.Tests.csproj" Type="Classic C#" />
     <Project Path="tests\AspNetCore.OpenApiFeatureManagementOptions.Tests\AspNetCore.OpenApiFeatureManagementOptions.Tests.csproj" Type="Classic C#" />
     <Project Path="tests\AspNetCore.OpenApiOidcExtensions.Tests\AspNetCore.OpenApiOidcExtensions.Tests.csproj" Type="Classic C#" />
-    <Project Path="tests\AspNetCore.OpenApiVersioningOptions.Tests\AspNetCore.OpenApiVersioningOptions.Tests.csproj" Type="Classic C#" />
     <Project Path="tests\AspNetCore.VersioningTests\AspNetCore.VersioningTests.csproj" Type="Classic C#" />
     <Project Path="tests\Extensions.Options.DependencyInjection.Tests\Extensions.Options.DependencyInjection.Tests.csproj" Type="Classic C#" />
     <Project Path="tests\HttpClient.AuthenticationHandlers.Tests\HttpClient.AuthenticationHandlers.Tests.csproj" Type="Classic C#" />

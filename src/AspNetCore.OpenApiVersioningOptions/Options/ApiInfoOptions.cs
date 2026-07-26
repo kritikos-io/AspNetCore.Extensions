@@ -5,6 +5,9 @@ using System.ComponentModel.DataAnnotations;
 /// <summary>
 /// Base configuration options for OpenAPI document info (title, description, contact, license).
 /// </summary>
+[Obsolete(
+  "Part of the deprecated AspNetCore.OpenApiVersioningOptions surface, superseded by the "
+  + "Asp.Versioning.OpenApi package. This API will be removed in a future release.")]
 public abstract class OpenApiInfoOptions
 {
   /// <summary>

@@ -7,8 +7,6 @@ using Kritikos.AspNetCore.MinimalApiExtensions.StartupBuilder;
 using Kritikos.AspNetCore.OpenApiExtensions.OperationTransformers;
 using Kritikos.AspNetCore.OpenApiFeatureManagementOptions;
 using Kritikos.AspNetCore.OpenApiOidcExtensions.DocumentTransformers;
-using Kritikos.AspNetCore.OpenApiVersioningOptions;
-using Kritikos.AspNetCore.OpenApiVersioningOptions.DocumentTransformers;
 using Kritikos.AspNetCore.VersioningOptions;
 using Kritikos.Extensions.Options.DependencyInjection;
 
@@ -39,17 +37,20 @@ public class Startup : IWebApplicationStartup
     builder.Services.AddOptionsDefinition<MyOpenApiInfoOptions>();
     builder.Services.AddOptionsDefinition<MyOpenApiOpenIdOptions>();
 
-    builder.Services.AddVersionedOpenApi<Program>(static options =>
-    {
-      options.AddOperationTransformer<AuthorizationCheckOperationTransformer>();
-
-      options.AddDocumentTransformer<ApiVersionDocumentTransformer<MyOpenApiInfoOptions>>();
-      options.AddDocumentTransformer<FeatureFilterDocumentTransformer>();
-
-      options.AddDocumentTransformer<OidcSecuritySchemeTransformer<MyOpenApiOpenIdOptions>>();
-    });
-
     builder.Services.AddApiVersioningDefaults();
+
+    builder.Services
+      .AddApiVersioning()
+      .AddApiExplorer()
+      .AddOpenApi(static options =>
+      {
+        options.Document.AddOperationTransformer<AuthorizationCheckOperationTransformer>();
+
+        options.Document.AddDocumentTransformer<InfoDocumentTransformer>();
+        options.Document.AddDocumentTransformer<FeatureFilterDocumentTransformer>();
+
+        options.Document.AddDocumentTransformer<OidcSecuritySchemeTransformer<MyOpenApiOpenIdOptions>>();
+      });
 
     builder.Services.AddApiVersionModelProvider<Program>();
     builder.Services.AddApiVersionSetProvider<Program>();
@@ -67,12 +68,12 @@ public class Startup : IWebApplicationStartup
 
     app.UseRouting();
 
-    app.MapOpenApi();
+    app.MapOpenApi().WithDocumentPerVersion();
     app.MapScalarApiReference(o =>
     {
       var options = app.Services.GetRequiredService<IOptions<MyOpenApiOpenIdOptions>>().Value;
 
-      o.AddDocuments(Program.VersionModel.ImplementedApiVersions.Select(static v => $"v{v}"));
+      o.AddDocuments(app.DescribeApiVersions().Select(static description => description.GroupName));
       o.WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
       o.AddPreferredSecuritySchemes("oidc");
       o.AddAuthorizationCodeFlow("oidc", flow =>

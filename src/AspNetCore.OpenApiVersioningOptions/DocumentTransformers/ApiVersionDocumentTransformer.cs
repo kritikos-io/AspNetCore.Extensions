@@ -17,6 +17,9 @@ using Microsoft.OpenApi;
 /// <typeparam name="TApiInfoOptions">The options type containing API info metadata.</typeparam>
 /// <param name="options">The API info options providing title, description, contact, and license data.</param>
 /// <param name="versionProvider">The API version description provider.</param>
+[Obsolete(
+  "Superseded by the Asp.Versioning.OpenApi package (VersionedOpenApiOptions.DocumentDescription: "
+  + "DeprecationNotice/SunsetNotice/HidePolicyLinks). This API will be removed in a future release.")]
 public sealed class ApiVersionDocumentTransformer<TApiInfoOptions>(
   IOptions<TApiInfoOptions> options,
   IApiVersionDescriptionProvider versionProvider)
