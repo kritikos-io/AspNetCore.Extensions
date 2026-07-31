@@ -17,9 +17,11 @@ public class OpenIdConnectTokenProviderTests
   [Test]
   public async Task GetAccessToken_returns_the_token_on_success(CancellationToken cancellationToken)
   {
-    using var provider = CreateProvider(static request => request.Method == HttpMethod.Get
-      ? Json(DiscoveryJson)
-      : Json("""{"access_token":"test-token","token_type":"Bearer"}"""));
+    using var provider = CreateProvider(
+      static request => request.Method == HttpMethod.Get
+        ? Json(DiscoveryJson)
+        : Json("""{"access_token":"test-token","token_type":"Bearer"}"""),
+      TimeProvider.System);
 
     var token = await provider.GetAccessToken(cancellationToken);
 
@@ -29,7 +31,9 @@ public class OpenIdConnectTokenProviderTests
   [Test]
   public async Task GetAccessToken_throws_when_the_discovery_document_request_fails(CancellationToken cancellationToken)
   {
-    using var provider = CreateProvider(static _ => new HttpResponseMessage(HttpStatusCode.InternalServerError));
+    using var provider = CreateProvider(
+      static _ => new HttpResponseMessage(HttpStatusCode.InternalServerError),
+      TimeProvider.System);
 
     await Assert.That(async () => await provider.GetAccessToken(cancellationToken))
       .Throws<HttpRequestException>();
@@ -38,9 +42,11 @@ public class OpenIdConnectTokenProviderTests
   [Test]
   public async Task GetAccessToken_returns_empty_when_the_response_has_no_access_token(CancellationToken cancellationToken)
   {
-    using var provider = CreateProvider(static request => request.Method == HttpMethod.Get
-      ? Json(DiscoveryJson)
-      : Json("""{"error":"invalid_client"}"""));
+    using var provider = CreateProvider(
+      static request => request.Method == HttpMethod.Get
+        ? Json(DiscoveryJson)
+        : Json("""{"error":"invalid_client"}"""),
+      TimeProvider.System);
 
     var token = await provider.GetAccessToken(cancellationToken);
 
@@ -51,16 +57,18 @@ public class OpenIdConnectTokenProviderTests
   public async Task GetAccessToken_reuses_the_cached_token_until_it_nears_expiry(CancellationToken cancellationToken)
   {
     var tokenRequests = 0;
-    using var provider = CreateProvider(request =>
-    {
-      if (request.Method == HttpMethod.Get)
+    using var provider = CreateProvider(
+      request =>
       {
-        return Json(DiscoveryJson);
-      }
+        if (request.Method == HttpMethod.Get)
+        {
+          return Json(DiscoveryJson);
+        }
 
-      Interlocked.Increment(ref tokenRequests);
-      return Json("""{"access_token":"test-token","token_type":"Bearer","expires_in":3600}""");
-    });
+        Interlocked.Increment(ref tokenRequests);
+        return Json("""{"access_token":"test-token","token_type":"Bearer","expires_in":3600}""");
+      },
+      TimeProvider.System);
 
     var first = await provider.GetAccessToken(cancellationToken);
     var second = await provider.GetAccessToken(cancellationToken);
@@ -154,7 +162,7 @@ public class OpenIdConnectTokenProviderTests
       await release.Task.WaitAsync(ct);
       return Json("""{"access_token":"test-token","token_type":"Bearer","expires_in":3600}""");
     });
-    using var provider = CreateProvider(handler);
+    using var provider = CreateProvider(handler, TimeProvider.System);
 
     var callers = Enumerable.Range(0, 8)
       .Select(_ => provider.GetAccessToken(cancellationToken))
@@ -173,12 +181,12 @@ public class OpenIdConnectTokenProviderTests
 
   private static OpenIdConnectTokenProvider CreateProvider(
     Func<HttpRequestMessage, HttpResponseMessage> responder,
-    TimeProvider? timeProvider = null)
+    TimeProvider timeProvider)
     => CreateProvider(new StubHttpMessageHandler(responder), timeProvider);
 
   private static OpenIdConnectTokenProvider CreateProvider(
     HttpMessageHandler handler,
-    TimeProvider? timeProvider = null)
+    TimeProvider timeProvider)
   {
     var factory = Substitute.For<IHttpClientFactory>();
     factory.CreateClient(Arg.Any<string>()).Returns(new System.Net.Http.HttpClient(handler));
@@ -193,7 +201,7 @@ public class OpenIdConnectTokenProviderTests
     return new OpenIdConnectTokenProvider(
       factory,
       options,
-      timeProvider ?? TimeProvider.System,
+      timeProvider,
       NullLogger<OpenIdConnectTokenProvider>.Instance);
   }
 
