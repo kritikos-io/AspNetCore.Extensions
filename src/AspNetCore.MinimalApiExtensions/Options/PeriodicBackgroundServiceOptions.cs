@@ -8,7 +8,8 @@ using System.ComponentModel.DataAnnotations;
 public abstract class PeriodicBackgroundServiceOptions : IValidatableObject
 {
   /// <summary>
-  /// Gets or sets the interval between executions of the background service.
+  /// Gets or sets the interval between executions of the background service. Set to
+  /// <see cref="Timeout.InfiniteTimeSpan"/> to run only when triggered.
   /// </summary>
   public TimeSpan Interval { get; set; }
 
@@ -20,10 +21,10 @@ public abstract class PeriodicBackgroundServiceOptions : IValidatableObject
   /// <inheritdoc />
   public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
   {
-    if (Interval <= TimeSpan.Zero)
+    if (Interval <= TimeSpan.Zero && Interval != Timeout.InfiniteTimeSpan)
     {
       yield return new ValidationResult(
-        "Interval must be greater than zero.",
+        "Interval must be greater than zero, or Timeout.InfiniteTimeSpan to run only when triggered.",
         [nameof(Interval)]);
     }
   }

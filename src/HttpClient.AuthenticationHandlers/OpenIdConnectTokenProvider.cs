@@ -1,5 +1,6 @@
 namespace Kritikos.HttpClient.AuthenticationHandlers;
 
+using System.ComponentModel.DataAnnotations;
 using System.Net.Http.Json;
 using System.Text.Json.Serialization;
 
@@ -26,7 +27,7 @@ public sealed partial class OpenIdConnectTokenProvider(
 {
   private static readonly TimeSpan TokenRefreshMargin = TimeSpan.FromSeconds(30);
 
-  private readonly OpenIdConnectHandlerOptions options = options;
+  private readonly OpenIdConnectHandlerOptions options = Validate(options);
   private readonly IHttpClientFactory clientFactory = clientFactory;
   private readonly TimeProvider timeProvider = timeProvider;
   private readonly SemaphoreSlim tokenGate = new(1, 1);
@@ -103,6 +104,13 @@ public sealed partial class OpenIdConnectTokenProvider(
 
   [LoggerMessage(LogLevel.Error, "Error creating access token from {Url}: {Error}")]
   private static partial void ErrorCreatingAccessToken(ILogger logger, Uri? url, string? error);
+
+  private static OpenIdConnectHandlerOptions Validate(OpenIdConnectHandlerOptions options)
+  {
+    ArgumentNullException.ThrowIfNull(options);
+    Validator.ValidateObject(options, new ValidationContext(options), validateAllProperties: true);
+    return options;
+  }
 
   private string? GetCachedToken()
   {

@@ -1,5 +1,6 @@
 namespace Kritikos.HttpClient.AuthenticationHandlers.Tests;
 
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text;
 
@@ -174,6 +175,22 @@ public class OpenIdConnectTokenProviderTests
 
     await Assert.That(tokens.All(static token => token == "test-token")).IsTrue();
     await Assert.That(tokenRequests).IsEqualTo(1);
+  }
+
+  [Test]
+  public async Task Constructor_throws_when_options_fail_validation()
+  {
+    var factory = Substitute.For<IHttpClientFactory>();
+
+    await Assert.That(() =>
+      {
+        _ = new OpenIdConnectTokenProvider(
+          factory,
+          new OpenIdConnectHandlerOptions(),
+          TimeProvider.System,
+          NullLogger<OpenIdConnectTokenProvider>.Instance);
+      })
+      .Throws<ValidationException>();
   }
 
   private static HttpResponseMessage Json(string content)
