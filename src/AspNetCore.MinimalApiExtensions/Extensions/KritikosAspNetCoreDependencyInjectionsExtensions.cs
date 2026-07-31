@@ -85,6 +85,7 @@ public static class KritikosAspNetCoreDependencyInjectionsExtensions
 
       services.AddOptionsDefinition<TOptions>();
       services.Configure(configure ?? (static _ => { }));
+      services.TryAddSingleton(TimeProvider.System);
       return services.AddHostedService<TService>();
     }
 

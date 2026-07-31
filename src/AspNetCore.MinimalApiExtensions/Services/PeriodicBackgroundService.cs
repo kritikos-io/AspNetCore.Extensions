@@ -15,17 +15,19 @@ using Microsoft.Extensions.Options;
 /// <remarks>Ensure you also call <see cref="OptionsConfigurationServiceCollectionExtensions.Configure{T}(IServiceCollection, string?, IConfiguration)"/> to register <typeparamref name="TOptions"/>.</remarks>
 /// <param name="options">An implementation of <see cref="PeriodicBackgroundServiceOptions"/> to provide needed parameters.</param>
 /// <param name="logger">An <see cref="ILogger"/> instance to provide proper structured logs.</param>
+/// <param name="timeProvider">The <see cref="TimeProvider"/> driving the periodic timer. Registered as <see cref="TimeProvider.System"/> by <c>AddPeriodicBackgroundService</c> and overridable; supply a fake clock to make derived services deterministic in tests.</param>
 /// <typeparam name="TService">The type of the service to be implemented (Curiously Recurring Template Pattern to overcome lack of the self keyword).</typeparam>
 /// <typeparam name="TOptions">An implementation of <see cref="PeriodicBackgroundServiceOptions"/> for <typeparamref name="TService"/>.</typeparam>
 public abstract class PeriodicBackgroundService<TService, TOptions>(
   IOptions<TOptions> options,
-  ILogger<TService> logger)
+  ILogger<TService> logger,
+  TimeProvider timeProvider)
   : BackgroundService
   where TService : PeriodicBackgroundService<TService, TOptions>
   where TOptions : PeriodicBackgroundServiceOptions
 {
   private readonly string serviceName = typeof(TService).Name;
-  private readonly PeriodicTimer timer = new(options.Value.Interval);
+  private readonly PeriodicTimer timer = new(options.Value.Interval, timeProvider);
 
   private CancellationTokenSource? cancellationTokenSource;
 

@@ -87,7 +87,7 @@ The core toolkit for Minimal-API hosts: correlation-header middleware, the [Hear
 - Endpoints: implement `IEndpoint` and call `app.MapEndpoints()` to discover and register them.
 - Correlation: `services.AddCorrelationHeader()` plus `app.UseCorrelationHeader()`; binds `AspNetCore:Middleware:Correlation` (`Header`, `IncludeInResponse`).
 - Heartbeat: `services.AddHeartbeat()`; binds `AspNetCore:Heartbeat`. Detailed below.
-- Periodic work: derive an options type from `PeriodicBackgroundServiceOptions` (`Interval`, `TriggerStopsCurrentExecution`) and register with `services.AddPeriodicBackgroundService<TService, TOptions>()`.
+- Periodic work: derive an options type from `PeriodicBackgroundServiceOptions` (`Interval`, `TriggerStopsCurrentExecution`) and register with `services.AddPeriodicBackgroundService<TService, TOptions>()`. The base requires a `TimeProvider` — registered as `TimeProvider.System` by that call and overridable — which a derived service accepts and forwards to `base` for testable timing.
 - Startup: `IApplicationStartup` and `IWebApplicationStartup` compose registration and pipeline setup.
 - Depends on: `Extensions.Options.DependencyInjection` and the ASP.NET Core shared framework.
 
