@@ -2,15 +2,12 @@
 
 using Asp.Versioning;
 using Asp.Versioning.Builder;
-using Asp.Versioning.Conventions;
 
-using Kritikos.AspNetCore.VersioningOptions.Contracts;
+using Kritikos.AspNetCore.MinimalApiExtensions.WellKnown;
 
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-
-#pragma warning disable CA1034 // Do not nest type - false positive from C# 14 extension blocks
-#pragma warning disable CA1708 // Identifiers should differ by more than case - false positive from C# 14 extension blocks
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 
 /// <summary>
 /// Dependency injection extensions for configuring API versioning with opinionated defaults.
@@ -21,76 +18,40 @@ public static class KritikosApiVersioningDependencyInjectionExtensions
   extension(IServiceCollection services)
   {
     /// <summary>
-    /// Adds opinionated default options for api versioning.
+    /// Adds opinionated API-versioning defaults and registers the shared <see cref="ApiVersionSet"/> and its
+    /// <see cref="ApiVersionModel"/> (built from <paramref name="setupAction"/>) as singletons, letting versioned
+    /// endpoints resolve them from services.
     /// </summary>
-    /// <exception cref="ArgumentNullException"><paramref name="services"/> are null.</exception>
+    /// <param name="setupAction">Configures the <see cref="ApiVersionSetBuilder"/> with the supported API versions.</param>
     /// <returns>The configured <see cref="IServiceCollection"/>.</returns>
-    public IServiceCollection AddApiVersioningDefaults()
+    /// <exception cref="ArgumentNullException"><paramref name="services"/> or <paramref name="setupAction"/> are null.</exception>
+    public IServiceCollection AddApiVersioningDefaults(Action<ApiVersionSetBuilder> setupAction)
     {
       ArgumentNullException.ThrowIfNull(services);
+      ArgumentNullException.ThrowIfNull(setupAction);
 
       services
         .AddApiVersioning()
         .AddApiExplorer();
 
       services.ConfigureOptions<ApiVersioningDefaultOptions>();
+      services.TryAddEnumerable(ServiceDescriptor.Singleton<IApiCatalogSource, ApiVersionCatalogSource>());
+
+      services.TryAddSingleton(_ =>
+      {
+        var set = new ApiVersionSetBuilder(name: null);
+        setupAction(set);
+        return set.Build();
+      });
+
+      services.TryAddSingleton(static provider =>
+      {
+        var set = provider.GetRequiredService<ApiVersionSet>();
+        var options = provider.GetRequiredService<IOptions<ApiVersioningOptions>>().Value;
+        return set.Build(options);
+      });
 
       return services;
-    }
-
-    /// <summary>
-    /// Registers an <see cref="IApiVersionModelProvider"/> and adds its <see cref="ApiVersionModel"/> as a singleton.
-    /// </summary>
-    /// <typeparam name="TVersionModelProvider">The type implementing <see cref="IApiVersionModelProvider"/>.</typeparam>
-    /// <returns>The configured <see cref="IServiceCollection"/>.</returns>
-    /// <exception cref="ArgumentNullException"><paramref name="services"/> is <see langword="null"/>.</exception>
-    public IServiceCollection AddApiVersionModelProvider<TVersionModelProvider>()
-      where TVersionModelProvider : IApiVersionModelProvider
-    {
-      ArgumentNullException.ThrowIfNull(services);
-      services.AddSingleton(TVersionModelProvider.VersionModel);
-      return services;
-    }
-
-    /// <summary>
-    /// Registers an <see cref="IApiVersionSetProvider"/> and adds its <see cref="ApiVersionSet"/> as a singleton.
-    /// </summary>
-    /// <typeparam name="TVersionSetProvider">The type implementing <see cref="IApiVersionSetProvider"/>.</typeparam>
-    /// <returns>The configured <see cref="IServiceCollection"/>.</returns>
-    /// <exception cref="ArgumentNullException"><paramref name="services"/> is <see langword="null"/>.</exception>
-    public IServiceCollection AddApiVersionSetProvider<TVersionSetProvider>()
-      where TVersionSetProvider : IApiVersionSetProvider
-    {
-      ArgumentNullException.ThrowIfNull(services);
-      services.AddSingleton<ApiVersionSet>(static _ => TVersionSetProvider.VersionSet);
-      return services;
-    }
-  }
-
-  extension(WebApplication app)
-  {
-    /// <summary>
-    /// Builds and assigns the <see cref="ApiVersionSet"/> from the registered version model, applying optional configuration.
-    /// </summary>
-    /// <typeparam name="TVersionSetProvider">The type implementing <see cref="IApiVersionSetProvider"/>.</typeparam>
-    /// <param name="setupAction">An optional action to further configure the <see cref="ApiVersionSetBuilder"/>.</param>
-    /// <returns>The configured <see cref="WebApplication"/>.</returns>
-    /// <exception cref="ArgumentNullException">The <see cref="WebApplication"/> is <see langword="null"/>.</exception>
-    public WebApplication AddApiVersionSet<TVersionSetProvider>(
-      Action<ApiVersionSetBuilder>? setupAction = null)
-      where TVersionSetProvider : IApiVersionSetProvider
-    {
-      ArgumentNullException.ThrowIfNull(app);
-      var versionModel = app.Services.GetRequiredService<ApiVersionModel>();
-
-      var set = app.NewApiVersionSet()
-        .HasApiVersions(versionModel.SupportedApiVersions)
-        .HasDeprecatedApiVersions(versionModel.DeprecatedApiVersions);
-
-      setupAction?.Invoke(set);
-      TVersionSetProvider.VersionSet = set.Build();
-
-      return app;
     }
   }
 }

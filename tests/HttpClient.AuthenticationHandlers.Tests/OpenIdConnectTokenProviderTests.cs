@@ -37,7 +37,7 @@ public class OpenIdConnectTokenProviderTests
       TimeProvider.System);
 
     await Assert.That(async () => await provider.GetAccessToken(cancellationToken))
-      .Throws<HttpRequestException>();
+      .Throws<InvalidOperationException>();
   }
 
   [Test]
@@ -124,8 +124,13 @@ public class OpenIdConnectTokenProviderTests
       {
         if (request.Method == HttpMethod.Get)
         {
-          Interlocked.Increment(ref discoveryRequests);
-          return Json(DiscoveryJson);
+          if (request.RequestUri?.AbsoluteUri.Contains("openid-configuration", StringComparison.Ordinal) == true)
+          {
+            Interlocked.Increment(ref discoveryRequests);
+            return Json(DiscoveryJson);
+          }
+
+          return Json("""{"keys":[]}""");
         }
 
         Interlocked.Increment(ref tokenRequests);

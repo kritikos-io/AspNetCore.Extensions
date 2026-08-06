@@ -5,43 +5,61 @@ using System.Net.Http.Json;
 using System.Text.Json.Serialization;
 
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Protocols;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 
 /// <summary>
 /// Provides access tokens using the OAuth 2.0 client credentials flow via an OpenID Connect provider.
 /// </summary>
 /// <remarks>
-/// Access tokens are cached and reused until shortly before they expire, and both the token refresh and the
-/// discovery-document fetch are guarded by single-flight primitives so concurrent callers trigger at most one
-/// request to the identity provider.
+/// Access tokens are cached and reused until shortly before they expire; the token refresh is guarded by a
+/// single-flight primitive, and the OIDC discovery document is fetched, cached, and periodically refreshed via
+/// <see cref="ConfigurationManager{T}"/>.
 /// </remarks>
-/// <param name="clientFactory">The HTTP client factory used to create clients for token requests.</param>
-/// <param name="options">The OpenID Connect handler options containing endpoint and credential information.</param>
-/// <param name="timeProvider">The clock used to evaluate token expiry.</param>
-/// <param name="logger">The logger instance used for error logging.</param>
-public sealed partial class OpenIdConnectTokenProvider(
-  IHttpClientFactory clientFactory,
-  OpenIdConnectHandlerOptions options,
-  TimeProvider timeProvider,
-  ILogger<OpenIdConnectTokenProvider> logger) : IDisposable
+public sealed partial class OpenIdConnectTokenProvider : IDisposable
 {
   private static readonly TimeSpan TokenRefreshMargin = TimeSpan.FromSeconds(30);
 
-  private readonly OpenIdConnectHandlerOptions options = Validate(options);
-  private readonly IHttpClientFactory clientFactory = clientFactory;
-  private readonly TimeProvider timeProvider = timeProvider;
+  private readonly IHttpClientFactory clientFactory;
+  private readonly TimeProvider timeProvider;
+  private readonly ILogger<OpenIdConnectTokenProvider> logger;
   private readonly SemaphoreSlim tokenGate = new(1, 1);
-  private readonly SemaphoreSlim discoveryGate = new(1, 1);
+  private readonly ConfigurationManager<OpenIdConnectConfiguration> configurationManager;
+  private readonly List<KeyValuePair<string, string>> parameters;
 
-  private readonly List<KeyValuePair<string, string>> parameters =
-  [
-    new("grant_type", "client_credentials"),
-    new("client_id", options.ClientId),
-    new("client_secret", options.ClientSecret),
-  ];
-
-  private OpenIdConnectConfiguration? discoveryDocument;
   private CachedToken? cache;
+
+  /// <summary>
+  /// Initializes a new instance of the <see cref="OpenIdConnectTokenProvider"/> class.
+  /// </summary>
+  /// <param name="clientFactory">The HTTP client factory used to create clients for token and discovery requests.</param>
+  /// <param name="options">The OpenID Connect handler options containing endpoint and credential information.</param>
+  /// <param name="timeProvider">The clock used to evaluate token expiry.</param>
+  /// <param name="logger">The logger instance used for error logging.</param>
+  /// <exception cref="ArgumentNullException"><paramref name="options"/> is <see langword="null"/>.</exception>
+  public OpenIdConnectTokenProvider(
+    IHttpClientFactory clientFactory,
+    OpenIdConnectHandlerOptions options,
+    TimeProvider timeProvider,
+    ILogger<OpenIdConnectTokenProvider> logger)
+  {
+    ArgumentNullException.ThrowIfNull(options);
+    Validator.ValidateObject(options, new ValidationContext(options), validateAllProperties: true);
+
+    this.clientFactory = clientFactory;
+    this.timeProvider = timeProvider;
+    this.logger = logger;
+    this.configurationManager = new(
+      options.WellKnownEndpoint.AbsoluteUri,
+      new OpenIdConnectConfigurationRetriever(),
+      clientFactory.CreateClient(nameof(OpenIdConnectTokenProvider)));
+    this.parameters =
+    [
+      new("grant_type", "client_credentials"),
+      new("client_id", options.ClientId),
+      new("client_secret", options.ClientSecret),
+    ];
+  }
 
   /// <summary>
   /// Retrieves an access token from the OpenID Connect token endpoint using client credentials.
@@ -67,7 +85,7 @@ public sealed partial class OpenIdConnectTokenProvider(
         return current;
       }
 
-      var discovery = await GetDiscoveryDocument(cancellationToken);
+      var discovery = await configurationManager.GetConfigurationAsync(cancellationToken);
       using var request = new HttpRequestMessage(HttpMethod.Post, discovery.TokenEndpoint)
       {
         Content = new FormUrlEncodedContent(parameters),
@@ -93,24 +111,10 @@ public sealed partial class OpenIdConnectTokenProvider(
   }
 
   /// <inheritdoc />
-  public void Dispose()
-  {
-    tokenGate.Dispose();
-    discoveryGate.Dispose();
-  }
-
-  [LoggerMessage(LogLevel.Error, "Error fetching discovery document from {Url}: {Error}")]
-  private static partial void ErrorFetchingDiscoveryDocument(ILogger logger, Uri url, string? error);
+  public void Dispose() => tokenGate.Dispose();
 
   [LoggerMessage(LogLevel.Error, "Error creating access token from {Url}: {Error}")]
   private static partial void ErrorCreatingAccessToken(ILogger logger, Uri? url, string? error);
-
-  private static OpenIdConnectHandlerOptions Validate(OpenIdConnectHandlerOptions options)
-  {
-    ArgumentNullException.ThrowIfNull(options);
-    Validator.ValidateObject(options, new ValidationContext(options), validateAllProperties: true);
-    return options;
-  }
 
   private string? GetCachedToken()
   {
@@ -118,40 +122,6 @@ public sealed partial class OpenIdConnectTokenProvider(
     return snapshot is not null && timeProvider.GetUtcNow() + TokenRefreshMargin < snapshot.ExpiresAt
       ? snapshot.Value
       : null;
-  }
-
-  private async ValueTask<OpenIdConnectConfiguration> GetDiscoveryDocument(
-    CancellationToken cancellationToken = default)
-  {
-    if (discoveryDocument is not null)
-    {
-      return discoveryDocument;
-    }
-
-    await discoveryGate.WaitAsync(cancellationToken);
-    try
-    {
-      if (discoveryDocument is not null)
-      {
-        return discoveryDocument;
-      }
-
-      var client = clientFactory.CreateClient(nameof(OpenIdConnectTokenProvider));
-      using var response = await client.GetAsync(options.WellKnownEndpoint, cancellationToken);
-      if (!response.IsSuccessStatusCode)
-      {
-        ErrorFetchingDiscoveryDocument(logger, options.WellKnownEndpoint, response.ReasonPhrase);
-        response.EnsureSuccessStatusCode();
-      }
-
-      var content = await response.Content.ReadAsStringAsync(cancellationToken);
-      discoveryDocument = OpenIdConnectConfiguration.Create(content);
-      return discoveryDocument;
-    }
-    finally
-    {
-      discoveryGate.Release();
-    }
   }
 
   private sealed record CachedToken(string Value, DateTimeOffset ExpiresAt);

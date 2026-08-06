@@ -22,10 +22,10 @@ dotnet add package Kritikos.AspNetCore.MinimalApiExtensions
 | [Extensions.Options](src/Extensions.Options) | Static-abstract contracts that let an options class declare its own configuration section. |
 | [Extensions.Options.DependencyInjection](src/Extensions.Options.DependencyInjection) | Binds and validates those options definitions and validates them on startup. |
 | [AspNetCore.MinimalApiExtensions](src/AspNetCore.MinimalApiExtensions) | Startup, endpoint-mapping, correlation, [Heartbeat](#heartbeat) liveness, and periodic background-service building blocks for Minimal APIs. |
+| [AspNetCore.MinimalApiExtensions.Authentication](src/AspNetCore.MinimalApiExtensions.Authentication) | Wires OAuth2 protected-resource metadata (RFC 9728) from the configured JWT bearer scheme's authority. |
 | [AspNetCore.VersioningOptions](src/AspNetCore.VersioningOptions) | Opinionated defaults for `Asp.Versioning` API versioning and the API explorer. |
 | [AspNetCore.FeatureManagementOptions](src/AspNetCore.FeatureManagementOptions) | Feature-flag endpoint filters and a session-backed feature manager for Minimal APIs. |
-| [AspNetCore.OpenApiExtensions](src/AspNetCore.OpenApiExtensions) | OpenAPI operation transformer that documents auth responses and security for `[Authorize]` endpoints. |
-| [AspNetCore.OpenApiOidcExtensions](src/AspNetCore.OpenApiOidcExtensions) | OpenAPI document transformer that adds an OpenID Connect / OAuth2 scheme from a discovery document. |
+| [AspNetCore.OpenApiExtensions](src/AspNetCore.OpenApiExtensions) | OpenAPI transformers that publish a `bearer` (JWT) or `oauth2` security scheme and document auth responses/security for `[Authorize]` endpoints. |
 | [AspNetCore.OpenApiFeatureManagementOptions](src/AspNetCore.OpenApiFeatureManagementOptions) | OpenAPI document transformer that hides operations behind disabled feature flags. |
 | [HttpClient.Handlers](src/HttpClient.Handlers) | Delegating handler that injects a randomized `User-Agent` when one is absent. |
 | [HttpClient.AuthenticationHandlers](src/HttpClient.AuthenticationHandlers) | Delegating handler that attaches an OAuth2 client-credentials bearer token, cached until near expiry. |
@@ -43,7 +43,7 @@ flowchart TD
   mae[AspNetCore.MinimalApiExtensions] --> eodi
   oae[AspNetCore.OpenApiExtensions] --> mae
   vo[AspNetCore.VersioningOptions] --> mae
-  ooie[AspNetCore.OpenApiOidcExtensions] --> oae
+  maea[AspNetCore.MinimalApiExtensions.Authentication] --> mae
   ofmo[AspNetCore.OpenApiFeatureManagementOptions] --> oae
   ofmo --> fmo[AspNetCore.FeatureManagementOptions]
   svdi[SemanticVersioning.DependencyInjection] --> sv[SemanticVersioning]
@@ -89,6 +89,9 @@ The core toolkit for Minimal-API hosts: correlation-header middleware, the [Hear
 - Heartbeat: `services.AddHeartbeat()`; binds `AspNetCore:Heartbeat`. Detailed below.
 - Periodic work: derive an options type from `PeriodicBackgroundServiceOptions` (`Interval`, `TriggerStopsCurrentExecution`) and register with `services.AddPeriodicBackgroundService<TService, TOptions>()`. The base requires a `TimeProvider` — registered as `TimeProvider.System` by that call and overridable — which a derived service accepts and forwards to `base` for testable timing.
 - Startup: `IApplicationStartup` and `IWebApplicationStartup` compose registration and pipeline setup.
+- Well-known endpoints: `services.AddSecurityTxt()` / `AddOAuthProtectedResource()` bind and validate options, and `app.MapSecurityTxt()` / `MapOAuthProtectedResource()` / `MapApiCatalog()` serve the [RFC 9116][security-txt], [RFC 9728][oauth-protected-resource], and [RFC 9727][api-catalog] documents at the origin-root `/.well-known/*`. Each returns a chainable builder, so `.RequireAuthorization(...)` gates it.
+- Auto-discovery: `MapApiCatalog()` composes the catalog from every registered `IApiCatalogSource`, so libraries advertise APIs without manual registration (for example, `AspNetCore.VersioningOptions` contributes each API version's OpenAPI document); `MapOAuthProtectedResource()` falls back to the request's base URL when no `Resource` is configured.
+- API-key auth: `AddAuthentication().AddApiKey()` registers the `ApiKey` scheme, reading a configurable header (`X-API-Key` by default) and resolving keys via an injected `IApiKeyValidator` (returns a `ClaimsPrincipal` or `null`); keyless requests are left unauthenticated so other schemes still run. Framework-only — no JWT dependency.
 - Depends on: `Extensions.Options.DependencyInjection` and the ASP.NET Core shared framework.
 
 #### Heartbeat
@@ -116,11 +119,19 @@ while (moreWork)
 
 Staleness is measured with a monotonic `TimeProvider` timestamp, so NTP corrections, DST shifts, and VM pause and resume never skew it. Each source is cancelled inside its own `try`/`catch`, so one faulting linked-token callback cannot fault the watchdog or bring down the host, and re-registering a name disposes the previous handle. Metrics and traces are emitted under the source name `Kritikos.AspNetCore.MinimalApiExtensions.Heartbeat` for wiring into OpenTelemetry.
 
+### AspNetCore.MinimalApiExtensions.Authentication
+
+`AddOidcProtectedResource()` registers [RFC 9728][oauth-protected-resource] OAuth2 protected-resource metadata and adds the configured JWT bearer scheme's authority to its authorization servers, so the metadata follows the API's authentication configuration instead of a hard-coded list. It layers JWT bearer awareness over the `MapOAuthProtectedResource()` well-known endpoint, kept in its own package so `AspNetCore.MinimalApiExtensions` stays free of the authentication dependency.
+
+- Registration: `services.AddOidcProtectedResource()` (defaults to the `Bearer` authentication scheme; pass a scheme name to override), paired with `app.MapOAuthProtectedResource()` to serve the metadata.
+- Depends on: `AspNetCore.MinimalApiExtensions` and `Microsoft.AspNetCore.Authentication.JwtBearer`.
+
 ### AspNetCore.VersioningOptions
 
 Opinionated defaults for [Asp.Versioning][asp-versioning]: `ApiVersioningDefaultOptions` configures both `ApiVersioningOptions` and `ApiExplorerOptions` via `IConfigureOptions<T>`.
 
-- Registration: `services.AddApiVersioningDefaults()`; supply a custom version model with `services.AddApiVersionModelProvider<TProvider>()` (a `IApiVersionModelProvider`).
+- Registration: `services.AddApiVersioningDefaults(builder => builder.HasApiVersion(new ApiVersion(1)).HasDeprecatedApiVersion(new ApiVersion(2)).ReportApiVersions())` builds and registers the shared `ApiVersionSet` and its `ApiVersionModel` as singletons. Endpoints implement `IVersionedEndpoint` (declaring a `Group` and `Version`); the default implementation resolves them from services, validates the version against the set, and applies `WithApiVersionSet`/`MapToApiVersion`, so implementations only map their routes.
+- api-catalog: `AddApiVersioningDefaults()` also registers an `IApiCatalogSource` that advertises each discovered API version's OpenAPI document in the [RFC 9727][api-catalog] catalog; tune the document route with `ApiVersionCatalogOptions.DocumentRoutePattern` (default `openapi/{0}.json`). It stays inert unless `app.MapApiCatalog()` is mapped.
 - Depends on: `AspNetCore.MinimalApiExtensions` and `Asp.Versioning.Mvc.ApiExplorer`.
 
 ### AspNetCore.FeatureManagementOptions
@@ -133,20 +144,20 @@ Gates Minimal-API endpoints on [Microsoft.FeatureManagement][feature-management]
 
 ## OpenAPI
 
-These transformers extend the built-in `Microsoft.AspNetCore.OpenApi` pipeline; register them on `OpenApiOptions` with `options.AddOperationTransformer<T>()` or `options.AddDocumentTransformer<T>()`.
+These packages extend the built-in `Microsoft.AspNetCore.OpenApi` pipeline; register the transformers on `OpenApiOptions` with `options.AddOperationTransformer<T>()` or `options.AddDocumentTransformer<T>()`.
 
 ### AspNetCore.OpenApiExtensions
 
-`AuthorizationCheckOperationTransformer` (`IOpenApiOperationTransformer`) adds `401` and `403` responses and an OAuth2 security requirement to every operation behind `[Authorize]`, keeping the spec honest about what needs a token.
+Document transformers declare the security schemes the API validates and restore HTTP `QUERY` operations the built-in generator drops, and an operation transformer annotates the `[Authorize]` operations that require security:
 
+- `BearerSecuritySchemeDocumentTransformer` publishes a bare HTTP `bearer` scheme (`bearerFormat: JWT`) under the key `bearer` — the pure JWT contract, when interactive login is not needed.
+- `OAuth2SecuritySchemeDocumentTransformer` publishes an OAuth2 authorization-code scheme (inline authorization/token endpoints) under the key `oauth2` — the same bearer token, plus the interactive flow an API-reference UI (e.g. Scalar) needs to obtain it in one click.
+- `ApiKeySecuritySchemeDocumentTransformer` publishes an API-key scheme (`in: header`) under the key `apiKey`, carrying the configured header name.
+- `AuthorizationCheckOperationTransformer` adds `401`/`403` responses and, per operation, a security requirement referencing the scheme key mapped from that operation's required authentication scheme (from `[Authorize(AuthenticationSchemes = ...)]` or the endpoint's `AuthorizationPolicy`); operations that declare no explicit scheme fall back to a configurable default key (default `bearer`), and operations marked `[AllowAnonymous]` are left untouched. This lets a mixed API document some operations under `oauth2` and others under `apiKey`.
+- `QueryOperationDocumentTransformer` re-injects HTTP `QUERY` operations ([RFC 10008](https://www.rfc-editor.org/info/rfc10008)) that the built-in generator drops — OpenAPI 3.1 has no `query` path-item field, so it emits the request schema but omits the operation. Each QUERY endpoint is restored with its request body, parameters, responses, and — when secured — `401`/`403` plus a security requirement (reusing the same scheme mapping as `AuthorizationCheckOperationTransformer`).
+
+- Registration: `options.AddBearerSecurityScheme()`, `options.AddOAuth2SecurityScheme(authorizationUrl, tokenUrl, scopes)`, or `options.AddApiKeySecurityScheme(headerName)`, then `options.AddOperationTransformer(new AuthorizationCheckOperationTransformer(defaultSchemeId, schemesByAuthenticationScheme))`. Pass the default key (e.g. `OAuth2SecuritySchemeDocumentTransformer.SchemeId`) and, for multi-scheme APIs, a map from authentication scheme name to OpenAPI key (e.g. `{ [ApiKeyDefaults.AuthenticationScheme] = ApiKeySecuritySchemeDocumentTransformer.SchemeId }`). Add `options.AddQueryOperations(defaultSchemeId, schemesByAuthenticationScheme)` to restore `QUERY` operations, passing the same keys.
 - Depends on: `AspNetCore.MinimalApiExtensions` and `Microsoft.AspNetCore.OpenApi`.
-
-### AspNetCore.OpenApiOidcExtensions
-
-`OidcSecuritySchemeTransformer<TOptions>` (`IOpenApiDocumentTransformer`) fetches the OpenID Connect discovery document from the configured authority at document-generation time and adds the matching OAuth2 / OpenID Connect security scheme.
-
-- Configuration: subclass the abstract `OpenApiOpenIdOptions` (with its `Authority`) and bind it as `IOptions<TOptions>`.
-- Depends on: `AspNetCore.OpenApiExtensions` and `Microsoft.AspNetCore.Authentication.OpenIdConnect`.
 
 ### AspNetCore.OpenApiFeatureManagementOptions
 
@@ -209,3 +220,6 @@ Licensed under the terms of [LICENSE.md](LICENSE.md).
 [feature-management]: https://learn.microsoft.com/azure/azure-app-configuration/feature-management-dotnet-reference
 [client-credentials]: https://datatracker.ietf.org/doc/html/rfc6749#section-4.4
 [semver]: https://semver.org/spec/v2.0.0.html
+[security-txt]: https://www.rfc-editor.org/rfc/rfc9116
+[oauth-protected-resource]: https://www.rfc-editor.org/rfc/rfc9728
+[api-catalog]: https://www.rfc-editor.org/rfc/rfc9727

@@ -1,11 +1,9 @@
-﻿namespace Kritikos.SemanticVersioning.DependencyInjection;
+namespace Kritikos.SemanticVersioning.DependencyInjection;
 
 using System.Reflection;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-
-#pragma warning disable CA1034 // Do not nest type - false positive from C# 14 extension blocks
 
 /// <summary>
 /// Dependency injection extensions for registering <see cref="SemanticVersionDescriptor"/> instances.

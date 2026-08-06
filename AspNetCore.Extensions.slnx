@@ -1,4 +1,4 @@
-﻿<Solution>
+<Solution>
   <Folder Name="/Assets/">
     <File Path="icon.png" />
     <File Path="LICENSE.md" />
@@ -17,38 +17,37 @@
     <File Path="xunit.runner.json" />
   </Folder>
   <Folder Name="/samples/">
-    <Project Path="samples\PetStore.WebApi\PetStore.WebApi.csproj" Type="Classic C#" />
+    <Project Path="samples\PetStore.WebApi\PetStore.WebApi.csproj" Type="C#" />
     <File Path="samples\Directory.Build.props" />
   </Folder>
   <Folder Name="/src/">
-    <Project Path="src\AspNetCore.FeatureManagementOptions\AspNetCore.FeatureManagementOptions.csproj" Type="Classic C#" />
-    <Project Path="src\AspNetCore.MinimalApiExtensions\AspNetCore.MinimalApiExtensions.csproj" Type="Classic C#" />
-    <Project Path="src\AspNetCore.OpenApiExtensions\AspNetCore.OpenApiExtensions.csproj" Type="Classic C#" />
-    <Project Path="src\AspNetCore.OpenApiFeatureManagementOptions\AspNetCore.OpenApiFeatureManagementOptions.csproj" Type="Classic C#" />
-    <Project Path="src\AspNetCore.OpenApiOidcExtensions\AspNetCore.OpenApiOidcExtensions.csproj" Type="Classic C#" />
-    <Project Path="src\AspNetCore.VersioningOptions\AspNetCore.VersioningOptions.csproj" Type="Classic C#" />
-    <Project Path="src\Extensions.Options.DependencyInjection\Extensions.Options.DependencyInjection.csproj" Type="Classic C#" />
-    <Project Path="src\Extensions.Options\Extensions.Options.csproj" Type="Classic C#" />
-    <Project Path="src\HttpClient.AuthenticationHandlers\HttpClient.AuthenticationHandlers.csproj" Type="Classic C#" />
-    <Project Path="src\HttpClient.Handlers\HttpClient.Handlers.csproj" Type="Classic C#" />
-    <Project Path="src\PagedResults\PagedResults.csproj" Type="Classic C#" />
-    <Project Path="src\SemanticVersioning.DependencyInjection\SemanticVersioning.DependencyInjection.csproj" Type="Classic C#" />
-    <Project Path="src\SemanticVersioning\SemanticVersioning.csproj" Type="Classic C#" />
+    <Project Path="src\AspNetCore.FeatureManagementOptions\AspNetCore.FeatureManagementOptions.csproj" Type="C#" />
+    <Project Path="src\AspNetCore.MinimalApiExtensions\AspNetCore.MinimalApiExtensions.csproj" Type="C#" />
+    <Project Path="src\AspNetCore.OpenApiExtensions\AspNetCore.OpenApiExtensions.csproj" Type="C#" />
+    <Project Path="src\AspNetCore.OpenApiFeatureManagementOptions\AspNetCore.OpenApiFeatureManagementOptions.csproj" Type="C#" />
+    <Project Path="src\AspNetCore.VersioningOptions\AspNetCore.VersioningOptions.csproj" Type="C#" />
+    <Project Path="src\Extensions.Options.DependencyInjection\Extensions.Options.DependencyInjection.csproj" Type="C#" />
+    <Project Path="src\Extensions.Options\Extensions.Options.csproj" Type="C#" />
+    <Project Path="src\HttpClient.AuthenticationHandlers\HttpClient.AuthenticationHandlers.csproj" Type="C#" />
+    <Project Path="src\HttpClient.Handlers\HttpClient.Handlers.csproj" Type="C#" />
+    <Project Path="src\PagedResults\PagedResults.csproj" Type="C#" />
+    <Project Path="src\SemanticVersioning.DependencyInjection\SemanticVersioning.DependencyInjection.csproj" Type="C#" />
+    <Project Path="src\SemanticVersioning\SemanticVersioning.csproj" Type="C#" />
     <File Path="src\Directory.Build.props" />
   </Folder>
   <Folder Name="/tests/">
-    <Project Path="tests\AspNetCore.FeatureManagementOptionTests\AspNetCore.FeatureManagementOptionTests.csproj" Type="Classic C#" />
-    <Project Path="tests\AspNetCore.MinimalApiExtensions.Tests\AspNetCore.MinimalApiExtensions.Tests.csproj" Type="Classic C#" />
-    <Project Path="tests\AspNetCore.OpenApiExtensions.Tests\AspNetCore.OpenApiExtensions.Tests.csproj" Type="Classic C#" />
-    <Project Path="tests\AspNetCore.OpenApiFeatureManagementOptions.Tests\AspNetCore.OpenApiFeatureManagementOptions.Tests.csproj" Type="Classic C#" />
-    <Project Path="tests\AspNetCore.OpenApiOidcExtensions.Tests\AspNetCore.OpenApiOidcExtensions.Tests.csproj" Type="Classic C#" />
-    <Project Path="tests\AspNetCore.VersioningTests\AspNetCore.VersioningTests.csproj" Type="Classic C#" />
-    <Project Path="tests\Extensions.Options.DependencyInjection.Tests\Extensions.Options.DependencyInjection.Tests.csproj" Type="Classic C#" />
-    <Project Path="tests\HttpClient.AuthenticationHandlers.Tests\HttpClient.AuthenticationHandlers.Tests.csproj" Type="Classic C#" />
-    <Project Path="tests\HttpClient.Handlers.Tests\HttpClient.Handlers.Tests.csproj" Type="Classic C#" />
-    <Project Path="tests\PagedResults.Tests\PagedResults.Tests.csproj" Type="Classic C#" />
-    <Project Path="tests\SemanticVersioning.DependencyInjection.Tests\SemanticVersioning.DependencyInjection.Tests.csproj" Type="Classic C#" />
-    <Project Path="tests\SemanticVersioning.Tests\SemanticVersioning.Tests.csproj" Type="Classic C#" />
+    <Project Path="tests\AspNetCore.FeatureManagementOptionTests\AspNetCore.FeatureManagementOptionTests.csproj" Type="C#" />
+    <Project Path="tests\AspNetCore.MinimalApiExtensions.Tests\AspNetCore.MinimalApiExtensions.Tests.csproj" Type="C#" />
+    <Project Path="tests\AspNetCore.MinimalApiExtensions.Authentication.Tests\AspNetCore.MinimalApiExtensions.Authentication.Tests.csproj" Type="C#" />
+    <Project Path="tests\AspNetCore.OpenApiExtensions.Tests\AspNetCore.OpenApiExtensions.Tests.csproj" Type="C#" />
+    <Project Path="tests\AspNetCore.OpenApiFeatureManagementOptions.Tests\AspNetCore.OpenApiFeatureManagementOptions.Tests.csproj" Type="C#" />
+    <Project Path="tests\AspNetCore.VersioningTests\AspNetCore.VersioningTests.csproj" Type="C#" />
+    <Project Path="tests\Extensions.Options.DependencyInjection.Tests\Extensions.Options.DependencyInjection.Tests.csproj" Type="C#" />
+    <Project Path="tests\HttpClient.AuthenticationHandlers.Tests\HttpClient.AuthenticationHandlers.Tests.csproj" Type="C#" />
+    <Project Path="tests\HttpClient.Handlers.Tests\HttpClient.Handlers.Tests.csproj" Type="C#" />
+    <Project Path="tests\PagedResults.Tests\PagedResults.Tests.csproj" Type="C#" />
+    <Project Path="tests\SemanticVersioning.DependencyInjection.Tests\SemanticVersioning.DependencyInjection.Tests.csproj" Type="C#" />
+    <Project Path="tests\SemanticVersioning.Tests\SemanticVersioning.Tests.csproj" Type="C#" />
     <File Path="tests\Directory.Build.props" />
   </Folder>
 </Solution>

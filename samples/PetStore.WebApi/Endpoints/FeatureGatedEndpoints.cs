@@ -1,22 +1,24 @@
 ﻿namespace Kritikos.PetStore.WebApi.Endpoints;
 
-using Kritikos.AspNetCore.FeatureManagementOptions;
-using Kritikos.AspNetCore.MinimalApiExtensions.Contracts;
+using Asp.Versioning;
 
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
+using Kritikos.AspNetCore.FeatureManagementOptions;
+using Kritikos.AspNetCore.VersioningOptions.Contracts;
+
 using Microsoft.FeatureManagement;
 
-public sealed class FeatureGatedEndpoints : IEndpoint
+public sealed class FeatureGatedEndpoints : IVersionedEndpoint
 {
   /// <inheritdoc />
-  public void MapEndpoint(IEndpointRouteBuilder app)
+  public string Group => "feature";
+
+  /// <inheritdoc />
+  public ApiVersion Version => new(2);
+
+  /// <inheritdoc />
+  public void MapGroupedEndpoint(RouteGroupBuilder group)
   {
-    var group = app.MapGroup("/api/v{version:apiVersion}/feature")
-        .WithApiVersionSet(Program.VersionSet)
-        .MapToApiVersion(2)
-        .WithTags("Features");
+    group.WithTags("Features");
 
     group.MapGet("single", static () => TypedResults.Ok("on"))
         .WithFeatureFlags("MyFeature");

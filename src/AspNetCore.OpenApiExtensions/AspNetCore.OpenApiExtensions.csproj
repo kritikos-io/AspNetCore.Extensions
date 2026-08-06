@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
+    <ProjectReference Include="..\AspNetCore.MinimalApiExtensions\AspNetCore.MinimalApiExtensions.csproj"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\AspNetCore.MinimalApiExtensions\AspNetCore.MinimalApiExtensions.csproj"/>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
   </ItemGroup>
 
 </Project>

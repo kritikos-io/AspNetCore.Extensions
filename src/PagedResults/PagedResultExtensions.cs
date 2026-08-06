@@ -1,7 +1,5 @@
 namespace Kritikos.PagedResults;
 
-#pragma warning disable CA1034 // Do not nest type - false positive from C# 14 extension blocks
-
 /// <summary>
 /// Extension methods for <see cref="PagedResult{T}"/>.
 /// </summary>

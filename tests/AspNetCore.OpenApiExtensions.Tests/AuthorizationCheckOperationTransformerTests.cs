@@ -62,6 +62,20 @@ public class AuthorizationCheckOperationTransformerTests
   }
 
   [Test]
+  public async Task AllowAnonymous_operation_is_left_untouched()
+  {
+    var transformer = new AuthorizationCheckOperationTransformer();
+    var operation = new OpenApiOperation();
+    var context = CreateContext(new AuthorizeAttribute(), new AllowAnonymousAttribute(), GetActionMethod());
+
+    await transformer.TransformAsync(operation, context, CancellationToken.None);
+
+    await Assert.That(operation.OperationId).IsEqualTo(nameof(SampleController.Secured));
+    await Assert.That(operation.Security is null || operation.Security.Count == 0).IsTrue();
+    await Assert.That(operation.Responses is null || !operation.Responses.ContainsKey("401")).IsTrue();
+  }
+
+  [Test]
   public async Task Existing_operation_id_is_preserved()
   {
     var transformer = new AuthorizationCheckOperationTransformer();
@@ -99,9 +113,61 @@ public class AuthorizationCheckOperationTransformerTests
     await Assert.That(operation.Responses!.Count).IsEqualTo(2);
   }
 
+  [Test]
+  public async Task Attribute_authentication_scheme_is_mapped_to_configured_key()
+  {
+    var transformer = new AuthorizationCheckOperationTransformer(
+      "oauth2",
+      new Dictionary<string, string>(StringComparer.Ordinal) { ["ApiKey"] = "apiKey" });
+    var operation = new OpenApiOperation();
+    var context = CreateContext(new AuthorizeAttribute { AuthenticationSchemes = "ApiKey" }, GetActionMethod());
+
+    await transformer.TransformAsync(operation, context, CancellationToken.None);
+
+    await Assert.That(ReferencedSchemeIds(operation)).IsEquivalentTo(["apiKey"]);
+  }
+
+  [Test]
+  public async Task Policy_authentication_scheme_is_mapped_to_configured_key()
+  {
+    var transformer = new AuthorizationCheckOperationTransformer(
+      "oauth2",
+      new Dictionary<string, string>(StringComparer.Ordinal) { ["ApiKey"] = "apiKey" });
+    var operation = new OpenApiOperation();
+    var policy = new AuthorizationPolicyBuilder()
+      .AddAuthenticationSchemes("ApiKey")
+      .RequireAssertion(_ => true)
+      .Build();
+    var context = CreateContext(new AuthorizeAttribute(), policy, GetActionMethod());
+
+    await transformer.TransformAsync(operation, context, CancellationToken.None);
+
+    await Assert.That(ReferencedSchemeIds(operation)).IsEquivalentTo(["apiKey"]);
+  }
+
+  [Test]
+  public async Task Operation_without_authentication_scheme_uses_default_key()
+  {
+    var transformer = new AuthorizationCheckOperationTransformer(
+      "oauth2",
+      new Dictionary<string, string>(StringComparer.Ordinal) { ["ApiKey"] = "apiKey" });
+    var operation = new OpenApiOperation();
+    var context = CreateContext(new AuthorizeAttribute(), GetActionMethod());
+
+    await transformer.TransformAsync(operation, context, CancellationToken.None);
+
+    await Assert.That(ReferencedSchemeIds(operation)).IsEquivalentTo(["oauth2"]);
+  }
+
   // ---- Helpers ----
   private static MethodInfo GetActionMethod()
     => typeof(SampleController).GetMethod(nameof(SampleController.Secured))!;
+
+  private static IReadOnlyList<string> ReferencedSchemeIds(OpenApiOperation operation)
+    => [.. operation.Security!
+      .SelectMany(requirement => requirement.Keys)
+      .OfType<OpenApiSecuritySchemeReference>()
+      .Select(reference => reference.Reference.Id!),];
 
   private static OpenApiOperationTransformerContext CreateContext(params object[] metadata)
     => new()

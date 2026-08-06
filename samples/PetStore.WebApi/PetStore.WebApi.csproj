@@ -14,16 +14,25 @@
 
   <ItemGroup>
     <PackageReference Include="Asp.Versioning.OpenApi" />
+    <PackageReference Include="Microsoft.Extensions.ApiDescription.Server">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Scalar.AspNetCore" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\AspNetCore.FeatureManagementOptions\AspNetCore.FeatureManagementOptions.csproj" />
     <ProjectReference Include="..\..\src\AspNetCore.MinimalApiExtensions\AspNetCore.MinimalApiExtensions.csproj" />
+    <ProjectReference Include="..\..\src\AspNetCore.MinimalApiExtensions.Authentication\AspNetCore.MinimalApiExtensions.Authentication.csproj" />
     <ProjectReference Include="..\..\src\AspNetCore.OpenApiExtensions\AspNetCore.OpenApiExtensions.csproj" />
     <ProjectReference Include="..\..\src\AspNetCore.OpenApiFeatureManagementOptions\AspNetCore.OpenApiFeatureManagementOptions.csproj" />
-    <ProjectReference Include="..\..\src\AspNetCore.OpenApiOidcExtensions\AspNetCore.OpenApiOidcExtensions.csproj" />
     <ProjectReference Include="..\..\src\AspNetCore.VersioningOptions\AspNetCore.VersioningOptions.csproj" />
+    <ProjectReference Include="..\..\src\SemanticVersioning.DependencyInjection\SemanticVersioning.DependencyInjection.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageVersion Update="Microsoft.Extensions.ApiDescription.Server" Version="10.0.10" />
   </ItemGroup>
 
 </Project>
