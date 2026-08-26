@@ -26,5 +26,6 @@
     <PackageVersion Include="Scalar.AspNetCore" Version="2.16.17" />
     <PackageVersion Include="TUnit" Version="1.63.0" />
   </ItemGroup>
+
   <Import Project="Directory.Packages.template.props" />
 </Project>
