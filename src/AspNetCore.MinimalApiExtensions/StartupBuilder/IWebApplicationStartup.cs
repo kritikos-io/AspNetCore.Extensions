@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Builder;
 /// <summary>
 /// Provides a startup contract for configuring services and middleware on a <see cref="WebApplicationBuilder"/>.
 /// </summary>
-[CLSCompliant(false)]
 public interface IWebApplicationStartup
 {
   /// <summary>

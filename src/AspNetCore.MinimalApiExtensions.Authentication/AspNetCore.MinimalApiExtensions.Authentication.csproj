@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
+    <SkipClsCompliant>true</SkipClsCompliant>
   </PropertyGroup>
 
   <PropertyGroup Label="Package">

@@ -6,7 +6,6 @@ using Microsoft.Extensions.Hosting;
 /// <summary>
 /// Provides a startup contract for configuring services and middleware on an <see cref="IHostApplicationBuilder"/>-based generic host.
 /// </summary>
-[CLSCompliant(false)]
 public interface IApplicationStartup
 {
   /// <summary>
