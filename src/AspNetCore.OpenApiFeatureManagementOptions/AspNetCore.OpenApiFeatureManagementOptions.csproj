@@ -5,6 +5,11 @@
     <SkipClsCompliant>true</SkipClsCompliant>
   </PropertyGroup>
 
+  <PropertyGroup Label="Package">
+    <Description>OpenAPI document transformer that removes operations gated behind disabled feature flags, so the published document matches runtime behaviour.</Description>
+    <PackageTags>aspnetcore;openapi;swagger;feature-management;feature-flags;document-transformer</PackageTags>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\AspNetCore.FeatureManagementOptions\AspNetCore.FeatureManagementOptions.csproj"/>
     <ProjectReference Include="..\AspNetCore.OpenApiExtensions\AspNetCore.OpenApiExtensions.csproj"/>

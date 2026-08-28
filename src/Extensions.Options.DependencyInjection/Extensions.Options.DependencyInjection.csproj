@@ -6,6 +6,11 @@
     <NoWarn>$(NoWarn);SYSLIB1104</NoWarn>
   </PropertyGroup>
 
+  <PropertyGroup Label="Package">
+    <Description>Binds options definitions to configuration, applies DataAnnotations validation and validates them on startup, either one type at a time or by scanning an assembly.</Description>
+    <PackageTags>options;configuration;dependency-injection;validation;startup;dotnet</PackageTags>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\Extensions.Options\Extensions.Options.csproj"/>
   </ItemGroup>

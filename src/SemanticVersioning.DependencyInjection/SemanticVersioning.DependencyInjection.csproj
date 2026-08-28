@@ -4,6 +4,11 @@
     <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Label="Package">
+    <Description>Registers a semantic version parsed from an assembly's informational version attribute, so components can inject the running version.</Description>
+    <PackageTags>semver;semantic-versioning;versioning;dependency-injection;assembly-version</PackageTags>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\SemanticVersioning\SemanticVersioning.csproj"/>
   </ItemGroup>

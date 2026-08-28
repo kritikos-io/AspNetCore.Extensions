@@ -4,4 +4,9 @@
     <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Label="Package">
+    <Description>SemVer 2.0.0 value types for parsing, comparing and ordering semantic versions, including pre-release and build metadata descriptors.</Description>
+    <PackageTags>semver;semantic-versioning;versioning;parsing;comparison</PackageTags>
+  </PropertyGroup>
+
 </Project>

@@ -4,4 +4,9 @@
     <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Label="Package">
+    <Description>Delegating handler that sets a randomized, browser-weighted User-Agent on any outgoing request that does not already carry one.</Description>
+    <PackageTags>httpclient;delegating-handler;user-agent;http;dotnet</PackageTags>
+  </PropertyGroup>
+
 </Project>

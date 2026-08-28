@@ -5,6 +5,11 @@
     <SkipClsCompliant>true</SkipClsCompliant>
   </PropertyGroup>
 
+  <PropertyGroup Label="Package">
+    <Description>OpenAPI transformers that publish bearer, OAuth2 or API-key security schemes, document authentication responses and per-operation security requirements for [Authorize] endpoints, and restore HTTP QUERY operations the built-in generator drops.</Description>
+    <PackageTags>aspnetcore;openapi;swagger;security-scheme;oauth2;jwt;api-key;authorization;http-query</PackageTags>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\AspNetCore.MinimalApiExtensions\AspNetCore.MinimalApiExtensions.csproj"/>
   </ItemGroup>

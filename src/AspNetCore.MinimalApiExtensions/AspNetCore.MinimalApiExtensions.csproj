@@ -6,6 +6,11 @@
     <IsPackable>true</IsPackable>
   </PropertyGroup>
 
+  <PropertyGroup Label="Package">
+    <Description>Building blocks for Minimal API hosts: endpoint mapping contracts, correlation-header middleware, a liveness heartbeat registry with watchdog and health check, periodic background services, startup abstractions, API-key authentication, and the RFC 9116/9727/9728 well-known endpoints.</Description>
+    <PackageTags>aspnetcore;minimal-api;endpoints;heartbeat;health-checks;correlation-id;background-service;well-known;api-key;security-txt</PackageTags>
+  </PropertyGroup>
+
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App"/>
   </ItemGroup>
